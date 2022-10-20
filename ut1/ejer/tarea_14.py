@@ -1,4 +1,4 @@
-# Escriba un programa en Python que acepte la opción de dos jugadoras en Piedra-Papel-Tijera y decida el resultado (solución).
+# Escriba un programa en Python que acepte la opción de dos jugadoras en Piedra-Papel-Tijera y decida el resultado.
 # Entrada: persona1=piedra; persona2=papel
 # Salida: Gana persona2: El papel envuelve a la piedra
 persona1 = input('Piedra, papel o tijera, saca lo que quieras ya! ')
