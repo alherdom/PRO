@@ -4,5 +4,4 @@ name = input("¿Su nombre? ")
 while not name.istitle():
     print("Error. Debe escribirlo correctamente")
     name = input("¿Su nombre? ")
-else:
     print(name)
