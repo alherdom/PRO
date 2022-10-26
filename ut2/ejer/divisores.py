@@ -1,5 +1,6 @@
 # Determine si un número dado es un número primo.
-# No es necesario implementar ningún algoritmo en concreto. La idea es probar los números menores al dado e ir viendo si las divisiones tienen resto cero o no.
+# No es necesario implementar ningún algoritmo en concreto. La idea es probar los números
+# menores al dado e ir viendo si las divisiones tienen resto cero o no.
 # ¿Podría optimizar su código? ¿Realmente es necesario probar con tantos divisores?
 # Ejemplo
 # Entrada: 11
