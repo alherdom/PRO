@@ -10,8 +10,8 @@ objetiv_x = 7
 objetiv_y = 8
 position_x = 0
 position_y = 0
-print(f'({position_x}, {position_y})', end=' ')
-movement = True # Usamso este booleano para cambiar la alternancia entre los dos tipos de movimientos (x + 1, y + 2) y (x + 2, y + 1).
+print(f"({position_x}, {position_y})", end=" ")
+movement = True  # Usamos este booleano para cambiar la alternancia entre los dos tipos de movimientos (x + 1, y + 2) y (x + 2, y + 1).
 while position_x != objetiv_x and position_y != objetiv_y:
     if movement:
         position_x += 1
@@ -19,6 +19,5 @@ while position_x != objetiv_x and position_y != objetiv_y:
     else:
         position_x += 2
         position_y += 1
-    print(f'({position_x}, {position_y})', end=' ')
+    print(f"({position_x}, {position_y})", end=" ")
     movement = not movement
-
