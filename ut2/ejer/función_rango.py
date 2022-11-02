@@ -8,4 +8,6 @@ f = x**2 - 6 * x + 3
 for num in range(-9, 9):
     x = num
     f = x**2 - 6 * x + 3
-    print(f)
+    if f >= num:
+        min = num
+        print(min)
