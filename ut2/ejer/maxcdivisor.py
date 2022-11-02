@@ -6,9 +6,11 @@
 a = 12
 b = 44
 
-min = a if a < b else b
+if a < b:
+    min = a
+else:
+    min = b
 
 for i in range(min, 1, -1):
     if (a % i) and (b % i) == 0:
-
-print("Este nunero es maximo divisor:")
+        print(i)
