@@ -3,17 +3,9 @@
 # Salida: 4
 cod1 = "0001010011101"
 cod2 = "0000110010001"
-position1 = 0
-position2 = 0
+hamming = 0
 
-same_char = True
-
-while same_char == True:
-    position1 += 1
-    position2 += 1
-    same_char = cod1[position1] in cod2[position2]
-    print(f'({cod1[position1]}, {cod2[position2]})', same_char, end=' ')  
-else:
-    print(f'({cod1[position1]}, {cod2[position2]})', same_char, end=' ')  
-    # same_char = not same_char
-
+for i in range(len(cod1)):
+    if cod1[i] != cod2[i]:
+        hamming += 1
+print(hamming)
