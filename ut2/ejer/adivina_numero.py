@@ -2,7 +2,7 @@
 # es menor o mayor que el que se está preguntando y mostrar igualmente el número de intentos
 # hasta encontrar el número objetivo
 TARGET_NUMBER = int(input('ESTABLEZCA EL NÚMERO A ADIVINAR: '))
-number = 0
+number = None
 num_tries = 0
 while number != TARGET_NUMBER:
     number = int(input('TECLEE UN NÚMERO: '))
@@ -11,6 +11,5 @@ while number != TARGET_NUMBER:
         print('EL NÚMERO TIENE QUE SER MENOR')
     elif number < TARGET_NUMBER:
         print('EL NÚMERO TIENE QUE SER MAYOR')
-    else:
-        print(f'✅ ¡ENHORABUENA! HAS ENCONTRADO EL NÚMERO EN {num_tries} INTENTOS')
+print(f'✅ ¡ENHORABUENA! HAS ENCONTRADO EL NÚMERO EN {num_tries} INTENTOS')
         
