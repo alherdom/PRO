@@ -1,6 +1,6 @@
 import sys
 
-import pycheck
+
 
 
 def run(word: str) -> float:
