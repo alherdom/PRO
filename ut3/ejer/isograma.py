@@ -5,7 +5,6 @@
 # downstream
 # six-year-old
 
-# words = ["lumberjacks", "background", "downstream", "six-year-old"]
 seen_chars = []
 text = "teclado"
 position = 0
