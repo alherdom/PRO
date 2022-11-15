@@ -9,10 +9,11 @@
 v1 = [4, 3, 8, 1]
 v2 = [9, 2, 7, 3]
 result = 0
-output = []
+buffer = []
 for value1, value2 in zip(v1, v2):
+    buffer.append(f"{value1}⋅{value2}")
     result += value1 * value2
-    output += str(value1) + str(value2)
-print(result)
+    operation = "".join(buffer)
+    print(result)
 # output_sep = "-".join([output])
-print(output)
+print(operation)
