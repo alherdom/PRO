@@ -6,8 +6,7 @@ import sys
 
 # En values tendremos una lista con los valores (como strings)
 values = sys.argv[1:]
-# values = [32, 56, 21, 99, 12, 17]
 # Su código debajo de aquí
-len_list = len(values)
-media = sum(values) / len_list
+values = [int(v) for v in values]
+media = sum(values) / len(values)
 print(media)
