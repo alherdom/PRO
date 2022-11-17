@@ -2,9 +2,11 @@
 # Entrada: [1, 1, 1, 1, 1, 1, 1]
 # Salida: Iguales
 
-values = [1, 1, 2, 1, 1, 1, 1]
-
+values = [1, 1, 1, 1, 1, 1, 1]
+dupli_values = None
+output = []
 for value in values:
-    if value == values[1]:
-        print(f'{value} es igual a {values[1]}')
-    
+    if value == dupli_value:
+        dupli_value = value
+        output.append(value)
+print(output)
