@@ -6,7 +6,7 @@ values = [1, 1, 1, 1, 1, 1, 1]
 dupli_values = None
 output = []
 for value in values:
-    if value == dupli_value:
-        dupli_value = value
+    if value == dupli_values:
+        dupli_values = value
         output.append(value)
 print(output)
