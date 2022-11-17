@@ -15,3 +15,4 @@ for value in values:
 if values == output:
     print("TODOS LOS VALORES DE LA LISTA SON IGUALES")
     print(output)
+# prueba
