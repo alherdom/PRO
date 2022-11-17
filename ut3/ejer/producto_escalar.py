@@ -25,4 +25,4 @@ for char in string_output:
         final_output += "+"
     elif len(final_output) < 15:
         final_output += "⋅"
-print(f'[{final_output}]={result}')
+print(f"[{final_output}]={result}")

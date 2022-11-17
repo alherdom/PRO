@@ -1,9 +1,10 @@
 # Consiga la siguiente transformación:
 # 12/31/20 ➡️ 31-12-2020
-
-input_date = "12/31/20"
-day = input_date[:2]
-month = input_date[3:5]
-year = "20" + input_date[6:9]
-output_date = '-'.join([day,month,year])
+SEP = "-"
+american_date = "12/31/20"
+splitted_american_date = american_date.split("/")
+day = splitted_american_date[1]
+month = splitted_american_date[0]
+year = "20" + splitted_american_date[2]
+output_date = SEP.join([day, month, year])
 print(output_date)
