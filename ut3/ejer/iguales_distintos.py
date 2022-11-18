@@ -3,13 +3,18 @@
 # Salida: Iguales
 
 values = [1, 1, 1, 1, 1, 1, 1]
-dupli_values = None
+first_value = values[0]
 output = []
 for value in values:
-    if value == dupli_value:
-        dupli_value = value
-        output.append(value)
-print(output)
+    if value == first_value:
+        first_value = value
+        output.append(first_value)
+    else:
+        print("ALGUNO DE LOS VALORES DE LA LISTA SON DISTINTOS")
+        print(values)
+if values == output:
+    print("TODOS LOS VALORES DE LA LISTA SON IGUALES")
+    print(output)
 
 sheldon_greeting = ['Penny', 'Penny', 'Penny']
 
