@@ -10,3 +10,7 @@ for value in values:
         dupli_value = value
         output.append(value)
 print(output)
+
+sheldon_greeting = ['Penny', 'Penny', 'Penny']
+
+sheldon_greeting.count(values[0])
