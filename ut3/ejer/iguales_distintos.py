@@ -5,17 +5,7 @@
 values = [1, 1, 1, 1, 1, 1, 1]
 first_value = values[0]
 output = []
-for value in values:
-    if value == first_value:
-        first_value = value
-        output.append(first_value)
-    else:
-        print("ALGUNO DE LOS VALORES DE LA LISTA SON DISTINTOS")
-        print(values)
-if values == output:
-    print("TODOS LOS VALORES DE LA LISTA SON IGUALES")
-    print(output)
-
-sheldon_greeting = ['Penny', 'Penny', 'Penny']
-
-sheldon_greeting.count(values[0])
+if values.count(values[0]) == len(values):
+    print("Iguales")
+else:
+    print("Distintos")

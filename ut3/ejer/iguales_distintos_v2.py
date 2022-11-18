@@ -2,7 +2,7 @@
 # Entrada: [1, 1, 1, 1, 1, 1, 1]
 # Salida: Iguales
 
-values = [1, 1, 1, 1, 1, 1, 2]
+values = [1, 1, 1, 1, 1, 1, 1]
 first_value = values[0]
 output = []
 different = False
