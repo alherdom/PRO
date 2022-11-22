@@ -6,8 +6,7 @@
 # print(diagonal)
 
 matrix = [[4, 6, 1], [2, 9, 3], [1, 7, 7]]
-diagonal_sum = 0
-matrix_size = len(matrix)
-for i in range(matrix_size):
-    diagonal_sum += matrix[i][i]
-print(diagonal_sum)
+
+main_diagonal = [matrix[i][i] for i in range(len(matrix))]
+sum_diagonal = sum(main_diagonal)
+print(sum_diagonal)

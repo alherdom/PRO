@@ -4,14 +4,13 @@
 
 values = [1, 1, 1, 1, 1, 1, 1]
 first_value = values[0]
-output = []
-different = False
-for value in values:
+for value in values[1:]:
     if value != first_value:
-        different = True 
-    else:
-        different = False
-if different:
-    print("Distintos")
+        print("Distintos")
+        break
 else:
     print("Iguales")
+
+# version 2
+# first_value = values[0]
+# if values.count(first_values) != len(value):
