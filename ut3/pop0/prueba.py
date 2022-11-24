@@ -1,7 +1,8 @@
-n = 8
-x = 3
-i = 1
-for i in range(1, n+1):
-    result = x * i
-    i += 1
-    print(result)
+fullname = 'Delgado Quintero, sergio'
+initials = []
+for char in fullname.title():
+    if char.isupper():
+        initials += char
+        if len(initials) == 2:
+            break    
+print(initials)
