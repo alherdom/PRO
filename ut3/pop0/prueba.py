@@ -1,8 +1,10 @@
-fullname = 'Delgado Quintero, sergio'
+initials_1 = []
 initials = []
-for char in fullname.title():
-    if char.isupper():
-        initials += char
-        if len(initials) == 2:
-            break    
+fullname = 'Delgado Quintero, sergio'
+fullname = fullname.title()
+for i in fullname:
+    if i.isupper():
+        initials_1 += i
+initials = initials_1[2] + initials_1[0] + initials_1[1] + " "
+initials ='.'.join(initials)
 print(initials)
