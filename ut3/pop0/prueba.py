@@ -1,6 +1,7 @@
 initials_1 = []
 initials = []
-fullname = 'Delgado Quintero, sergio'
+#fullname = 'Delgado Quintero, sergio'
+fullname = 'Suarez, maría'
 fullname = fullname.title()
 for i in fullname:
     if i.isupper():
