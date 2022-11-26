@@ -1,3 +1,8 @@
+# ************************
+# MULTIPLICACI�N EN CADENA
+# ************************
+
+
 def run(numbers: list) -> int:
     rmult = 1
     if len(numbers) > 1:
