@@ -1,4 +1,4 @@
 {
     "git.ignoreLimitWarning": true,
-    "terminal.explorerKind": "external"
+    "terminal.explorerKind": "integrated"
 }
