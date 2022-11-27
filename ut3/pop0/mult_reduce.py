@@ -1,5 +1,5 @@
 # ************************
-# MULTIPLICACI�N EN CADENAx
+# MULTIPLICACI�N EN CADENA
 # ************************
 
 
