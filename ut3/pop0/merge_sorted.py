@@ -9,7 +9,7 @@ def run(values1: list, values2: list) -> list:
     for num in merged:
         if num not in output:
             output.append(num)
-    merged = output
+    merged = sorted(output)
     return merged
 
 
