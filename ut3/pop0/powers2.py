@@ -7,7 +7,7 @@ con el exponente variando desde 0 hasta dicho valor (inclusive).
 
 
 def run(num_powers: int) -> list:
-    powers2 = [num_powers**i for i in range(num_powers + 1)]
+    powers2 = [2**i for i in range(num_powers + 1)]
     return powers2
 
 
