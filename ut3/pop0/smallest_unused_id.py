@@ -4,7 +4,10 @@
 
 
 def run(ids: list) -> int:
-    smallest_unused_id = 'tu código aquí'
+    numbers = numbers.split(",")
+    size = len(numbers)
+    numbers = numbers[1:size-1]
+    smallest_unused_id = " ".join(numbers)
     return smallest_unused_id
 
 
