@@ -4,7 +4,16 @@
 
 
 def run(values: list) -> int:
-    tsum = 'tu código aquí'
+    if len(values) > 0:
+        max_number = max(values)
+        min_number = min(values)
+        while max_number in values:
+            values.remove(max_number)
+        while min_number in values:
+            values.remove(min_number)
+    tsum = sum(values)
+
+  
     return tsum
 
 
