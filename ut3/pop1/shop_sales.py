@@ -4,18 +4,15 @@
 
 
 def run(sales: list) -> tuple:
-    pcs = 0
-    displays = 0
-    for element in sales:
-        pcs += sales[0]
-        displays += sales[1]
+    pcs = displays = 0   
+    for sale in sales:
+        pcs += sale[0]
+        displays += sale[1]
+    return pcs, displays           
     '''flattened = []
     for element in sales:
         flattened.extend(element)
     pcs = sum(flattened[::2])
-    displays = sum(flattened[1::2])
-    return pcs, displays'''
-
-
+    displays = sum(flattened[1::2])'''
 if __name__ == '__main__':
     run([[4, 5], [1, 3], [3, 2]])
