@@ -7,8 +7,7 @@ def run(hex_codes: list) -> str:
     text = ""
     for codes in hex_codes:
         decimal = int(codes,16)
-        emoji = chr(decimal)
-        text += emoji
+        text += chr(decimal)
     return text
 
 
