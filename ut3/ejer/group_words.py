@@ -5,19 +5,29 @@
 
 def run(words: list) -> dict:
     group_words = {}
-    t_words = []
+    m = []
+    b = []
+    c = []
+    a = []
     first_letter = words[0][0]    
     for word in words:
         first_letter = word[0]
-        group_words[first_letter] = t_words  
+        group_words[first_letter] = []
+
+        if word.startswith('m'):
+            m.append(word)
+        if word.startswith('b'):
+            b.append(word)
+        if word.startswith('c'):
+            c.append(word)
+        if word.startswith('a'):
+            a.append(word)
         
-    for word in words:
-        if word[0] in group_words:
-            t_words.append(word)
-            print(t_words)
-        
-      
-        
+    group_words['m'] = m
+    group_words['b'] = b
+    group_words['c'] = c
+    group_words['a'] = a
+
     return group_words
 
 
