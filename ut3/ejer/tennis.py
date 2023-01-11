@@ -17,9 +17,9 @@ if (games_a == 6 and abs(games_a - games_b) >= 2) or (games_b == 6 and games_a =
     winner = "A"
 elif (games_b == 6 and abs(games_a - games_b) >= 2) or (games_a == 6 and games_b == 7):
         winner = "B"
-print(games_a)
-print(games_b)
-print("Gana el partido el jugador: Player",winner)
+print("Los puntos del Jugador A son:",games_a)
+print("Los puntos del Jugador B son:",games_b)
+print("Gana el partido el Jugador:",winner)
 if winner == "":
     print("No hay ganador")
 
