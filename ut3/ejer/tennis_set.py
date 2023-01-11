@@ -7,7 +7,6 @@ def run(points: str) -> tuple:
     max_points = 4
     games_player1 = games_player2 = 0
     points_player1 = points_player2 = 0
-    winner = ""
     for char in points:
         if char == "A":
             points_player1 += 1
