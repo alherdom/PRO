@@ -1,7 +1,7 @@
 empty_dict = {}
 
 family = {
-    'papa':'56','mama':'60','hermano':'30'
+    'Antonio':56,'Esmeralda':60,'AntonioH':30,'Hachiko':14,'Neko':10
 }
 
 print(family)
