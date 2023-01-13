@@ -5,12 +5,10 @@
 
 def run(sentence: str) -> dict:
     counter = {}
-    
     for char in sentence:
         if char in counter:
             continue
-        amount_char = sentence.count(char)
-        counter[char] = amount_char
+        counter[char] = sentence.count(char)
     return counter
 
 
