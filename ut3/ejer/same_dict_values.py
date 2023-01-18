@@ -4,9 +4,12 @@
 
 
 def run(items: dict) -> bool:
-    values = list(items.values()) or [0]
-    num_same_items = values.count(values[0])
-    all_same = num_same_items == len(values)
+    values = list(items.values())
+    all_same = True
+    for value in values:
+       if value != values[0]:
+           all_same = False
+           break
     return all_same
 
     
