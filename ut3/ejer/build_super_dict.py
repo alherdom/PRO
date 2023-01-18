@@ -11,7 +11,7 @@ def run(items: list) -> dict:
             flattened.extend(item)
         else:
             flattened.append(item)
-    unpack_items = flattened[0]
+    unpack_items = {flattened[0]:list(flattened)}
     
     print(flattened)
     return unpack_items
