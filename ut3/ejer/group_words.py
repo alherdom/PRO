@@ -5,21 +5,12 @@
 
 def run(words: list) -> dict:
     group_words = {}
-    letters = []
     for word in words:
         first_letter = word[0]
-        if first_letter not in letters:
-            letters.append(first_letter)
-            group_words[first_letter] = word
-    print(letters)
-   
-    
-   
-    """for letters, words in group_words.items():   
-            if word.startswith(first_letter):
-                group_words[letters] = words"""
-   
-
+        if first_letter in group_words:
+            group_words[first_letter].append(word)
+        else:
+            group_words[first_letter] = [word]
 
     return group_words
 
