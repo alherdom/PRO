@@ -4,16 +4,15 @@
 
 
 def run(items: list) -> dict:
-    unpack_items = {}
-    flattened = []
-    for item in items:
-        if type(item) == list:
-            flattened.extend(item)
-        else:
-            flattened.append(item)
-    unpack_items = {flattened[0]:list(flattened)}
     
-    print(flattened)
+    unpack_items = {key: values for key,*values in items}
+    
+    """unpack_items = {item[0]: item[1:] for item in items}"""
+    """unpack_items = {}
+    for item in items:
+          key = item[0]
+          values = item[1:]
+          unpack_items[key] = values"""
     return unpack_items
 
 
