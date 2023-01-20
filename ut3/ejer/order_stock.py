@@ -4,8 +4,9 @@
 
 
 def run(stock: dict, merch: str, amount: int) -> bool:
-    # TU CÓDIGO AQUÍ
-    available = 'output'
+
+    available = False
+    
     return available
 
 
