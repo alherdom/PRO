@@ -4,9 +4,11 @@
 
 
 def run(stock: dict, merch: str, amount: int) -> bool:
-
     available = False
-    
+    for item, number in stock.items():
+        if merch == item and amount <= number:
+            available = True
+            break   
     return available
 
 
