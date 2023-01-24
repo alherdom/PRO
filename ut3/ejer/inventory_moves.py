@@ -5,18 +5,19 @@
 
 def run(imoves: str) -> dict:
     inventory = {}
+    imoves = imoves.split(",")
     oper = 0
-    numbers = []
-
-    for char in imoves:
-        if char.isalpha():
-            inventory[char] = []
-        if char.isdigit():
-            oper += int(char)
-            numbers.append(char)    
-    print(numbers)
-    print(oper)         
-         
+    for imove in imoves:
+        letter = imove[0]
+        number = imove[1:]
+        inventory[letter] = number
+        if imove.startswith(letter):
+            oper += int(number)
+            inventory[letter] = oper
+        oper = 0
+   
+       
+      
     return inventory
 
 
