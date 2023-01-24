@@ -5,17 +5,12 @@
 
 def run(imoves: str) -> dict:
     inventory = {}
-    imoves = imoves.split(",")
-    oper = 0
-    for imove in imoves:
-        letter = imove[0]
-        number = int(imove[1:])
-        inventory[letter] = number
-        if imove in inventory[letter]:
-            oper += int(number)
-            inventory[letter] = oper
-        oper = 0
-   
+    for imove in imoves.split(","):
+        article = imove[0]
+        amount = int(imove[1:])
+        inventory[article] = inventory.get(article,0) + amount
+        
+    
        
       
     return inventory

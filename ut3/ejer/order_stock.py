@@ -4,11 +4,20 @@
 
 
 def run(stock: dict, merch: str, amount: int) -> bool:
-    available = False
-    for item, number in stock.items():
+    
+    merch_stock = stock.get(merch,0)
+    available = merch_stock >= amount
+    
+    """
+    if stock[merch] >= amount:
+        available = True
+    """
+    
+    """for item, number in stock.items():
         if merch == item and amount <= number:
             available = True
-            break   
+            break
+    """   
     return available
 
 
