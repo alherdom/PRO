@@ -4,8 +4,9 @@
 
 
 def run(d1: dict, d2: dict) -> dict:
-    merged = {}
-    merge = {**d1,**d2}
+    merged = d1
+    for letter, number in d2.items():
+        merged[letter] = number
     return merged
 
 

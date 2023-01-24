@@ -9,9 +9,9 @@ def run(imoves: str) -> dict:
     oper = 0
     for imove in imoves:
         letter = imove[0]
-        number = imove[1:]
+        number = int(imove[1:])
         inventory[letter] = number
-        if imove.startswith(letter):
+        if imove in inventory[letter]:
             oper += int(number)
             inventory[letter] = oper
         oper = 0
