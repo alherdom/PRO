@@ -4,11 +4,13 @@
 
 
 def run(input: tuple) -> set:
+    """set1 = set([value[0] for value in input])
+       set2 = set([value[1] for value in input])""" 
     values1 = set()
     values2 = set()
-    for items in input:
-        values1.add(items[0])
-        values2.add(items[1])
+    for first, second in input:
+        values1.add(first)
+        values2.add(second)
     output = (values1,values2)
     return output
 
