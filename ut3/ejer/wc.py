@@ -15,4 +15,4 @@ def run(input_path: Path) -> tuple:
     return num_lines, num_words, num_bytes
 
 if __name__ == '__main__':
-    run('data\wc\lorem.txt')
+    run('data/wc/lorem.txt')
