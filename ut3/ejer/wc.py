@@ -9,9 +9,11 @@ def run(input_path: Path) -> tuple:
     
     #---------LECTURA FICHERO. CALCULO DE LINEAS----------#
     with open(input_path) as f:
-        num_lines = sum(1 for line in f)
-        print(num_lines)
-    
+        for line in f:
+            num_lines += 1
+            for items in line:
+                num_bytes +=1
+
     return num_lines, num_words, num_bytes
 
 if __name__ == '__main__':
