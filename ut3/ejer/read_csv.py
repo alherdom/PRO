@@ -5,22 +5,21 @@ from pathlib import Path
 
 
 def run(datafile: Path) -> list:
-    NUMBERS = "1234567890"
+    keys = {}
+    values = []
     data = []
-    pokedex = {}
-    values = {}
     with open(datafile) as f:
         for lines in f:
-            pokedex = [lines.strip().split()]
+            keys = lines.strip().split(",")
+            data = [keys]
             break
         for lines in f:
-            values += lines.strip().split()
-            for value in values:
-                if value in ('0123456789'):
-                    values.append(int(value))
-                elif value in('TrueFalse'):
-                    values.append(bool(value))
-    data = {**pokedex, **values}
+            values += lines.strip().split(",")
+            
+        print(keys)
+        print(values)
+  
+        
                     
         
      
