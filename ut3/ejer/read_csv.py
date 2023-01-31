@@ -15,6 +15,10 @@ def run(datafile: Path) -> list:
             break
         for lines in f:
             values += lines.strip().split(",")
+            for value in values:
+                if value == 'False':
+                    value = False
+                    print(value)
             
         print(keys)
         print(values)
