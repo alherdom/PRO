@@ -15,14 +15,14 @@ def run(datafile: Path) -> list:
             break
         for lines in f:
             values += lines.strip().split(",")
-            for value in values:
-                if value == 'False':
-                    value = False
-                    print(value)
-            
-        print(keys)
+        for value in values:
+            if value == 'False':
+                values[-1] = False
+                print(values[-1])
+            elif value.isdigit():
+                value = int(value)
+                print(value)
         print(values)
-  
         
                     
         
