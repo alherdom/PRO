@@ -5,32 +5,30 @@ from pathlib import Path
 
 
 def run(datafile: Path) -> list:
-    NUMBERS = ("1234567890")
-    data = []
-    key_line = []
-    value_lines = []
-    pokedex = {}
-    i = 0
-    with open(datafile) as f:
-        key_line = f.readline().strip().split(",")
+    with open (datafile) as f:
+        NUMBERS="1234567890"
+        data=[]
+        pokedex = {}
+        first_line = f.readline()
+        i = 0
         for lines in f:
+            key_line = first_line.strip().split(",")
             value_lines = lines.strip().split(",")
             for value in value_lines:
-                pokedex[key_line[i]] = value_lines[i]
-                i += 1
-                if i == 12:
-                    i = 0
-                if value in NUMBERS:
-                    pokedex[key_line[i]] =int(value)
-                if value == "False":
-                    pokedex[key_line[-1]] = False
-                if value == "True":
-                    pokedex[key_line[-1]] = True
-      
-        data.append(pokedex)
-
-      
-        
+                if value[0] in NUMBERS:
+                     pokedex[key_line[i]] = int(value)
+                     i += 1
+                elif value=="False":
+                    pokedex[key_line[i]] = False
+                    i += 1
+                elif value=="True":
+                    pokedex[key_line[i]] = True
+                    i += 1
+                else:
+                    pokedex[key_line[i]] = value
+                    i += 1
+            i=0
+            data.append(pokedex)
                     
         
      
