@@ -9,17 +9,25 @@ def run(data_path: Path, target_word: str) -> list:
     values = ()
     num_row = 0
     num_column = 0
+    trash = ".,;:()!¿'"
     with open(data_path, 'r') as f:
         for line in f:
-            num_row += 1
-            list_words = line.strip().split()
-            if target_word in line.strip():
-                num_column = line.index(target_word) + 1
-                print(num_row)
-                print(num_column)
-                break
-        matches = [(num_row,num_column)]
-            
+            line = line.lower()
+            num_row += 1         
+            list_words = line.lower().strip().split()
+            target_word = target_word.lower()  
+            its_here = False
+        #USO EL "if" Y UN BOOLEANO PARA SABER SI LA PALABRA ESTÁ ÚNICAMENTE EN LA LISTA
+            for word in list_words:
+                word = word.strip(trash)
+                if word == target_word:
+                    its_here = True
+        #USO "in" PARA SABER SI LA PALABRA ESTA EN LA LINEA        
+            if target_word in line.strip() and its_here:
+                    num_column = line.index(target_word) + 1
+                    values = (num_row,num_column)
+                    matches.append(values)
+       
     return matches
     
 
