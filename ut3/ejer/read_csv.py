@@ -9,26 +9,19 @@ def run(datafile: Path) -> list:
         NUMBERS="1234567890"
         data=[]
         pokedex = {}
-        first_line = f.readline()
         i = 0
         for lines in f:
-            key_line = first_line.strip().split(",")
+            key_line = line.strip().split(",")
             value_lines = lines.strip().split(",")
+            print(key_line)
+            print(value_lines)
             for value in value_lines:
-                if value[0] in NUMBERS:
-                     pokedex[key_line[i]] = int(value)
-                     i += 1
-                elif value=="False":
-                    pokedex[key_line[i]] = False
-                    i += 1
-                elif value=="True":
-                    pokedex[key_line[i]] = True
-                    i += 1
-                else:
-                    pokedex[key_line[i]] = value
-                    i += 1
-            i=0
-            data.append(pokedex)
+                pokedex[key_line[i]] = value
+                i += 1
+                if i == 12:
+                    i = 0
+                    continue
+        data.append(pokedex)
                     
         
      
