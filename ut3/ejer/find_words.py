@@ -7,8 +7,7 @@ from pathlib import Path
 def run(data_path: Path, target_word: str) -> list:
     matches = []
     values = ()
-    num_row = 0
-    num_column = 0
+    num_row = num_column = 0
     trash = ".,;:()!¿'"
     with open(data_path, 'r') as f:
         for line in f:
