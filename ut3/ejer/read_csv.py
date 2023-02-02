@@ -21,7 +21,7 @@ def run(datafile: Path) -> list:
                     value = True
                 pokedex[key] = value
             data.append(pokedex)
-                    
+                
         
      
     return data
