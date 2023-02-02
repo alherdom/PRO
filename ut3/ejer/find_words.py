@@ -6,7 +6,6 @@ from pathlib import Path
 
 def run(data_path: Path, target_word: str) -> list: 
     with open(data_path, encoding="UTF-8") as f:
-        
         TRASH = "(,)'-¡!"
         target_word = target_word.lower()
         matches = []
