@@ -7,7 +7,7 @@ from pathlib import Path
 
 def run(matrix1_path: Path, matrix2_path: Path) -> bool:
     # LECTURA DE FICHEROS. METO LAS MATRICES EN DOS LISTAS:
-    with open(matrix1_path, encoding="UTF-8") as f1, open(matrix2_path, encoding="UTF-8") as f2:
+    with open(matrix1_path) as f1, open(matrix2_path) as f2:
         matrix1 = f1.read().split()
         matrix2 = f2.read().split()
         results = []
@@ -20,15 +20,12 @@ def run(matrix1_path: Path, matrix2_path: Path) -> bool:
         count = 0         
         for result in results:
             if count != 4:
-                fresult.write(f'{str(result)} ')
+                fresult.write(f'{result} ')
                 count += 1
             elif count >= 4:
-                fresult.write(f'{str(result)}\n')
+                fresult.write(f'{result}\n')
                 count = 0
-    
-    
-    
-    return filecmp.cmp(result_path, 'data\sum_matrix\.expected', shallow=False)
+    return filecmp.cmp(result_path, 'data/sum_matrix/.expected', shallow=False)
 
 
 if __name__ == '__main__':
