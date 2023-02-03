@@ -6,14 +6,14 @@ from pathlib import Path
 
 
 def run(matrix1_path: Path, matrix2_path: Path) -> bool:
-    with open(matrix1_path) as f1, open(matrix2_path) as f2:
+    with open(matrix1_path, encoding="utf8") as f1, open(matrix2_path, encoding="utf8") as f2:
         matrix1 = f1.read().split()
         matrix2 = f2.read().split()
         results = []
         for values1, values2 in zip(matrix1, matrix2):
-            results.append(int(values1)+int(values2))
+            results.append(str(int(values1)+int(values2)))
     result_path = 'data/sum_matrix/result.dat'
-    with open(result_path, 'w') as fresult:
+    with open(result_path, 'w', encoding="utf8") as fresult:
         count = 0
         for result in results:
             if count != 4:
@@ -22,7 +22,7 @@ def run(matrix1_path: Path, matrix2_path: Path) -> bool:
             elif count >= 4:
                 fresult.write(f'{result}\n')
                 count = 0
-    return filecmp.cmp(result_path, 'data\sum_matrix\.expected', shallow=False)
+    return filecmp.cmp(result_path, 'data/sum_matrix/.expected', shallow=False)
 
 
 if __name__ == '__main__':
