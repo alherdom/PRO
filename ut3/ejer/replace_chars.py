@@ -5,7 +5,7 @@ import filecmp
 from pathlib import Path
 
 
-def run(input_path: Path, replacements: str) -> bool:
+def run(input_path: Path, replacements: str) -> bool: 
     with open(input_path, encoding="utf8") as finput:
         news = finput.read()
         if "á" in news:
@@ -18,12 +18,10 @@ def run(input_path: Path, replacements: str) -> bool:
             news = news.replace("ó", "o")
         if "ú" in news:
             news = news.replace("ú", "u")
+    print(news)
     output_path = 'data/replace_chars/r_noticia.txt'
     with open(output_path, 'w',encoding="utf8") as foutput:
         foutput.write(news)
-    
-    
-        
     return filecmp.cmp(output_path, 'data/replace_chars/.expected', shallow=False)
 
 
