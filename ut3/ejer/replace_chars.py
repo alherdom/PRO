@@ -7,19 +7,23 @@ from pathlib import Path
 
 def run(input_path: Path, replacements: str) -> bool:
     with open(input_path, encoding="utf8") as finput:
-        news = finput.read().split()
-        for words in news:
-            for char in words:
-                if char in "áéíóú":
-                    
-                print(char)
-
-    
-    
-    
+        news = finput.read()
+        if "á" in news:
+            news = news.replace("á", "a")
+        if "é" in news:
+            news = news.replace("é", "e")
+        if "í" in news:
+            news = news.replace("í", "i")
+        if "ó" in news:
+            news = news.replace("ó", "o")
+        if "ú" in news:
+            news = news.replace("ú", "u")
     output_path = 'data/replace_chars/r_noticia.txt'
-    with open(output_path, 'w', encoding="utf8") as foutput:
-        foutput.write("Hola")
+    with open(output_path, 'w',encoding="utf8") as foutput:
+        foutput.write(news)
+    
+    
+        
     return filecmp.cmp(output_path, 'data/replace_chars/.expected', shallow=False)
 
 
