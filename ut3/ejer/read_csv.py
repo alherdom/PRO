@@ -7,12 +7,11 @@ from pathlib import Path
 def run(datafile: Path) -> list:
     with open (datafile) as f:
         data=[]
-        firstline = f.readline()
+        firstline = f.readline().strip().split(",")
         for lines in f:
             pokedex = {}
-            key_line = firstline.strip().split(",")
             value_lines = lines.strip().split(",")
-            for key, value in zip(key_line, value_lines):
+            for key, value in zip(firstline, value_lines):
                 if value.isdigit():
                     value = int(value)
                 elif value == "False":

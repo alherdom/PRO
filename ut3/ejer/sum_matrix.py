@@ -11,7 +11,7 @@ def run(matrix1_path: Path, matrix2_path: Path) -> bool:
         matrix2 = f2.read().split()
         results = []
         for values1, values2 in zip(matrix1, matrix2):
-            results.append(str(int(values1)+int(values2)))
+            results.append(int(values1)+int(values2))
     result_path = 'data/sum_matrix/result.dat'
     with open(result_path, 'w', encoding="utf8") as fresult:
         count = 0
