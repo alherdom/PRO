@@ -7,14 +7,15 @@ from pathlib import Path
 def run(input_path: Path) -> str:
     with open(input_path, encoding="UTF-8") as f1:
         TRASH = ",.;:()"
-        length0 = 0
+        length = 0
         words = f1.read().split()
         for word in words:
-            length1 = len(word.strip(TRASH))
-            if length1 >= length0:
+            if len(word.strip(TRASH)) >= length:
                 longest_word = word.strip(TRASH)
-                length0 = length1
+                length = len(word.strip(TRASH))
             
+                
+
  
 
     return longest_word
