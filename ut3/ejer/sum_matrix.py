@@ -16,12 +16,12 @@ def run(matrix1_path: Path, matrix2_path: Path) -> bool:
     with open(result_path, 'w', encoding="utf8") as fresult:
         count = 0
         for result in results:
-            if count != 4:
-                fresult.write(f'{result} ')
-                count += 1
-            elif count >= 4:
+            count += 1
+            if count == 5:
                 fresult.write(f'{result}\n')
                 count = 0
+            else:
+                fresult.write(f'{result} ')
     return filecmp.cmp(result_path, 'data/sum_matrix/.expected', shallow=False)
 
 
