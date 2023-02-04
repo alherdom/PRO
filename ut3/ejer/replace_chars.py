@@ -6,18 +6,11 @@ from pathlib import Path
 
 
 def run(input_path: Path, replacements: str) -> bool: 
-    with open(input_path, encoding="utf8") as finput:
-        i = 0
-        old_chars = []
-        new_chars = []
+    replacements = replacements.split('|')
+    with open(input_path, encoding="utf8") as finput:    
         news = finput.read()
-        replace_chars = replacements.replace("|","").split
-        old_chars.append(replace_chars[::2])
-        new_chars.append(replace_chars[1::2])
-        print(new_chars)
+        
         for old_char, new_char in zip(old_chars,new_chars):
-            print(old_char)
-            print(new_char)
             news = news.replace(old_char,new_char)
    
         
