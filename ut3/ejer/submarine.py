@@ -2,23 +2,22 @@
 # YELLOW SUBMARINE
 # ****************
 from pathlib import Path
-MIN_DEPTH = 0
-MAX_DEPTH = 600
-CONSUMPTION_RATE = 3
 def run(route_path: Path) -> tuple:
-    distance = depth = 0
+    MIN_DEPTH = distance = depth = 0
+    MAX_DEPTH = 600
+    LPM = 3
     with open(route_path) as f:
         fuel = int(f.readline())
-        moves = [[int(h) for h in v.split(':')] for v in f.readline().strip().split(',')]
-        for x, y in moves:
-            distance += x
-            depth += y
-            fuel -= abs(x) * CONSUMPTION_RATE
+        moves = f.readline().replace(':',',').strip().split(',')
+        for x, y in zip(moves[::2], moves[1::2]):
+            distance += int(x)
+            depth += int(y)
+            fuel -= abs(int(x)) * LPM
             if not fuel or depth > MAX_DEPTH or depth < MIN_DEPTH:
                 break
       
           
-      
+    #TRUCO: moves = [[int(h) for h in v.split(':')] for v in f.readline().strip().split(',')]
 
     return distance, depth, fuel
 
