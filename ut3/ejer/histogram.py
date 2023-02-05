@@ -6,18 +6,17 @@ from pathlib import Path
 
 
 def run(data_path: Path) -> bool:
-    block = "█"
-    LETTERS = "ABCDEFGH"
-    numbers = []
-    with open(data_path) as f1:
-        data = f1.read()
-        for letter in LETTERS:
-            numbers.append(data.count(letter))
-
+    frequencies = []
+    with open(data_path) as f:
+        letters = sorted(list(set(f.read())))
+        data = open(data_path).read()
+        for letter in letters:
+            frequencies.append(data.count(letter))
     histogram_path = 'data/histogram/histogram.txt'
-    with open(histogram_path, "w") as fhistogram:
-        for key, value in zip(LETTERS, numbers):
-            fhistogram.write(f'{key} {value*block} {value}\n')
+    with open(histogram_path, "w") as f:
+        for letter, frequencie in zip(letters,frequencies):
+            f.write(f'{letter} {frequencie*"█"} {frequencie}\n')
+
     return filecmp.cmp(histogram_path, 'data/histogram/.expected', shallow=False)
 
 
