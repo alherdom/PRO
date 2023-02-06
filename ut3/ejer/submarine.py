@@ -8,8 +8,9 @@ def run(route_path: Path) -> tuple:
     LPM = 3
     with open(route_path) as f:
         fuel = int(f.readline())
-        moves = f.readline().replace(':',',').strip().split(',')
-        for x, y in zip(moves[::2], moves[1::2]):
+        moves = f.readline().strip().split(',')
+        for move in moves:
+            x, y = move.split(':')
             distance += int(x)
             depth += int(y)
             fuel -= abs(int(x)) * LPM
