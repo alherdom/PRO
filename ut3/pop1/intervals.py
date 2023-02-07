@@ -5,7 +5,8 @@
 
 def run(interval: str) -> list:
     irange = []
-    
+    min = 3
+    max = 10
     if interval.startswith('[') and interval.endswith("]"):
         min = 3
         max = 11
