@@ -6,23 +6,17 @@ from pathlib import Path
 
 
 def run(input_path: Path) -> bool:
-    
-    
-    with open(input_path) as f1:
-        freq = {}
-        words = f1.read().lower().split()
-        for word in words:
-            if words.count(word) >= lower_bound:
-                freq[word] = words.count(word)
-                
-                
-                
-        output_path = 'data/common_words/output.txt'    
-        with open(output_path, 'w') as f:
+
+    with open(input_path) as f:
+        lines = f.readlines()
+        sentences = [line.lower().strip().split() for line in f]
+
+        output_path = "data/common_words/output.txt"
+        with open(output_path, "w") as f:
             f.write("Hola")
-                  
-    return filecmp.cmp(output_path, 'data/common_words/.expected', shallow=False)
+
+    return filecmp.cmp(output_path, "data/common_words/.expected", shallow=False)
 
 
-if __name__ == '__main__':
-    run('data/common_words/minizen.txt')
+if __name__ == "__main__":
+    run("data/common_words/minizen.txt")
