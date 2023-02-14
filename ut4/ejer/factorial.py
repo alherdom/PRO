@@ -4,13 +4,10 @@
 
 
 def factorial(n):
-    fact = n
-    if n == 0:
-        fact = 1
-    elif n < 0:
+    if n < 0:
         fact = None
     else:
-        for i in range(1,n):
-            fact *= (n - i)    
+        fact = 1
+        for i in range(n,0,-1):
+            fact *= i    
     return fact
-
