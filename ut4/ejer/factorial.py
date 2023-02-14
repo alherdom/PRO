@@ -3,10 +3,11 @@
 # ************************************
 
 
-def factorial(n):
-    for i in range(1,n+1):
-        fact = n 
-        fact *= n * n - i
+
+def factorial(n):  
+    fact = n
+    for i in range(1,n):
+        fact *= (n - i)
         return fact
     
     
