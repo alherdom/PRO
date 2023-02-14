@@ -9,7 +9,6 @@
 def gen_squared(n=100):
     for i in range(n):
         yield i ** 2
-        
 for i in gen_squared():
     print(i)
     
