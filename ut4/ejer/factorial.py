@@ -3,12 +3,14 @@
 # ************************************
 
 
-
-def factorial(n):  
+def factorial(n):
     fact = n
-    for i in range(1,n):
-        fact *= (n - i)
-        return fact
-    
-    
+    if n == 0:
+        fact = 1
+    elif n < 0:
+        fact = None
+    else:
+        for i in range(1,n):
+            fact *= (n - i)    
+    return fact
 
