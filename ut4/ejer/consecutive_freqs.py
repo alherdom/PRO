@@ -5,7 +5,7 @@
 
 def cfreq(items,as_string=False):
     freqs = []
-    elements = []
+    elements = []_
     quantitys = []
     i = 0
     count = 0
