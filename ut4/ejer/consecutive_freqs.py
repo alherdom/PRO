@@ -14,7 +14,7 @@ def cfreq(items,as_string=False):
             elements.append(item)
         if items[i] == item:
             count += 1
-        if items.index(item) == len(items):
+        if items.index(item) == len(items)
             quantitys.append(count)
             i += 1
             count = 0
