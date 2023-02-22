@@ -1,9 +1,6 @@
-vending_path = 'vending.dat'
-operations_path = 'operations.dat'
-status_path = 'status.dat'
-
-
-
+vending_path = 'ut4/te1/data/vending.dat'
+operations_path = 'ut4/te1/data/operations.dat'
+status_path = 'ut4/te1/data/status.dat'
 
 def order(choice,money):
     ARTICLES = {1:'Coca-Cola',2:'Clipper',3:'Tirma',4:'Fanta',5:'Eidetesa'}
