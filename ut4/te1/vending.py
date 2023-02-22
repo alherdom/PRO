@@ -1,3 +1,10 @@
+vending_path = 'vending.dat'
+operations_path = 'operations.dat'
+status_path = 'status.dat'
+
+
+
+
 def order(choice,money):
     ARTICLES = {1:'Coca-Cola',2:'Clipper',3:'Tirma',4:'Fanta',5:'Eidetesa'}
     PRICES = {1:1.5,2:1.8,3:1.1,4:1.5,5:2.8}
