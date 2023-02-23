@@ -1,6 +1,6 @@
-def find_items(items,value):
+def find_items(items: tuple, target: int):
     '''
-    Cuenta el numero de veces que aparece "valor" dentro de
+    Cuenta el numero de veces que aparece "target" dentro de
     "items".
 
     :param items: tupla con todos los valor
@@ -11,7 +11,7 @@ def find_items(items,value):
     :return: numero de repeticiones
     :rtype: int
     '''
-    count = len([i for i in items if i == value])
+    count = len([i for i in items if i == target])
     return count
 
 input = (1,2,2,2,1,3,2,4)
