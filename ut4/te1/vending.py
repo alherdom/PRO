@@ -1,5 +1,5 @@
-VENDING_PATH = 'data/vending.dat'
-OPERATION_PATH = 'data/operations.dat'
+VENDING_PATH = 'ut4/te1/data/vending.dat'
+OPERATION_PATH = 'ut4/te1/data/operations.dat'
 
 with open(VENDING_PATH, encoding="utf8") as f1, open(OPERATION_PATH, encoding="utf8") as f2:
     coins = f1.readline().split()
@@ -15,8 +15,6 @@ with open(VENDING_PATH, encoding="utf8") as f1, open(OPERATION_PATH, encoding="u
         line = line.strip().split()
         operations_list.append(line)
 
-def order():
-    
 
 for operation in operations_list:
     match operation[0]:
@@ -66,7 +64,7 @@ for operation in operations_list:
     # def order(product,amount,first_coin,second_coin,third_coin):
         
         
-status_path = 'data/status.dat'     
+status_path = 'ut4/te1/data/status.dat'     
 with open(status_path, 'w', encoding="utf8") as f3:
     f3.write(f'Hola')
 
