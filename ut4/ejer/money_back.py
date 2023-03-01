@@ -12,6 +12,8 @@ def run(to_give_back: float, available_currencies: list) -> dict:
             quot, rem = divmod(to_give_back,currency)             
             money_back[currency] = quot
             to_give_back-= quot*currency
+    if to_give_back != 0:
+        money_back = None
             
          
 
