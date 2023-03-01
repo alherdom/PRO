@@ -5,8 +5,7 @@
 
 def run(to_give_back: float, available_currencies: list) -> dict:
     money_back = {}
-    available_currencies.sort(reverse=True)  
-    for currency in available_currencies:
+    for currency in sorted(available_currencies, reverse=True):
         if currency <= to_give_back:
             money_back[currency] = (to_give_back // currency)
             to_give_back %= currency

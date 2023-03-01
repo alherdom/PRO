@@ -5,11 +5,8 @@
 
 def run(to_give_back: float, available_currencies: dict) -> dict:
     money_back = {}
-    available_currencies = dict(
-        sorted(available_currencies.items(), key=lambda item: item[0], reverse=True)
-    )
     if to_give_back > 0:
-        for currency, amount in available_currencies.items():
+        for currency, amount in sorted(available_currencies.items(), reverse=True):
             quot, rem = divmod(to_give_back, currency)
             if quot < amount:
                 to_give_back -= quot * currency
