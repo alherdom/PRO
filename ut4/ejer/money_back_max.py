@@ -4,6 +4,7 @@
 
 
 def run(to_give_back: float, available_currencies: dict) -> dict:
+    quot = 0
     money_back = {}
     available_currencies = dict(sorted(available_currencies.items(), key=lambda item:item[0],reverse=True)) 
     for currency, amount in available_currencies.items():
