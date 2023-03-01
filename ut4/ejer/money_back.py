@@ -8,10 +8,10 @@ def run(to_give_back: float, available_currencies: list) -> dict:
     available_currencies.sort(reverse=True)
     for currency in available_currencies:
         while currency <= to_give_back:
-            quot, rem = divmod(to_give_back, currency)
+            quot = to_give_back // currency
             to_give_back -= quot * currency
             money_back[currency] = quot
-    if to_give_back != 0:
+    if to_give_back:
         money_back = None
     return money_back
 

@@ -14,7 +14,7 @@ def run(to_give_back: float, available_currencies: dict) -> dict:
             to_give_back -= quot * currency
             money_back[currency] = quot
             
-    if to_give_back != 0:
+    if to_give_back:
         money_back = None
     return money_back
 
