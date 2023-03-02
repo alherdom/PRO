@@ -8,6 +8,7 @@ def run(to_give_back: float, available_currencies: dict) -> dict:
     if to_give_back > 0:
         for currency, amount in sorted(available_currencies.items(), reverse=True):
             quot, rem = divmod(to_give_back, currency)
+            # USAR min()
             if quot < amount:
                 to_give_back -= quot * currency
                 money_back[currency] = quot
