@@ -6,14 +6,25 @@ from pathlib import Path
 OPERATION_PATH = 'data/vending/operations.dat'
 STATUS_PATH = 'data/vending/status.dat'
 
+
+
+
+
+
 def run(operations_path: Path) -> bool:
     operations = []
     with open(OPERATION_PATH, encoding="utf8") as f1:
         for line in f1:
             line = line.strip().split()
             operations.append(line)
-        for operation in operations:
-            match operation[0]:
+            print(operations)
+        # for operation in operations:
+        #     match operation[0]:
+        #         case 'O':
+                    
+                
+                         
+                    
                 
     
     
