@@ -17,7 +17,7 @@ for operation in operations_list:
             money += int(operation[1])
         case "O":
             insert_money = operation[3]
-            print(status.get(operation[1], 'E1 PRODUCT NOT FOUND'))
+            print(status.get(operation[1], '❌ E1 PRODUCT NOT FOUND'))
 
 STATUS_PATH = 'ut4/te1/data/vending/status.dat'     
 with open(STATUS_PATH, 'w') as f:
