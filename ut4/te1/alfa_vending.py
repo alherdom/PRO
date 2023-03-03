@@ -1,5 +1,5 @@
 OPERATION_PATH = 'ut4//te1/data/vending/operations.dat'
-with open(OPERATION_PATH, encoding="utf8") as f:
+with open(OPERATION_PATH) as f:
     operations_list = []
     for line in f:
         operations_list.append(line.strip().split())
@@ -20,7 +20,7 @@ for operation in operations_list:
             print(status.get(operation[1], 'E1 PRODUCT NOT FOUND'))
 
 STATUS_PATH = 'ut4/te1/data/vending/status.dat'     
-with open(STATUS_PATH, 'w', encoding="utf8") as f:
+with open(STATUS_PATH, 'w') as f:
     f.write(f'{money}\n')
     for product, state in sorted(status.items()):
         specs = ' '.join(str(i) for i in state) + "\n"
