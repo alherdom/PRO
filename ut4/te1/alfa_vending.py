@@ -3,9 +3,9 @@ with open(OPERATION_PATH) as f:
     operations_list = []
     for line in f:
         operations_list.append(line.strip().split())
-         
+        
+money = 0        
 status = {}
-money = 0
 for operation in operations_list:
     match operation[0]:
         case "R":
@@ -18,7 +18,7 @@ for operation in operations_list:
         case "O":
             insert_money = operation[3]
             print(status.get(operation[1], '❌ E1 PRODUCT NOT FOUND'))
-
+            
 STATUS_PATH = 'ut4/te1/data/vending/status.dat'     
 with open(STATUS_PATH, 'w') as f:
     f.write(f'{money}\n')
