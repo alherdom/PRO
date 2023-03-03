@@ -2,8 +2,7 @@ OPERATION_PATH = 'ut4//te1/data/vending/operations.dat'
 with open(OPERATION_PATH, encoding="utf8") as f:
     operations_list = []
     for line in f:
-        line = line.strip().split()
-        operations_list.append(line)
+        operations_list.append(line.strip().split())
          
 status = {}
 money = 0
@@ -13,14 +12,13 @@ for operation in operations_list:
             status[operation[1]] = [operation[2]] 
         case "P":
             for product, stock in status.items():
-                if operation[1] == product:
-                    values = [stock[0],operation[2]]
-                    status[product] = values
+                status[product] = [stock[0],operation[2]]
         case "M":
             money += int(operation[1])
         case "O":
-            print(operation)
-        
+            insert_money = operation[3]
+            print(status.get(operation[1], 'E1 PRODUCT NOT FOUND'))
+
 STATUS_PATH = 'ut4/te1/data/vending/status.dat'     
 with open(STATUS_PATH, 'w', encoding="utf8") as f:
     f.write(f'{money}\n')
