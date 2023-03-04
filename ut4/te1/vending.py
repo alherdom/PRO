@@ -4,20 +4,23 @@
 import filecmp
 from pathlib import Path
 
-
 def run(operations_path: Path) -> bool:
     OPERATION_PATH = 'data/vending/operations.dat'
     with open(OPERATION_PATH) as f:
         operations_list = [line.strip().split() for line in f]
-
+ 
     money = 0
     elements = []
     prices = {}
     status = {}
+    
     for operation in operations_list:
         match operation[0]:
             case "R":        
-                status[operation[1]] = int(operation[2])
+                if operation[1] in status:
+                    status[operation[1]] += int(operation[2])
+                else:
+                    status[operation[1]] = int(operation[2])
             case "P":
                 price = int(operation[2])
                 if operation[1] in status:
@@ -53,7 +56,6 @@ def run(operations_path: Path) -> bool:
             f.write(f"{product} {specs}")
 
     return filecmp.cmp(STATUS_PATH, 'data/vending/.expected', shallow=False)
-
 
 if __name__ == '__main__':
     run('data/vending/operations.dat')
