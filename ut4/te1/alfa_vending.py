@@ -1,4 +1,4 @@
-OPERATION_PATH = "ut4//te1/data/vending/operations.dat"
+OPERATION_PATH = "ut4/te1/data/vending/operations.dat"
 with open(OPERATION_PATH) as f:
     operations_list = [line.strip().split() for line in f]
 
@@ -18,13 +18,10 @@ for operation in operations_list:
                 print("E1 PRODUCT NOT FOUND")
         case "O":
             if operation[1] in status:
-                paid = int(operation[3])
-                order = int(operation[2])
-                if status[operation[1]] >= order:
-                    bill = order * prices[operation[1]]
-                    if paid >= bill:
-                        status[operation[1]] -= order
-                        money += bill
+                if status[operation[1]] >= int(operation[2]):
+                    if int(operation[3]) >= (int(operation[2]) * prices[operation[1]]):
+                        status[operation[1]] -= int(operation[2])
+                        money += (int(operation[2]) * prices[operation[1]])
                     else:
                         print("E3 NOT ENOUGH USER MONEY")
                 else:

@@ -3,34 +3,55 @@
 # ******************
 import filecmp
 from pathlib import Path
-OPERATION_PATH = 'data/vending/operations.dat'
-STATUS_PATH = 'data/vending/status.dat'
-
-
-
-
 
 
 def run(operations_path: Path) -> bool:
-    operations = []
-    with open(OPERATION_PATH, encoding="utf8") as f1:
-        for line in f1:
-            line = line.strip().split()
-            operations.append(line)
-            print(operations)
-        # for operation in operations:
-        #     match operation[0]:
-        #         case 'O':
-                    
-                
-                         
-                    
-                
-    
-    
-    # ESCRITURA SALIDA "STATUS"
-    with open(STATUS_PATH, 'w', encoding="utf8") as f3:
-        f3.write(f'Hola')
+    OPERATION_PATH = 'data/vending/operations.dat'
+    STATUS_PATH = 'data/vending/status.dat'
+    with open(OPERATION_PATH) as f:
+        operations_list = [line.strip().split() for line in f]
+
+    money = 0
+    elements = []
+    prices = {}
+    status = {}
+    for operation in operations_list:
+        match operation[0]:
+            case "R":        
+                status[operation[1]] = int(operation[2])
+            case "P":
+                price = int(operation[2])
+                if operation[1] in status:
+                    prices[operation[1]] = int(operation[2])
+                else:
+                    print("E1 PRODUCT NOT FOUND")
+            case "O":
+                if operation[1] in status:
+                    if status[operation[1]] >= int(operation[2]):
+                        if int(operation[3]) >= (int(operation[2]) * prices[operation[1]]):
+                            status[operation[1]] -= int(operation[2])
+                            money += (int(operation[2]) * prices[operation[1]])
+                        else:
+                            print("E3 NOT ENOUGH USER MONEY")
+                    else:
+                        print("E2 UNAVAILABLE STOCK")
+                else:
+                    print("E1 PRODUCT NOT FOUND")
+            case "M":
+                money += int(operation[1])
+
+    for stock, price in zip(status.values(), prices.values()):
+        elements.append([stock, price])
+
+    for key, element in zip(status.keys(), elements):
+        status[key] = element
+
+    STATUS_PATH = "data/vending/status.dat"
+    with open(STATUS_PATH, "w") as f:
+        f.write(f"{money}\n")
+        for product, stock_price in sorted(status.items()):
+            specs = " ".join(str(i) for i in stock_price) + "\n"
+            f.write(f"{product} {specs}")
 
     return filecmp.cmp(STATUS_PATH, 'data/vending/.expected', shallow=False)
 
