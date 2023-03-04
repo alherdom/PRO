@@ -7,7 +7,6 @@ from pathlib import Path
 
 def run(operations_path: Path) -> bool:
     OPERATION_PATH = 'data/vending/operations.dat'
-    STATUS_PATH = 'data/vending/status.dat'
     with open(OPERATION_PATH) as f:
         operations_list = [line.strip().split() for line in f]
 

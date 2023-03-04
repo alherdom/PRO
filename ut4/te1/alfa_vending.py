@@ -1,4 +1,5 @@
 OPERATION_PATH = "ut4/te1/data/vending/operations.dat"
+
 with open(OPERATION_PATH) as f:
     operations_list = [line.strip().split() for line in f]
 
