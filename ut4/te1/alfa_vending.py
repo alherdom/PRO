@@ -39,7 +39,6 @@ for stock, price in zip(status.values(), prices.values()):
 for key, element in zip(status.keys(), elements):
     status[key] = element
 
-
 STATUS_PATH = "ut4/te1/data/vending/status.dat"
 with open(STATUS_PATH, "w") as f:
     f.write(f"{money}\n")
