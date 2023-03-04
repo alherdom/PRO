@@ -15,15 +15,21 @@ for operation in operations_list:
             if operation[1] in status:
                 prices[operation[1]] = int(operation[2])
             else:
-                print('E1 PRODUCT NOT FOUND')
+                print("E1 PRODUCT NOT FOUND")
         case "O":
             if operation[1] in status:
                 paid = int(operation[3])
                 order = int(operation[2])
-                product = operation[1]
-                price = prices[operation[1]]
-                print(price)
-                bill = order * price
+                if status[operation[1]] >= order:
+                    bill = order * prices[operation[1]]
+                    if paid >= bill:
+                        money += bill
+                    else:
+                        print("E3 NOT ENOUGH USER MONEY")
+                else:
+                    print("E2 UNAVAILABLE STOCK")
+            else:
+                print("E1 PRODUCT NOT FOUND")
         case "M":
             money += int(operation[1])
 
