@@ -23,6 +23,7 @@ for operation in operations_list:
                 if status[operation[1]] >= order:
                     bill = order * prices[operation[1]]
                     if paid >= bill:
+                        status[operation[1]] -= order
                         money += bill
                     else:
                         print("E3 NOT ENOUGH USER MONEY")
