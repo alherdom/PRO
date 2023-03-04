@@ -23,7 +23,6 @@ def run(operations_path: Path) -> bool:
                 else:
                     status[operation[1]] = int(operation[2])
             case "P":
-                price = int(operation[2])
                 if operation[1] in status:
                     prices[operation[1]] = int(operation[2])
                 else:
