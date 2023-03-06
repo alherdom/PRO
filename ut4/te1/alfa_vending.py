@@ -7,49 +7,47 @@ from pathlib import Path
 OPERATION_PATH = "data/vending/operations.dat"
 STATUS_PATH = "data/vending/status.dat"
 
+def read_operations(operation_path:str) -> list:
+    operations_list = [line.strip().split() for line in open(OPERATION_PATH)]
+    return operations_list
+
+def restock(operation: list, stocks: dict) -> dict:
+    product = operation[1]
+    stock = int(operation[2]) 
+    if operation[1] in stocks:
+        stocks[product] += stock
+    else:
+        stocks[product] = stock
+    return stocks
+    
+def change_price(operation: list, stocks:dict, prices: dict) -> dict:
+    product = operation[1]
+    price = int(operation[2])
+    if product in stocks:
+        prices[product] = price
+    return prices
+
+def order(operation: list, stocks: dict, prices: dict) -> dict:
+    total_bills = 0
+    product = operation[1]
+    qty_ordered = int(operation[2])
+    user_money = int(operation[3])
+    if product in stocks:
+        if stocks[product] >= qty_ordered:
+            if user_money >= (qty_ordered * prices[product]):
+                stocks[product] -= int(operation[2])
+                total_bills += int(operation[2]) * prices[operation[1]]
+    result = {'money':total_bills,'products':stocks}
+    return result
+
+def reload_money(operation: list, machine_money: int) -> int:
+    machine_money += int(operation[1])
+    return machine_money
 
 def run(operations_path: Path) -> bool:
-    money = 0
+    
     elements = []
-    prices = {}
-    status = {}
-    f = open(OPERATION_PATH)  # LECTURA FICHERO DE ENTRADA
-    operations_list = [line.strip().split() for line in f]
-
-    def restocking(operation: list) -> dict:  # FUNCIÓN DE REASBASTECIMIENTO DE PRODUCTO
-        if operation[1] in status:
-            status[operation[1]] += int(operation[2])
-        else:
-            status[operation[1]] = int(operation[2])
-        return status
-
-    def pricing(operation: list) -> dict:  # FUNCIÓN PARA FIJAR PRECIOS
-        if operation[1] in status:
-            prices[operation[1]] = int(operation[2])
-        else:
-            print("E1 PRODUCT NOT FOUND")
-        return prices
-
-    def ordering(
-        operation: list, money: int
-    ) -> dict:  # FUNCIÓN PARA PEDIDOS EN LA MÁQUINA
-        if operation[1] in status:
-            if status[operation[1]] >= int(operation[2]):
-                if int(operation[3]) >= (int(operation[2]) * prices[operation[1]]):
-                    status[operation[1]] -= int(operation[2])
-                    money += int(operation[2]) * prices[operation[1]]
-                else:
-                    print("E3 NOT ENOUGH USER MONEY")
-            else:
-                print("E2 UNAVAILABLE STOCK")
-        else:
-            print("E1 PRODUCT NOT FOUND")
-        return status
-
-    def reloading(operation: list, money: int) -> int:  # FUNCIÓN PARA RECARGA DE DINERO
-        money += int(operation[1])
-        return money
-
+    
     for operation in operations_list:
         match operation[0]:
             case "R":

@@ -5,16 +5,15 @@ import filecmp
 from pathlib import Path
 
 OPERATION_PATH = "data/vending/operations.dat"
-STATUS_PATH = "data/vending/status.dat"
-
+STATUS_PATH = "data/vending/status.dat"   
 
 def run(operations_path: Path) -> bool:
     money = 0
     elements = []
     prices = {}
     status = {}
-    f = open(OPERATION_PATH)  # LECTURA FICHERO DE ENTRADA
-    operations_list = [line.strip().split() for line in f]
+    # LECTURA FICHERO DE ENTRADA
+    operations_list = [line.strip().split() for line in open(OPERATION_PATH)]
 
     def restocking(operation: list) -> dict:  # FUNCIÓN DE REASBASTECIMIENTO DE PRODUCTO
         if operation[1] in status:
