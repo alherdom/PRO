@@ -30,7 +30,9 @@ def run(operations_path: Path) -> bool:
             print("E1 PRODUCT NOT FOUND")
         return prices
 
-    def ordering(operation: list, money: int) -> dict:  # FUNCIÓN PARA PEDIDOS EN LA MÁQUINA
+    def ordering(
+        operation: list, money: int
+    ) -> dict:  # FUNCIÓN PARA PEDIDOS EN LA MÁQUINA
         if operation[1] in status:
             if status[operation[1]] >= int(operation[2]):
                 if int(operation[3]) >= (int(operation[2]) * prices[operation[1]]):
