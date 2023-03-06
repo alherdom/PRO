@@ -37,47 +37,38 @@ def order(operation: list, stocks: dict, prices: dict) -> dict:
             if user_money >= (qty_ordered * prices[product]):
                 stocks[product] -= int(operation[2])
                 total_bills += int(operation[2]) * prices[operation[1]]
-    result = {'money':total_bills,'products':stocks}
+    result = {'money':total_bills,'products':stocks,'prices':prices}
     return result
 
-def reload_money(operation: list, machine_money: int) -> int:
+def reload_money(operation: list, machine_money: int, result: dict) -> dict:
     machine_money += int(operation[1])
-    return machine_money
+    result['money'] += machine_money
+    return result
 
-def run(operations_path: Path) -> bool:
+def run(operations_path: Path, result: tuple, machine_money: int) -> bool:
+    total_bills = result[0]
+    stocks = result[1]
     
     elements = []
-    
-    for operation in operations_list:
+    for operation in read_operations(OPERATION_PATH):
         match operation[0]:
             case "R":
-                restocking(operation)
+                restock(operation)
             case "P":
                 pricing(operation)
-            case "O":
-                if operation[1] in status:
-                    if status[operation[1]] >= int(operation[2]):
-                        if int(operation[3]) >= (
-                            int(operation[2]) * prices[operation[1]]
-                        ):
-                            status[operation[1]] -= int(operation[2])
-                            money += int(operation[2]) * prices[operation[1]]
-                        else:
-                            print("E3 NOT ENOUGH USER MONEY")
-                    else:
-                        print("E2 UNAVAILABLE STOCK")
-                else:
-                    print("E1 PRODUCT NOT FOUND")
-                # ordering (operation, money)
+            case "O":             
+                ordering(operation, money)
             case "M":
-                money += int(operation[1])
-                # reloading(operation,money)
+                reload_money(machine_money)
+                
     for stock, price in zip(
-        status.values(), prices.values()
+        stocks.values(), prices.values()
     ):  # LISTO STOCK Y PRECIO PARA FORMAR STATUS
         elements.append([stock, price])
-    for key, element in zip(status.keys(), elements):  # SE CREA EL DICT STATUS
-        status[key] = element
+        
+    for key, element in zip(stocks.keys(), elements):  # SE CREA EL DICT STATUS
+        stocks[key] = element
+        
     with open(STATUS_PATH, "w") as f:  # ESCRITURA FICHERO DE SALIDA
         f.write(f"{money}\n")
         for product, stock_price in sorted(status.items()):
