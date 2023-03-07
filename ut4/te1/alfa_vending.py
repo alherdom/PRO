@@ -45,11 +45,13 @@ def reload_money(operation: list, machine_money: int, result: dict) -> dict:
     result['money'] += machine_money
     return result
 
-def run(operations_path: Path, result: tuple, machine_money: int) -> bool:
+def run(operations_path: Path) -> bool:
     total_bills = result[0]
     stocks = result[1]
     
     elements = []
+    
+    
     for operation in read_operations(OPERATION_PATH):
         match operation[0]:
             case "R":
@@ -59,7 +61,7 @@ def run(operations_path: Path, result: tuple, machine_money: int) -> bool:
             case "O":             
                 ordering(operation, money)
             case "M":
-                reload_money(machine_money)
+                reload_money(operation,machine_money,result)
                 
     for stock, price in zip(
         stocks.values(), prices.values()
