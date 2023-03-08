@@ -2,7 +2,7 @@
 # CONTANDO VOCALES (EN RECURSIVO)
 # *******************************
 
-
+# RECURSIVIDAD
 def count_vowels(text: str, num_vowels=0) -> int:
     VOWELS = "aeiou"
     if len(text) > 0:

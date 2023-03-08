@@ -2,7 +2,7 @@
 # IDENTIFICANDO SECUENCIAS CONSECUTIVAS DE UN TAMAÑO
 # **************************************************
 
-
+# SIN RECURSIVIDAD
 # def consecutive_seq(items: list, target_count: list) -> int:
 #     for item in items:
 #         times = items.count(item)
@@ -10,6 +10,7 @@
 #             return item
 #     return False
         
+# CON RECURSIVIDAD
 def consecutive_seq(items: list, target_count: list, count=1):
     if len(items) == 1:
         return False
