@@ -11,6 +11,9 @@ def is_magic_square(values: list) -> bool:
             avg_rows = sum(sum_rows) / len(sum_rows)
             if avg_rows != sum(values[0]):
                 return False
+        for value in values:
+            for v in value:
+                print(v)
     return True
         
 
