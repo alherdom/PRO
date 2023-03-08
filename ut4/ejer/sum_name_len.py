@@ -1,12 +1,11 @@
 names = ["ana", "pepa", "maria"]
 
-def pnames(names:list,n:int):
+def pnames(names:list,size=0):
     if n >= 0:
-        name = names[n]
-        print(name)
-        return pnames(names,n-1)
+        size += len(names[0])
+        return pnames(names[1:],size)
 
-print(pnames(names,2))
+print(pnames(names))
     
 
 
