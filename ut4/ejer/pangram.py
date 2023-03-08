@@ -4,8 +4,8 @@
 
 
 def is_pangram(text:str) -> bool:
-    set_text = set(text)
-    if len(set_text) >= 27:
+    text = text.replace(' ','')
+    if len(set(text)) >= 26:
         return True
     return False
     
