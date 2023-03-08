@@ -15,21 +15,21 @@ def run(operations_path: Path) -> bool:
     # LECTURA FICHERO DE ENTRADA
     operations_list = [line.strip().split() for line in open(OPERATION_PATH)]
 
-    def restocking(operation: list) -> dict:  # FUNCIÓN DE REASBASTECIMIENTO DE PRODUCTO
+    def restock(operation: list) -> dict:  # FUNCIÓN DE REASBASTECIMIENTO DE PRODUCTO
         if operation[1] in stocks:
             stocks[operation[1]] += int(operation[2])
         else:
             stocks[operation[1]] = int(operation[2])
         return stocks
 
-    def pricing(operation: list) -> dict:  # FUNCIÓN PARA FIJAR PRECIOS
+    def change_price(operation: list) -> dict:  # FUNCIÓN PARA FIJAR PRECIOS
         if operation[1] in stocks:
             prices[operation[1]] = int(operation[2])
         else:
             print("E1 PRODUCT NOT FOUND")
         return prices
 
-    def ordering(operation: list, money: int) -> tuple[dict, int]:  # FUNCIÓN PARA PEDIDOS EN LA MÁQUINA
+    def order(operation: list, money: int) -> tuple[dict, int]:  # FUNCIÓN PARA PEDIDOS EN LA MÁQUINA
         if operation[1] in stocks:
             if stocks[operation[1]] >= int(operation[2]):
                 if int(operation[3]) >= (int(operation[2]) * prices[operation[1]]):
@@ -43,20 +43,20 @@ def run(operations_path: Path) -> bool:
             print("E1 PRODUCT NOT FOUND")
         return (stocks, money)
 
-    def reloading(operation: list, money: int) -> int:  # FUNCIÓN PARA RECARGA DE DINERO
+    def reload_money(operation: list, money: int) -> int:  # FUNCIÓN PARA RECARGA DE DINERO
         money += int(operation[1])
         return money
     
     for operation in operations_list:
         match operation[0]:
             case "R":
-                restocking(operation)
+                restock(operation)
             case "P":
-                pricing(operation)
+                change_price(operation)
             case "O":
-                (stocks, money) = ordering(operation, money)
+                (stocks, money) = order(operation, money)
             case "M":
-                money = reloading(operation,money)
+                money = reload_money(operation,money)
                                 
     for stock, price in zip(stocks.values(), prices.values()):  # LISTO STOCK Y PRECIO PARA FORMAR stocks
         elements.append([stock, price])

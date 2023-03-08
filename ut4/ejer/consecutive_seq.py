@@ -10,12 +10,12 @@
 #             return item
 #     return False
         
-def consecutive_seq(items: list, target_count: list, i: int) -> int:
-    i = 1
-    count = 0
-    if items[:i] == items[:i+1]:
-        count +=1
-    if count == target_count:
-        return items[:i]
-    return False
-
+def consecutive_seq(items: list, target_count: list, count=1):
+    if len(items) == 1:
+        return False
+    if items[0] == items[1]:
+        count += 1
+    if target_count == count:
+        return items[0]
+    return consecutive_seq(items[1:], target_count, count)
+    
