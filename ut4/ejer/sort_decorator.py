@@ -1,14 +1,12 @@
-def order_type(type:bool=True):
-    def sort_decor(func):
+def order_output(ascending: bool = True):
+    def decorator(func):
         def wrapper(*args, **kwargs):
-            result = func(*args, **kwargs)
-            if type:
-                return sorted(func(*args, **kwargs))
-            return sorted(func(*args, **kwargs), reverse=True)
+            output = func(*args, **kwargs)
+            return sorted(output, reverse = not ascending)
         return wrapper
-    return sort_decor
+    return decorator
 
-@order_type(True)
+@order_output()
 def sum_list(a: list, b: list) -> list:
     return a + b
 

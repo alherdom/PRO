@@ -11,7 +11,7 @@
 #     return False
         
 # CON RECURSIVIDAD
-def consecutive_seq(items: list, target_count: list, count=1):
+def consecutive_seq(items: list, target_count: list, count:int=1) -> int:
     if len(items) == 1:
         return False
     if items[0] == items[1]:
