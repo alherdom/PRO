@@ -17,9 +17,10 @@ def restock(operation: list, stock: dict):
         
 def change_price(operation: list, stock:dict, prices: dict):
     code = operation[1]
-    new_price = int(operation[2])
     if code in stock:
+        new_price = int(operation[2])
         prices[code] = new_price
+    
     
 def write_file(status_path: Path, money: int, stock: dict, prices: dict):
     details = []
