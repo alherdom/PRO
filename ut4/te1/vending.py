@@ -15,30 +15,44 @@ def restock(operation: list, stock: dict):
     else:
         stock[code] += qty_restock
         
-def change_price(operation: list, prices: dict):
+def change_price(operation: list, stock:dict, prices: dict):
     code = operation[1]
     new_price = int(operation[2])
-    prices[code] = new_price
+    if code in stock:
+        prices[code] = new_price
     
-def reload_money(operation: list, money: int):
-    money += int(operation[1])
+def write_file(status_path: Path, money: int, stock: dict, prices: dict):
+    details = []
+    for code_stock, price in zip(sorted(stock.items()), sorted(prices.values())):
+        code, stock = code_stock
+        details.append([code, stock, price])
     
+    with open(status_path, 'w') as f:
+        f.write(f'{money}\n')
+        for detail in details:
+            specs = " ".join(str(i) for i in detail) + "\n"
+            f.write(f'{specs}')
+
 def run(operations_path: Path) -> bool:
     status_path = 'data/vending/status.dat'
     stock = {}
     prices = {}
     money = 0
     operations = read_file(operations_path)
+    
     for operation in operations:
         match operation[0]:
             case "R":
                 restock(operation, stock)
             case "P":
-                change_price(operation, prices)
+                change_price(operation, stock, prices)
             case "M":
-                reload_money(operation, money)
+                money += int(operation[1])    
+                            
+    write_file(status_path, money, stock, prices)
 
     return filecmp.cmp(status_path, 'data/vending/.expected', shallow=False)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     run('data/vending/operations.dat')
+
