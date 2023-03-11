@@ -34,6 +34,7 @@ def order(operation: list, stock: dict, prices: dict):
             bill = prices[code] * qty_ordered
             if user_money >= bill:
                 stock[code] -= qty_ordered
+                bill += bill
 
 
 def write_file(status_path: Path, money: int, stock: dict, prices: dict):
