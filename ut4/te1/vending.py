@@ -25,7 +25,7 @@ def change_price(operation: list, stock: dict, prices: dict):
         prices[code] = new_price
 
 
-def order(operation: list, stock: dict, prices: dict):
+def order(operation: list, stock: dict, prices: dict, money: int = 0) -> int:
     code = operation[1]
     qty_ordered = int(operation[2])
     user_money = int(operation[3])
@@ -34,8 +34,12 @@ def order(operation: list, stock: dict, prices: dict):
             bill = prices[code] * qty_ordered
             if user_money >= bill:
                 stock[code] -= qty_ordered
-                bill += bill
+                money += bill
+    return money
 
+def reload_money(operation: list, money: int = 0):
+    money += int(operation[1])
+    return money
 
 def write_file(status_path: Path, money: int, stock: dict, prices: dict):
     details = []
@@ -64,9 +68,9 @@ def run(operations_path: Path) -> bool:
             case "P":
                 change_price(operation, stock, prices)
             case "O":
-                order(operation, stock, prices)
+                money += order(operation, stock, prices)
             case "M":
-                money += int(operation[1])
+                money += reload_money(operation)
 
     write_file(status_path, money, stock, prices)
 
