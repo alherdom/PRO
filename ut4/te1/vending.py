@@ -12,9 +12,9 @@ def restock(operation: list, stock: dict):
     qty_restock = int(operation[2])
     if code not in stock:
         stock[code] = qty_restock
-        print(f'✅ {" ".join(operation)}')
     else:
         stock[code] += qty_restock
+    print(f'✅ {" ".join(operation)}')
 
 def change_price(operation: list, stock: dict, prices: dict):
     code = operation[1]
@@ -31,10 +31,9 @@ def order(operation: list, stock: dict, prices: dict, money: int = 0) -> int:
     user_money = int(operation[3])
     if code in stock:
         if stock[code] >= qty_ordered:
-            bill = prices[code] * qty_ordered
-            if user_money >= bill:
+            if user_money >= prices[code] * qty_ordered:
                 stock[code] -= qty_ordered
-                money += bill
+                money += prices[code] * qty_ordered
                 print(f'✅ {" ".join(operation)}')
             else:
                 print(f'❌ {" ".join(operation)} (E3: NOT ENOUGH USER MONEY)')
@@ -49,16 +48,13 @@ def reload_money(operation: list, money: int = 0) -> int:
     print(f'✅ {" ".join(operation)}')
     return money
 
-def write_file(status_path: Path, money: int, stock: dict, prices: dict, details: list = []):
-    for code_stock, price in zip(sorted(stock.items()), prices.values()):
-        code, stock = code_stock
-        details.append([code, stock, price]) # ESTO SE PUEDE REFACTORIZAR!
-
-    with open(status_path, "w") as f:
+def write_file(status_path: Path, money: int, stock: dict, prices: dict):
+     with open(status_path, "w") as f:
         f.write(f"{money}\n")
-        for detail in details:
-            specs = " ".join(str(i) for i in detail) + "\n"
-            f.write(f"{specs}")
+        for code_stock, code_price in zip(sorted(stock.items()), sorted(prices.items())):
+            scode, stock = code_stock
+            pcode, price = code_price
+            f.write(f'{scode} {stock} {price}\n')
 
 def run(operations_path: Path) -> bool:
     status_path = "data/vending/status.dat"
