@@ -37,7 +37,7 @@ def order(operation: list, stock: dict, prices: dict, money: int = 0) -> int:
                 money += bill
     return money
 
-def reload_money(operation: list, money: int = 0):
+def reload_money(operation: list, money: int = 0) -> int:
     money += int(operation[1])
     return money
 
