@@ -52,7 +52,7 @@ def reload_money(operation: list, money: int = 0) -> int:
 def write_file(status_path: Path, money: int, stock: dict, prices: dict, details: list = []):
     for code_stock, price in zip(sorted(stock.items()), prices.values()):
         code, stock = code_stock
-        details.append([code, stock, price])
+        details.append([code, stock, price]) # ESTO SE PUEDE REFACTORIZAR!
 
     with open(status_path, "w") as f:
         f.write(f"{money}\n")
