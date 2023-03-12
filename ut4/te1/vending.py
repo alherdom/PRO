@@ -4,8 +4,8 @@
 import filecmp
 from pathlib import Path
 
-def read_file(operations_path: str) -> list:
-    return [line.strip().split() for line in open(operations_path)]
+def read_file(operations_path: str):
+    return (line.strip().split() for line in open(operations_path))
 
 def restock(operation: list, stock: dict):
     code = operation[1]
