@@ -69,6 +69,7 @@ def run(operations_path: Path, money:int=0, stock:dict={}, prices:dict={}) -> bo
                 money += order(operation, stock, prices)
             case "M":
                 money += reload_money(operation)
+                
     write_file(status_path, money, stock, prices)
 
     return filecmp.cmp(status_path, "data/vending/.expected", shallow=False)
