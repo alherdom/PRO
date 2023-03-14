@@ -7,9 +7,10 @@ def result_as_status(func):
     def wrapper(*args, **kwargs):
         result_w = func(*args, **kwargs)
         status, result = result_w
-        rstatus = {'status':status,'result':result}
+        rstatus = {"status": status, "result": result}
         return rstatus
     return wrapper
+
 
 @result_as_status
 def run(values: list) -> tuple:
@@ -21,6 +22,6 @@ def run(values: list) -> tuple:
             result += value
         else:
             status = False
-            result = 'Not int value found'            
+            result = "Not int value found"
             break
-    return (status,result)
+    return (status, result)
