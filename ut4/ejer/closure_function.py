@@ -9,12 +9,13 @@ def make_multiplier_of(n):
 m3 = make_multiplier_of(3)
 m5 = make_multiplier_of(5)
 
-# type(m3)
-# function
-m3(7)  # 7 * 3
+# # type(m3)
+# # function
+# m3(7)  # 7 * 3
 
-# type(m5)
-# function
-m5(8)  # 8 * 5
+# # type(m5)
+# # function
+# m5(8)  # 8 * 5
 
-make_multiplier_of(5)(8)  # Llamada directa!
+# make_multiplier_of(5)(8)  # Llamada directa!
+
