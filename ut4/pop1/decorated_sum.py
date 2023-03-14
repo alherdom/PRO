@@ -9,6 +9,7 @@ def result_as_status(func):
         status, result = result_w
         rstatus = {"status": status, "result": result}
         return rstatus
+
     return wrapper
 
 
