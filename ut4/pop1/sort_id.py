@@ -11,6 +11,6 @@ def sort_id(db: list) -> list:
     #     i += 1
     # return sorted_db
     sorted_db = db.copy()
-    for i, item in enumerate(sorted_db):
-        item['id'] = i+1
+    for i, item in enumerate(sorted_db, start=1):
+        item['id'] = i
     return sorted_db
