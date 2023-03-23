@@ -3,13 +3,13 @@ ON_CONSUMPTION_BATTERY = 5
 OFF_CONSUMPTION_BATTERY = 2
 
 class MobilePhone:
-    def __init__(self, manufacturer: str, screen_size: float, num_cores: int):
+    def __init__(self, manufacturer: str, screen_size: float, num_cores: int, battery: int):
         self.manufacturer = manufacturer
         self.screen_size = screen_size
         self.num_cores = num_cores
         self.apps = ["Whatsapp","YouTube","Twitter"]
         self.status = False
-        self.battery = 100
+        self.battery = battery
         
     def switch_power(self):
         if self.status:
@@ -32,8 +32,9 @@ class MobilePhone:
             print("The app has been unistall")
             
     def battery_recharge(self, battery):
+        
         to_charge = min(100, self.battery + battery)
         self.battery = to_charge
         
-iphone = MobilePhone("Apple",6.4,8)   
-iphone.
+iphone = MobilePhone("Apple",6.4,8,3000)   
+iphone.install_app("Tiktok")
