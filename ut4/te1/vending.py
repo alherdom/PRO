@@ -5,85 +5,77 @@ import filecmp
 from pathlib import Path
 
 
-def read_file(operations_path: str):
-    return (line.strip().split() for line in open(operations_path))
+def read_file(path: str):
+    return (line.strip().split() for line in open(path))
 
 
-def restock(operation: list, stock: dict):
+def restock(operation: list, vending_status: dict):
     code = operation[1]
-    qty_restock = int(operation[2])
-    if code not in stock:
-        stock[code] = qty_restock
+    restock_qty = int(operation[2])
+    products = vending_status["products"]
+    if code in products:
+        details = products[code]
+        details["stock"] += restock_qty
     else:
-        stock[code] += qty_restock
-    print(f'✅ {" ".join(operation)}')
+        details = {"stock": restock_qty, "price": 0}
+        products[code] = details
 
 
-def change_price(operation: list, stock: dict, prices: dict):
+def change_price(operation: list, vending_status: dict):
     code = operation[1]
-    if code in stock:
-        new_price = int(operation[2])
-        prices[code] = new_price
-        print(f'✅ {" ".join(operation)}')
-    else:
-        print(f'❌ {" ".join(operation)} (E1: PRODUCT NOT FOUND)')
+    new_price = int(operation[2])
+    products = vending_status["products"]
+    if code in products:
+        details = products[code]
+        details["price"] = new_price
 
 
-def order(operation: list, stock: dict, prices: dict, money: int = 0) -> int:
+def order(operation: list, vending_status: dict):
     code = operation[1]
     qty_ordered = int(operation[2])
     user_money = int(operation[3])
-    if code in stock:
-        if stock[code] >= qty_ordered:
-            if user_money >= prices[code] * qty_ordered:
-                stock[code] -= qty_ordered
-                money += prices[code] * qty_ordered
-                print(f'✅ {" ".join(operation)}')
-            else:
-                print(f'❌ {" ".join(operation)} (E3: NOT ENOUGH USER MONEY)')
-        else:
-            print(f'❌ {" ".join(operation)} (E2: UNAVAILABLE STOCK)')
-    else:
-        print(f'❌ {" ".join(operation)} (E1: PRODUCT NOT FOUND)')
-    return money
+    products = vending_status["products"]
+    if code in products:
+        details = products[code]
+        stock, price = details.values()
+        if (user_money >= price * qty_ordered) and (stock >= qty_ordered):
+            vending_status["money"] += price * qty_ordered
+            details["stock"] -= qty_ordered
 
 
-def reload_money(operation: list, money: int = 0) -> int:
-    money += int(operation[1])
-    print(f'✅ {" ".join(operation)}')
-    return money
+def reload_money(operation: list, vending_status: dict):
+    vending_status["money"] += int(operation[1])
 
 
-def write_file(status_path: Path, money: int, stock: dict, prices: dict):
-    with open(status_path, "w") as f:
+def write_file(path: Path, vending_status: dict):
+    with open(path, "w") as f:
+        money = vending_status["money"]
+        products = vending_status["products"]
         f.write(f"{money}\n")
-        for code_stock, code_price in zip(
-            sorted(stock.items()), sorted(prices.items())
-        ):
-            scode, stock = code_stock
-            pcode, price = code_price
-            f.write(f"{scode} {stock} {price}\n")
+        for code, details in sorted(products.items()):
+            details_list = " ".join((str(detail) for detail in details.values()))
+            f.write(f"{code} {details_list}\n")
 
 
-def run(
-    operations_path: Path, money: int = 0, stock: dict = {}, prices: dict = {}
-) -> bool:
-    status_path = "data/vending/status.dat"
+def run(operations_path: Path) -> bool:
+    STATUS_PATH = "data/vending/status.dat"
+    vending_status = {"money": 0, "products": {}}
     operations = read_file(operations_path)
+
     for operation in operations:
         match operation[0]:
-            case "R":
-                restock(operation, stock)
-            case "P":
-                change_price(operation, stock, prices)
             case "O":
-                money += order(operation, stock, prices)
+                order(operation, vending_status)
+            case "R":
+                restock(operation, vending_status)
+            case "P":
+                change_price(operation, vending_status)
             case "M":
-                money += reload_money(operation)
+                reload_money(operation, vending_status)
 
-    write_file(status_path, money, stock, prices)
+    write_file(STATUS_PATH, vending_status)
 
-    return filecmp.cmp(status_path, "data/vending/.expected", shallow=False)
+    return filecmp.cmp(STATUS_PATH, "data/vending/.expected", shallow=False)
 
 
 if __name__ == "__main__":

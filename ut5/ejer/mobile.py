@@ -35,7 +35,6 @@ class MobilePhone:
             print("The app has been unistall")
 
     def battery_recharge(self, battery):
-
         to_charge = min(100, self.battery + battery)
         self.battery = to_charge
 
