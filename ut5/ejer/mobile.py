@@ -21,23 +21,32 @@ class MobilePhone:
             self.battery -= ON_CONSUMPTION_BATTERY
         self.status = not self.status
 
-    def install_app(self, *apps: str):
+    def install_apps(self, *apps: str):
         for app in apps:
             if app not in self.apps:
                 self.apps.append(app)
             else:
                 print("The app has been install")
 
-    def uninstall_app(self, apps: list):
-        if apps in self.apps:
-            self.apps.remove(apps)
-        else:
-            print("The app has been unistall")
+    def uninstall_apps(self, apps: list):
+        for app in apps:
+            if app in self.apps:
+                self.apps.remove(app)
+            else:
+                print("The app has been unistall")
 
     def battery_recharge(self, battery):
-        to_charge = min(100, self.battery + battery)
+        to_charge = min(battery, self.battery + battery)
         self.battery = to_charge
-
+        
+    def show_installed_apps(self):
+        print(self.apps)
+        
+    def last_installed_app(self):
+        return self.apps[-1]
 
 iphone = MobilePhone("Apple", 6.4, 8, 3000)
-iphone.install_app("Tiktok")
+iphone.install_apps("Tiktok")
+iphone.show_installed_apps()
+print(iphone.last_installed_app())
+
