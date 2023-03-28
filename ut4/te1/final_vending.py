@@ -4,6 +4,8 @@
 import filecmp
 from pathlib import Path
 
+check_exist = lambda element, elements: True if element in elements else False
+
 
 def read_file(path: str):
     return (line.strip().split() for line in open(path))
@@ -13,7 +15,7 @@ def restock(operation: list, vending_status: dict):
     code = operation[1]
     restock_qty = int(operation[2])
     products = vending_status["products"]
-    if code in products:
+    if check_exist(code, products):
         details = products[code]
         details["stock"] += restock_qty
     else:
@@ -25,7 +27,7 @@ def change_price(operation: list, vending_status: dict):
     code = operation[1]
     new_price = int(operation[2])
     products = vending_status["products"]
-    if code in products:
+    if check_exist(code, products):
         details = products[code]
         details["price"] = new_price
 
@@ -35,7 +37,7 @@ def order(operation: list, vending_status: dict):
     qty_ordered = int(operation[2])
     user_money = int(operation[3])
     products = vending_status["products"]
-    if code in products:
+    if check_exist(code, products):
         details = products[code]
         stock, price = details.values()
         if (user_money >= price * qty_ordered) and (stock >= qty_ordered):
@@ -53,7 +55,7 @@ def write_file(path: Path, vending_status: dict):
         products = vending_status["products"]
         f.write(f"{money}\n")
         for code, details in sorted(products.items()):
-            details_list = " ".join((str(detail) for detail in details.values()))
+            details_list = " ".join(list(str(detail) for detail in details.values()))
             f.write(f"{code} {details_list}\n")
 
 
