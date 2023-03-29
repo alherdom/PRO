@@ -1,9 +1,5 @@
-import random
-
-
 class OS:
     graphical_interface = True
-
     def __init__(
         self,
         name: str,
