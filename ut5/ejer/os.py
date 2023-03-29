@@ -49,10 +49,17 @@ class OS:
                 )
         return True, "Parámetros correctos, el usuario o contraseña no existan"
 
-    def modify_users(self, name: str):
+    def modify_users(self, name: str, new_password: str, new_group: str):
+        if name not in self.users_info:
+            return False, "Error"
+        values = self.users_info[name]
+        password, group = values
         pass
 
-    def create_user(self, name: str, password: str):
+    def create_user(self, name: str, password: str, group: str):
+        if name in self.users_info:
+            return False, "Error"
+        self.users_info[name] = [password, group]
         pass
 
     def if_updated(self):
