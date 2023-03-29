@@ -36,6 +36,7 @@ class OS:
     def mask_calculator(self, ip: str, cidr: str) -> list:
         num_of_octet, rest = divmod(int(cidr), 8)
         defatult_octet = "255."
+        mask = defatult_octet * num_of_octet
         return mask
 
     # Esto puede ser un decorador...
