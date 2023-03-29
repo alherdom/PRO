@@ -4,7 +4,15 @@ import random
 class OS:
     graphical_interface = True
 
-    def __init__(self, name: str, version: str, developer: str, kernel_type: str, system_file: str, xserver: str):
+    def __init__(
+        self,
+        name: str,
+        version: str,
+        developer: str,
+        kernel_type: str,
+        system_file: str,
+        xserver: str,
+    ):
         self.name = name
         self.version = version
         self.developer = developer
@@ -49,6 +57,7 @@ class OS:
 
     def create_user(self, name: str, password: str):
         pass
+
     def if_updated(self):
         pass
 
