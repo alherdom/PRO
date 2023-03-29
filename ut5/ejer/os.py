@@ -27,16 +27,12 @@ class OS:
     def upgrade(self):
         self.upgraded = not self.upgraded
 
+    # 172.18.99.202/16
     @property
-    def ip_calculator(self, ip: list) -> list:
-        first_octet = str(random.randint(0, 255)) + "."
-        second_octet = str(random.randint(0, 255)) + "."
-        third_octet = str(random.randint(0, 255)) + "."
-        fourth_octet = str(random.randint(0, 255))
-        return first_octet + second_octet + third_octet + fourth_octet
-
-
-
+    def mask_calculator(self, ip: str, cidr: str) -> list:
+        ones_octet = int(cidr) / 8
+        defatult_octet = "255"
+        return mask
 
     # Esto puede ser un decorador?
     def check_info_users(self, name: str, password: str) -> tuple[bool, str]:
