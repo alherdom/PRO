@@ -18,8 +18,8 @@ class OS:
         self.updated = False
         self.upgraded = False
         self.xserver = xserver
-        self.users_info = dict
-        self.ip = list
+        self.users_info = {}
+        self.ip = "172.18.99.202"
         self.load = 0
 
     def switch_boot(self):
@@ -38,7 +38,7 @@ class OS:
         defatult_octet = "255"
         return mask
 
-    # Esto puede ser un decorador?
+    # Esto puede ser un decorador...
     def check_info_users(self, name: str, password: str) -> tuple[bool, str]:
         for name, password in self.users_info.items():
             if name in self.users_info and password in self.users_info:
@@ -52,6 +52,7 @@ class OS:
         pass
 
     def create_user(self, name: str, password: str):
+        
         pass
 
     def if_updated(self):
