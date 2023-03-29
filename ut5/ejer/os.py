@@ -19,7 +19,7 @@ class OS:
         self.updated = False
         self.upgraded = False
         self.xserver = xserver
-        self.users_info = {"name": "", "info": {}}
+        self.users_info = {"names": [], "passwords": [], "groups": []}
         self.ip = "172.18.99.202"
         self.load = 0
 
@@ -40,27 +40,12 @@ class OS:
         mask = defatult_octet * num_of_octet
         return mask
 
-    # Esto puede ser un decorador...
-    def check_info_users(self, name: str, password: str) -> tuple[bool, str]:
-        for name, password in self.users_info.items():
-            if name in self.users_info and password in self.users_info:
-                return (
-                    False,
-                    "Error, usuario o contraseña ya existen, pruebe a modificarlos",
-                )
-        return True, "Parámetros correctos, el usuario o contraseña no existan"
-
-    def modify_users(self, name: str, new_password: str, new_group: str):
-        if name not in self.users_info:
-            return False, "Error"
-        values = self.users_info[name]
-        password, group = values
-
     def create_user(self, name: str, password: str, group: str):
-        if name in self.users_info:
+        names = self.users_info["names"]
+        if name in names:
             return False, "Error"
-        self.users_info[name] = [password, group]
-        pass
+        names.append(name)
+
 
     def if_updated(self):
         pass
