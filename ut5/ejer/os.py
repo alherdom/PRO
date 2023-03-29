@@ -41,7 +41,7 @@ class OS:
         binary_mask = ones + ceros
         for i, bit in enumerate(binary_mask, start=1):
             mask += bit
-            if i % 8 == 0 and i != 0:
+            if i % 8 == 0 and i != 32:
                 mask += "."      
         print(mask)
         
