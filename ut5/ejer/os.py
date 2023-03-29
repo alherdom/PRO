@@ -20,7 +20,7 @@ class OS:
         self.upgraded = False
         self.xserver = xserver
         self.users_info = {"names": [], "passwords": [], "groups": []}
-        self.ip = "172.18.99.202"
+        self.ip = "172.18.99.202/14"
         self.load = 0
 
     def switch_boot(self):
@@ -33,19 +33,33 @@ class OS:
         self.upgraded = not self.upgraded
 
     # 172.18.99.202/16
-    @property
-    def mask_calculator(self, ip: str, cidr: str) -> list:
-        num_of_octet, rest = divmod(int(cidr), 8)
-        defatult_octet = "255."
-        mask = defatult_octet * num_of_octet
-        return mask
+    def mask_calculator(self):
+        cidr = int(self.ip.split("/")[-1])
+        ones = "1" * cidr
+        ceros = "0" * (32 - cidr)
+        mask = ""
+        binary_mask = ones + ceros
+        for i, bit in enumerate(binary_mask, start=1):
+            mask += bit
+            if i % 8 == 0 and i != 0:
+                mask += "."      
+        print(mask)
+        
 
-    def create_user(self, name: str, password: str, group: str):
+
+    def add_users(self, name: str, password: str):
         names = self.users_info["names"]
+        passwords = self.users_info["passwords"]
         if name in names:
             return False, "Error"
         names.append(name)
+        passwords.append(password)
 
+    def add_groups(self, group: str):
+        groups = self.users_info["groups"]
+        if group in groups:
+            return False, "Error"
+        groups.append(group)
 
     def if_updated(self):
         pass
@@ -67,3 +81,7 @@ class OS:
 
     def stop_service(self):
         pass
+
+
+linux = OS("linux", "1.0", "canonical", "monolítico híbrido", "system_file", "xorg")
+linux.mask_calculator()
