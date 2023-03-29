@@ -3,7 +3,6 @@ import random
 
 class OS:
     graphical_interface = True
-    load = 0
 
     def __init__(self, name: str, version: str, developer: str, kernel_type: str, system_file: str, xserver: str):
         self.name = name
@@ -16,7 +15,8 @@ class OS:
         self.upgraded = False
         self.xserver = xserver
         self.users_info = dict
-        OS.load += 1
+        self.ip = list
+        self.load = 0
 
     def switch_boot(self):
         self.booted = not self.booted
@@ -28,12 +28,15 @@ class OS:
         self.upgraded = not self.upgraded
 
     @property
-    def get_ip(self) -> str:
-        first_num = str(random.randint(0, 255)) + "."
-        second_num = str(random.randint(0, 255)) + "."
-        third_num = str(random.randint(0, 255)) + "."
-        fourth_num = str(random.randint(0, 255))
-        return first_num + second_num + third_num + fourth_num
+    def ip_calculator(self, ip: list) -> list:
+        first_octet = str(random.randint(0, 255)) + "."
+        second_octet = str(random.randint(0, 255)) + "."
+        third_octet = str(random.randint(0, 255)) + "."
+        fourth_octet = str(random.randint(0, 255))
+        return first_octet + second_octet + third_octet + fourth_octet
+
+
+
 
     # Esto puede ser un decorador?
     def check_info_users(self, name: str, password: str) -> tuple[bool, str]:
@@ -45,14 +48,11 @@ class OS:
                 )
         return True, "Parámetros correctos, el usuario o contraseña no existan"
 
-    def modify_users(self, name: str) -> tuple[bool, str]:
-        return True, "Usuario modificado"
+    def modify_users(self, name: str):
+        pass
 
-    def create_user(self, name: str, password: str) -> tuple:
-        self.users_info[name] = password
-        return (True, "Se crea el usuario")
-        return (False, "Erro usuario o contraseña ya existen")
-
+    def create_user(self, name: str, password: str):
+        pass
     def if_updated(self):
         pass
 
