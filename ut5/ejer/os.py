@@ -53,7 +53,6 @@ class OS:
         pass
 
     def create_user(self, name: str, password: str):
-        
         pass
 
     def if_updated(self):
