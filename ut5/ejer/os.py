@@ -34,8 +34,8 @@ class OS:
     # 172.18.99.202/16
     @property
     def mask_calculator(self, ip: str, cidr: str) -> list:
-        ones_octet = int(cidr) / 8
-        defatult_octet = "255"
+        num_of_octet, rest = divmod(int(cidr), 8)
+        defatult_octet = "255."
         return mask
 
     # Esto puede ser un decorador...
