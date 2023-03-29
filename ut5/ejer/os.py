@@ -1,5 +1,6 @@
 class OS:
     graphical_interface = True
+
     def __init__(
         self,
         name: str,
@@ -18,7 +19,7 @@ class OS:
         self.updated = False
         self.upgraded = False
         self.xserver = xserver
-        self.users_info = {}
+        self.users_info = {"name": "", "info": {}}
         self.ip = "172.18.99.202"
         self.load = 0
 
@@ -54,7 +55,6 @@ class OS:
             return False, "Error"
         values = self.users_info[name]
         password, group = values
-        pass
 
     def create_user(self, name: str, password: str, group: str):
         if name in self.users_info:
