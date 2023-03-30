@@ -31,17 +31,19 @@ class OS:
     @staticmethod
     def audit(method):
         def wrapper(self, *args, **kwargs):
-            print(f'Operation System {self.name} running {method.__name__}!')
+            print(f"Operation System {self.name} running {method.__name__}!")
             return method(self, *args, **kwargs)
+
         return wrapper
 
     @audit
-    def calculate_mask(self):
+    def calculate_mask(self) -> str:
         cidr = int(self.__ip.split("/")[-1])
         subnet_mask = []
         binary_mask = ""
-        ones_ceros = ("1" * cidr) + ("0" * (32 - cidr))
-        for i, bit in enumerate(ones_ceros, start=1):
+        number_of_zeros = (32 - cidr)
+        ones_zeros = ("1" * cidr) + ("0" * number_of_zeros)
+        for i, bit in enumerate(ones_zeros, start=1):
             binary_mask += bit
             if i % 8 == 0 and i != 32:
                 binary_mask += "."
@@ -50,8 +52,20 @@ class OS:
             for i, bit in enumerate(octet[::-1]):
                 decimal_num += int(bit) * 2**i
             subnet_mask.append(str(decimal_num))
-        print(".".join(subnet_mask))
-
+        return (".".join(subnet_mask))
+    
+    @audit
+    def calculate_num_hosts(self) -> int:
+        cidr = int(self.__ip.split("/")[-1])
+        if cidr > 30:
+            return 0
+        number_of_zeros = (32 - cidr)
+        ones_of_host = "1" * number_of_zeros
+        num_hosts = -1
+        for i, bit in enumerate(ones_of_host[::-1]):
+            num_hosts += int(bit) * 2**i
+        return num_hosts
+        
     def add_user(self, name: str, password: str) -> tuple:
         if name in self.users_info:
             return False, "❌ Error"
@@ -100,9 +114,6 @@ class OS:
     def if_upgraded(self):
         pass
 
-    def delete_user(self, name: str):
-        pass
-
     def intall_aplication(self):
         pass
 
@@ -117,14 +128,15 @@ class OS:
 
 
 linux = OS("linux", "21.0", "stallman", "monolithic hybrid", "system file", "xorg")
-linux.calculate_mask()
+print(linux.calculate_mask())
+print(linux.calculate_num_hosts())
 print(linux.get_os_categories())
 linux.add_user("alejandro", "123456")
 linux.add_user("pepe", "654321")
 linux.add_user("alejandro", "123456")
 linux.add_user("raquel", "222222")
 linux.add_group("admins", "manage the system")
-linux.add_group("lp","control the printer")
+linux.add_group("lp", "control the printer")
 linux.add_group("scanner", "control the scanner")
 print(linux.get_users())
 print(linux.get_groups())
@@ -134,4 +146,3 @@ print(linux.get_users())
 print(linux.del_group("matraca"))
 linux.del_group("scanner")
 print(linux.get_groups())
-
