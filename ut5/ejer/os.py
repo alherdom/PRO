@@ -67,7 +67,7 @@ class OS:
         return num_hosts
 
     @audit
-    def get_type_mask(self) -> str:
+    def get_type_mask(self):
         cidr = int(self.__ip.split("/")[-1])
         if cidr <= 8:
             return "A"
@@ -141,7 +141,7 @@ linux = OS("linux", "21.0", "stallman", "monolithic hybrid", "system file", "xor
 print(linux.calculate_mask())
 print(linux.calculate_num_hosts())
 print(linux.get_os_categories())
-print(linux.get_type_mask)
+print(linux.get_type_mask())
 linux.add_user("alejandro", "123456")
 linux.add_user("pepe", "654321")
 linux.add_user("alejandro", "123456")
