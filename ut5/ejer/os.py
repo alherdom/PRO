@@ -28,6 +28,14 @@ class OS:
     def get_os_categories() -> list[str]:
         return ["Multitask", "Multiuser", "Multiprocess"]
 
+    @staticmethod
+    def audit(method):
+        def wrapper(self, *args, **kwargs):
+            print(f'Operation System {self.name} running {method.__name__}')
+            return method(self, *args, **kwargs)
+        return wrapper
+
+    @audit
     def calculate_mask(self):
         cidr = int(self.__ip.split("/")[-1])
         subnet_mask = []
