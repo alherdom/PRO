@@ -138,6 +138,26 @@ class OS:
     def stop_service(self):
         pass
 
+        self.processes = []
+        
+    def add_process(self, process):
+        self.processes.append(process)
+        print(f"Added process '{process}'")
+        
+    def remove_process(self, process):
+        if process in self.processes:
+            self.processes.remove(process)
+            print(f"Removed process '{process}'")
+        else:
+            print(f"Process '{process}' not found")
+            
+    def list_processes(self):
+        print("Running processes:")
+        for process in self.processes:
+            print(process)
+            
+    def get_os_info(self):
+        return f"{self.name} version {self.version}"
 
 linux = OS("linux", "21.0", "stallman", "monolithic hybrid", "system file", "xorg")
 print(linux.calc_mask())
