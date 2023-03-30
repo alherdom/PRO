@@ -31,7 +31,7 @@ class OS:
     @staticmethod
     def audit(method):
         def wrapper(self, *args, **kwargs):
-            print(f'Operation System {self.name} running {method.__name__}')
+            print(f'Operation System {self.name} running {method.__name__}!')
             return method(self, *args, **kwargs)
         return wrapper
 
@@ -54,27 +54,27 @@ class OS:
 
     def add_user(self, name: str, password: str) -> tuple:
         if name in self.users_info:
-            return False, "Error"
+            return False, "❌ Error"
         self.users_info[name] = password
-        return True, "User added"
+        return True, "✅ User added"
 
     def del_user(self, name: str, password: str) -> tuple:
         if name not in self.users_info and password not in self.users_info:
-            return False, "Error"
+            return False, "❌ Error"
         del self.users_info[name]
-        return True, "User deleted"
+        return True, "✅ User deleted"
 
     def add_group(self, group: str, description: str) -> tuple:
         if group in self.groups_info:
-            return False, "Error"
+            return False, "❌ Error"
         self.groups_info[group] = description
         return True, "Group added"
 
     def del_group(self, group: str) -> tuple:
         if group not in self.groups_info:
-            return False, "Error"
+            return False, "❌ Error"
         del self.groups_info[group]
-        return True, "Group deleted"
+        return True, "✅ Group deleted"
 
     def get_users(self):
         return list(self.users_info.keys())
