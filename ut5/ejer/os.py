@@ -75,7 +75,7 @@ class OS:
             return "The mask type is: B"
         if 24 <= cidr <= 32:
             return "The mask type is: C"
-        
+
     # método que compruebe si existe el usuario/grupo/contraseña?
 
     def add_user(self, name: str, password: str) -> tuple:
