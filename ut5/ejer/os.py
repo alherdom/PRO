@@ -37,7 +37,7 @@ class OS:
         return wrapper
 
     @audit
-    def calculate_mask(self) -> str:
+    def calc_mask(self) -> str:
         cidr = int(self.__ip.split("/")[-1])
         subnet_mask = []
         binary_mask = ""
@@ -55,7 +55,7 @@ class OS:
         return ".".join(subnet_mask)
 
     @audit
-    def calculate_num_hosts(self) -> int:
+    def calc_num_hosts(self):
         cidr = int(self.__ip.split("/")[-1])
         if cidr > 30:
             return 0
@@ -64,17 +64,19 @@ class OS:
         num_hosts = -1
         for i, bit in enumerate(ones_of_host[::-1]):
             num_hosts += int(bit) * 2**i
-        return num_hosts
+        print(f"The number of hosts is: {num_hosts}")
 
     @audit
     def get_type_mask(self):
         cidr = int(self.__ip.split("/")[-1])
         if cidr <= 8:
-            return "A"
+            return "The mask type is: A"
         if 9 <= cidr <= 16:
-            return "B"
+            return "The mask type is: B"
         if 24 <= cidr <= 32:
-            return "C"
+            return "The mask type is: C"
+        
+    # método que compruebe si existe el usuario/grupo/contraseña?
 
     def add_user(self, name: str, password: str) -> tuple:
         if name in self.users_info:
@@ -138,8 +140,8 @@ class OS:
 
 
 linux = OS("linux", "21.0", "stallman", "monolithic hybrid", "system file", "xorg")
-print(linux.calculate_mask())
-print(linux.calculate_num_hosts())
+print(linux.calc_mask())
+linux.calc_num_hosts()
 print(linux.get_os_categories())
 print(linux.get_type_mask())
 linux.add_user("alejandro", "123456")
