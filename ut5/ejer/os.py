@@ -19,9 +19,63 @@ class OS:
         self.updated = False
         self.upgraded = False
         self.xserver = xserver
-        self.users_info = {"names": [], "passwords": [], "groups": []}
-        self.ip = "172.18.99.202/14"
+        self.users_info = {}
+        self.groups_info = {}
+        self.__ip = "172.18.99.202/31"
         self.load = 0
+
+    @staticmethod
+    def get_os_categories() -> list[str]:
+        return ["Multitask", "Multiuser", "Multiprocess"]
+
+    def calculate_mask(self):
+        cidr = int(self.__ip.split("/")[-1])
+        subnet_mask = []
+        binary_mask = ""
+        ones_ceros = ("1" * cidr) + ("0" * (32 - cidr))
+        for i, bit in enumerate(ones_ceros, start=1):
+            binary_mask += bit
+            if i % 8 == 0 and i != 32:
+                binary_mask += "."
+        for octet in binary_mask.split("."):
+            decimal_num = 0
+            for i, bit in enumerate(octet[::-1]):
+                decimal_num += int(bit) * 2**i
+            subnet_mask.append(str(decimal_num))
+        print(".".join(subnet_mask))
+
+    def add_user(self, name: str, password: str) -> tuple:
+        if name in self.users_info:
+            return False, "Error"
+        self.users_info[name] = password
+        return True, "User added"
+
+    def del_user(self, name: str, password: str) -> tuple:
+        if name not in self.users_info and password not in self.users_info:
+            return False, "Error"
+        del self.users_info[name]
+        return True, "User deleted"
+
+    def add_group(self, group: str, description: str) -> tuple:
+        if group in self.groups_info:
+            return False, "Error"
+        self.groups_info[group] = description
+        return True, "Group added"
+
+    def del_group(self, group: str) -> tuple:
+        if group not in self.groups_info:
+            return False, "Error"
+        del self.groups_info[group]
+        return True, "Group deleted"
+
+    def get_users(self):
+        return self.users_info["names"]
+
+    def get_groups(self):
+        return self.users_info["groups"]
+
+    def get_passwords(self):
+        return self.users_info["passwords"]
 
     def switch_boot(self):
         self.booted = not self.booted
@@ -31,35 +85,6 @@ class OS:
 
     def upgrade(self):
         self.upgraded = not self.upgraded
-
-    # 172.18.99.202/16
-    def mask_calculator(self):
-        cidr = int(self.ip.split("/")[-1])
-        ones = "1" * cidr
-        ceros = "0" * (32 - cidr)
-        mask = ""
-        binary_mask = ones + ceros
-        for i, bit in enumerate(binary_mask, start=1):
-            mask += bit
-            if i % 8 == 0 and i != 32:
-                mask += "."      
-        print(mask)
-        
-
-
-    def add_users(self, name: str, password: str):
-        names = self.users_info["names"]
-        passwords = self.users_info["passwords"]
-        if name in names:
-            return False, "Error"
-        names.append(name)
-        passwords.append(password)
-
-    def add_groups(self, group: str):
-        groups = self.users_info["groups"]
-        if group in groups:
-            return False, "Error"
-        groups.append(group)
 
     def if_updated(self):
         pass
@@ -83,5 +108,18 @@ class OS:
         pass
 
 
-linux = OS("linux", "1.0", "canonical", "monolítico híbrido", "system_file", "xorg")
-linux.mask_calculator()
+linux = OS("linux", "21.0", "stallman", "monolithic hybrid", "system file", "xorg")
+linux.calculate_mask()
+print(linux.get_os_categories())
+linux.add_user("alejandro", "123456")
+linux.add_user("pepe", "654321")
+linux.add_user("alejandro", "123456")
+linux.add_user("raquel", "222222")
+linux.add_group("admins")
+linux.add_group("lp")
+linux.add_group("scanner")
+print(linux.get_users())
+print(linux.get_groups())
+print(linux.get_passwords())
+linux.del_user("pepe", "654321")
+print(linux.get_users())
