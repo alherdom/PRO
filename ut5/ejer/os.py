@@ -41,7 +41,7 @@ class OS:
         cidr = int(self.__ip.split("/")[-1])
         subnet_mask = []
         binary_mask = ""
-        number_of_zeros = (32 - cidr)
+        number_of_zeros = 32 - cidr
         ones_zeros = ("1" * cidr) + ("0" * number_of_zeros)
         for i, bit in enumerate(ones_zeros, start=1):
             binary_mask += bit
@@ -52,20 +52,30 @@ class OS:
             for i, bit in enumerate(octet[::-1]):
                 decimal_num += int(bit) * 2**i
             subnet_mask.append(str(decimal_num))
-        return (".".join(subnet_mask))
-    
+        return ".".join(subnet_mask)
+
     @audit
     def calculate_num_hosts(self) -> int:
         cidr = int(self.__ip.split("/")[-1])
         if cidr > 30:
             return 0
-        number_of_zeros = (32 - cidr)
+        number_of_zeros = 32 - cidr
         ones_of_host = "1" * number_of_zeros
         num_hosts = -1
         for i, bit in enumerate(ones_of_host[::-1]):
             num_hosts += int(bit) * 2**i
         return num_hosts
-        
+
+    @audit
+    def get_type_mask(self) -> str:
+        cidr = int(self.__ip.split("/")[-1])
+        if cidr <= 8:
+            return "A"
+        if 9 <= cidr <= 16:
+            return "B"
+        if 24 <= cidr <= 32:
+            return "C"
+
     def add_user(self, name: str, password: str) -> tuple:
         if name in self.users_info:
             return False, "❌ Error"
@@ -131,6 +141,7 @@ linux = OS("linux", "21.0", "stallman", "monolithic hybrid", "system file", "xor
 print(linux.calculate_mask())
 print(linux.calculate_num_hosts())
 print(linux.get_os_categories())
+print(linux.get_type_mask)
 linux.add_user("alejandro", "123456")
 linux.add_user("pepe", "654321")
 linux.add_user("alejandro", "123456")
