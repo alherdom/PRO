@@ -21,7 +21,7 @@ class OS:
         self.xserver = xserver
         self.users_info = {}
         self.groups_info = {}
-        self.__ip = "172.18.99.202/31"
+        self.__ip = "172.18.99.202/16"
         self.load = 0
 
     @staticmethod
@@ -69,13 +69,13 @@ class OS:
         return True, "Group deleted"
 
     def get_users(self):
-        return self.users_info["names"]
+        return list(self.users_info.keys())
 
     def get_groups(self):
-        return self.users_info["groups"]
+        return self.groups_info
 
     def get_passwords(self):
-        return self.users_info["passwords"]
+        return self.users_info
 
     def switch_boot(self):
         self.booted = not self.booted
@@ -115,11 +115,15 @@ linux.add_user("alejandro", "123456")
 linux.add_user("pepe", "654321")
 linux.add_user("alejandro", "123456")
 linux.add_user("raquel", "222222")
-linux.add_group("admins")
-linux.add_group("lp")
-linux.add_group("scanner")
+linux.add_group("admins", "manage the system")
+linux.add_group("lp","control the printer")
+linux.add_group("scanner", "control the scanner")
 print(linux.get_users())
 print(linux.get_groups())
 print(linux.get_passwords())
 linux.del_user("pepe", "654321")
 print(linux.get_users())
+print(linux.del_group("matraca"))
+linux.del_group("scanner")
+print(linux.get_groups())
+
