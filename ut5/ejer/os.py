@@ -66,6 +66,10 @@ class OS:
         for i, bit in enumerate(ones_of_host[::-1]):
             num_hosts += int(bit) * 2**i
         print(f"The number of hosts is: {num_hosts}")
+        
+    @audit
+    def calc_num_subnets(self):
+        
 
     @audit
     def get_type_mask(self):
