@@ -21,6 +21,7 @@ class OS:
         self.xserver = xserver
         self.users_info = {}
         self.groups_info = {}
+        self.processes = []
         self.__ip = "172.18.99.202/16"
         self.load = 0
 
@@ -102,13 +103,29 @@ class OS:
         del self.groups_info[group]
         return True, "✅ Group deleted"
 
-    def get_users(self):
+    def execute_process(self, *processes: str):
+        for process in processes:
+            if process not in self.processes:
+                self.processes.append(process)
+
+    def kill_process(self, processes: list):
+        for process in processes:
+            if process in self.processes:
+                self.processes.remove(process)
+
+    def show_processes(self) -> list:
+        return self.processes
+
+    def get_os_info(self):
+        return f"{self.name} version {self.version}"
+
+    def get_users(self) -> list:
         return list(self.users_info.keys())
 
-    def get_groups(self):
+    def get_groups(self) -> dict:
         return self.groups_info
 
-    def get_passwords(self):
+    def get_passwords(self) -> dict:
         return self.users_info
 
     def switch_boot(self):
@@ -138,29 +155,9 @@ class OS:
     def stop_service(self):
         pass
 
-        self.processes = []
 
-    def add_process(self, process):
-        self.processes.append(process)
-        print(f"Added process '{process}'")
-
-    def remove_process(self, process):
-        if process in self.processes:
-            self.processes.remove(process)
-            print(f"Removed process '{process}'")
-        else:
-            print(f"Process '{process}' not found")
-
-    def list_processes(self):
-        print("Running processes:")
-        for process in self.processes:
-            print(process)
-
-    def get_os_info(self):
-        return f"{self.name} version {self.version}"
-
-
-linux = OS("linux", "21.0", "stallman", "monolithic hybrid", "system file", "xorg")
+linux = OS("linux mint", "21.0", "stallman", "monolithic hybrid", "system file", "xorg")
+print(linux.get_os_info())
 print(linux.calc_mask())
 linux.calc_num_hosts()
 print(linux.get_os_categories())
@@ -180,3 +177,7 @@ print(linux.get_users())
 print(linux.del_group("matraca"))
 linux.del_group("scanner")
 print(linux.get_groups())
+linux.execute_process("firefox", "xeyes", "chrome")
+print(linux.show_processes())
+linux.kill_process(["firefox", "xeyes"])
+print(linux.show_processes())
