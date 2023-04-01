@@ -34,7 +34,9 @@ class OS:
     @staticmethod
     def audit(method):
         def wrapper(self, *args, **kwargs):
-            print(f"Operation System {self.name} running {method.__name__}")
+            print(
+                f"Operation System {self.name} version {self.version} running {method.__name__}"
+            )
             return method(self, *args, **kwargs)
 
         return wrapper
