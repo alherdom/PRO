@@ -1,5 +1,6 @@
 class OS:
     graphical_interface = True
+    ip = "172.18.99.202/16"
 
     def __init__(
         self,
@@ -22,7 +23,8 @@ class OS:
         self.users_info = {}
         self.groups_info = {}
         self.processes = []
-        self.__ip = "172.18.99.202/16"
+        self.ip = OS.ip
+        self.cidr = int(self.ip.split("/")[-1])
         self.load = 0
 
     @staticmethod
@@ -32,56 +34,44 @@ class OS:
     @staticmethod
     def audit(method):
         def wrapper(self, *args, **kwargs):
-            print(f"Operation System {self.name} running {method.__name__}!")
+            print(f"Operation System {self.name} running {method.__name__}")
             return method(self, *args, **kwargs)
 
         return wrapper
 
     @audit
-    def calc_mask(self) -> str:
-        cidr = int(self.__ip.split("/")[-1])
+    def get_subnet_mask(self) -> str:
         subnet_mask = []
-        binary_mask = ""
-        number_of_zeros = 32 - cidr
-        ones_zeros = ("1" * cidr) + ("0" * number_of_zeros)
-        for i, bit in enumerate(ones_zeros, start=1):
-            binary_mask += bit
-            if i % 8 == 0 and i != 32:
-                binary_mask += "."
-        for octet in binary_mask.split("."):
-            decimal_num = 0
-            for i, bit in enumerate(octet[::-1]):
-                decimal_num += int(bit) * 2**i
+        ones_zeros = ("1" * self.cidr) + ("0" * (32 - self.cidr))
+        for i in range(0, 32, 8):
+            decimal_num = int(ones_zeros[i : i + 8], 2)
             subnet_mask.append(str(decimal_num))
         return ".".join(subnet_mask)
 
     @audit
-    def calc_num_hosts(self):
-        cidr = int(self.__ip.split("/")[-1])
-        if cidr > 30:
-            return 0
-        number_of_zeros = 32 - cidr
-        ones_of_host = "1" * number_of_zeros
-        num_hosts = -1
-        for i, bit in enumerate(ones_of_host[::-1]):
-            num_hosts += int(bit) * 2**i
-        print(f"The number of hosts is: {num_hosts}")
-        
+    def get_wildcard_mask(self) -> str:
+        wildcard_mask = []
+        zeros_ones = ("0" * self.cidr) + ("1" * (32 - self.cidr))
+        for i in range(0, 32, 8):
+            decimal_num = int(zeros_ones[i : i + 8], 2)
+            wildcard_mask.append(str(decimal_num))
+        return ".".join(wildcard_mask)
+
     @audit
-    def calc_num_subnets(self):
-        
+    def get_number_hosts(self):
+        if self.cidr > 30:
+            return 0
+        num_hosts = 2 ** (32 - self.cidr) - 2
+        print(f"The number of hosts is: {num_hosts}")
 
     @audit
     def get_type_mask(self):
-        cidr = int(self.__ip.split("/")[-1])
-        if cidr <= 8:
+        if self.cidr <= 8:
             return "The mask type is: A"
-        if 9 <= cidr <= 16:
+        if 9 <= self.cidr <= 16:
             return "The mask type is: B"
-        if 24 <= cidr <= 32:
+        if 24 <= self.cidr <= 32:
             return "The mask type is: C"
-
-    # método que compruebe si existe el usuario/grupo/contraseña?
 
     def add_user(self, name: str, password: str) -> tuple:
         if name in self.users_info:
@@ -162,8 +152,9 @@ class OS:
 
 linux = OS("linux mint", "21.0", "stallman", "monolithic hybrid", "system file", "xorg")
 print(linux.get_os_info())
-print(linux.calc_mask())
-linux.calc_num_hosts()
+print(linux.get_subnet_mask())
+print(linux.get_wildcard_mask())
+linux.get_number_hosts()
 print(linux.get_os_categories())
 print(linux.get_type_mask())
 linux.add_user("alejandro", "123456")
