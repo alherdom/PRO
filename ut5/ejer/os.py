@@ -42,18 +42,18 @@ class OS:
     @audit
     def get_subnet_mask(self) -> str:
         subnet_mask = []
-        ones_zeros = ("1" * self.cidr) + ("0" * (32 - self.cidr))
+        bin_subnet_mask = ("1" * self.cidr) + ("0" * (32 - self.cidr))
         for i in range(0, 32, 8):
-            decimal_num = int(ones_zeros[i : i + 8], 2)
+            decimal_num = int(bin_subnet_mask[i : i + 8], 2)
             subnet_mask.append(str(decimal_num))
         return ".".join(subnet_mask)
 
     @audit
     def get_wildcard_mask(self) -> str:
         wildcard_mask = []
-        zeros_ones = ("0" * self.cidr) + ("1" * (32 - self.cidr))
+        bin_wildcard_mask = ("0" * self.cidr) + ("1" * (32 - self.cidr))
         for i in range(0, 32, 8):
-            decimal_num = int(zeros_ones[i : i + 8], 2)
+            decimal_num = int(bin_wildcard_mask[i : i + 8], 2)
             wildcard_mask.append(str(decimal_num))
         return ".".join(wildcard_mask)
 
