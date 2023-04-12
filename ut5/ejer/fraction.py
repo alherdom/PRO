@@ -1,7 +1,8 @@
 class Fraction:
     def __init__(self, num: int, den: int):
-        self.num = num // self.gcd(num, den)
-        self.den = den // self.gcd(num, den)
+        gcd = self.gcd(num, den)
+        self.num = num // gcd
+        self.den = den // gcd
 
     @staticmethod
     def gcd(a: int, b: int) -> int:
