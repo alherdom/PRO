@@ -43,7 +43,7 @@ class Date:
         return False
 
     def days_in_month(self) -> int:
-        _, days_in_month = MONTHS[self.month]
+        days_in_month = MONTHS[self.month][1]
         if self.is_leap_year():
             days_in_month += 1
         return days_in_month
@@ -58,17 +58,18 @@ class Date:
 
     def get_qty_leap_years(self) -> int:
         """Cantidad de años bisiestos entre 1900 y hasta el año anterior a la fecha marcada"""
-        return (self.year - 1901) // 4
+        return (self.year - 1900) // 4
 
     def delta_days(self) -> int:
         """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
         delta_days = self.day
         days_non_leap_years = (self.year - 1900) * 365
         qty_leap_years = (self.year - 1900) // 4
+        days_in_previous_years = days_non_leap_years + qty_leap_years
         for i in range(1, self.month):
-            _, days_in_month = MONTHS[i]
+            days_in_month = MONTHS[i][1]
             delta_days += days_in_month
-        delta_days = days_non_leap_years + qty_leap_years
+        delta_days += days_in_previous_years
         return delta_days
 
     def weekday(self) -> int:
@@ -93,7 +94,7 @@ class Date:
 
     def __str__(self):
         """martes 2 de septiembre de 2003"""
-        return f"día_semana {self.day} de {MONTHS[self.month]} de {self.year}"
+        return f"día_semana {self.day} de {MONTHS[self.month][0]} de {self.year}"
 
 
 date1 = Date(14, 4, 2023)
