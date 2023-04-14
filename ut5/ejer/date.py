@@ -52,22 +52,19 @@ class Date:
         """Cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
         return (self.year - 1900) // 4
 
-    def delta_days(self) -> int:
-        """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
-        delta_days = self.day
-        days_in_previous_years = ((self.year - 1900) * 365) + (self.year - 1900) // 4
-        for i in range(1, self.month):
-            days_in_month = MONTHS[i][1]
-            delta_days += days_in_month
-        delta_days += days_in_previous_years
-        return delta_days - 1
-
     def elapsed_days_in_current_year(self) -> int:
         elapsed_days = self.day
         for i in range(1, self.month):
             days_in_month = MONTHS[i][1]
             elapsed_days += days_in_month
         return elapsed_days
+
+    def delta_days(self) -> int:
+        """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
+        delta_days = self.elapsed_days_in_current_year()
+        days_in_previous_years = ((self.year - 1900) * 365) + (self.year - 1900) // 4
+        delta_days += days_in_previous_years
+        return delta_days - 1
 
     def weekday(self) -> int:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
