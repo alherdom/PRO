@@ -70,6 +70,8 @@ class Date:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
         El 1-1-1900 fue domingo."""
         weekday = (self.delta_days() % 7) + 1
+        if weekday == 7:
+            weekday = 0
         return weekday
 
     def is_weekend(self) -> bool:
@@ -96,7 +98,7 @@ class Date:
         pass
 
 
-date1 = Date(9, 5, 1992)
+date1 = Date(16, 4, 2023)
 print(date1.is_leap_year())
 print(date1.qty_leap_years())
 print(date1.elapsed_days_in_current_year())
