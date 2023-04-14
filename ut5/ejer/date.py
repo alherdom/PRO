@@ -44,12 +44,12 @@ class Date:
 
     def days_in_month(self) -> int:
         days_in_month = MONTHS[self.month][1]
-        if self.is_leap_year():
+        if self.is_leap_year() and self.month == 2:
             days_in_month += 1
         return days_in_month
 
     def qty_leap_years(self) -> int:
-        """Cantidad de años bisiestos entre 1900 y hasta el año anterior a la fecha marcada"""
+        """Cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
         return (self.year - 1900) // 4
 
     def delta_days(self) -> int:
@@ -64,37 +64,57 @@ class Date:
         delta_days += days_in_previous_years
         return delta_days - 1
 
+    def elapsed_days_in_current_year(self) -> int:
+        elapsed_days = self.day
+        for i in range(1, self.month):
+            days_in_month = MONTHS[i][1]
+            elapsed_days += days_in_month
+        return elapsed_days
+
     def weekday(self) -> int:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
         El 1-1-1900 fue domingo."""
-        pass
+        weekday = (self.delta_days() % 7) + 1
+        # weekday = 0
+        # for i in range(self.delta_days() + 1):
+        #     weekday += 1
+        #     if weekday == 7:
+        #         weekday = 0
+        return weekday
 
     def is_weekend(self) -> bool:
-        pass
+        if self.weekday() == 0 or self.weekday() == 6:
+            return True
+        return False
 
     def short_date(self) -> str:
         """02/09/2003"""
-        day_for_short_date = "0" + str(self.day)
-        month_for_short_date = "0" + str(self.month)
-        if self.day < 9 and self.month >= 9:
-            return f"{day_for_short_date}/{self.month}/{self.year}"
-        if self.day >= 9 and self.month < 9:
-            return f"{self.day}/{month_for_short_date}/{self.year}"
-        if self.day < 9 and self.month < 9:
-            return f"{day_for_short_date}/{month_for_short_date}/{self.year}"
-        return f"{self.day}/{self.month}/{self.year}"
+        return f"{self.day:02d}/{self.month:02d}/{self.year}"
 
     def __str__(self):
         """martes 2 de septiembre de 2003"""
-        return f"día_semana {self.day} de {MONTHS[self.month][0]} de {self.year}"
+        return f"{WEEKDAYS[self.weekday()]} {self.day} de {MONTHS[self.month][0]} de {self.year}"
+
+    def __add__(self, other):
+        new_date = self.day + other
+        pass
+
+    def __sub__(self, other):
+        pass
+
+    def __eq__(self, other):
+        pass
 
 
-date1 = Date(14, 4, 2023)
+date1 = Date(9, 5, 1992)
 print(date1.is_leap_year())
 print(date1.qty_leap_years())
+print(date1.elapsed_days_in_current_year())
 print(date1.days_in_month())
 print(date1.short_date())
 print(date1.delta_days())
+print(date1.weekday())
+print(date1.is_weekend())
 print(date1)
 # operador + suma días a la fecha
 # operador - resta días a la fecha o calcula la diferencia entre dos fechas
