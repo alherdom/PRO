@@ -75,11 +75,6 @@ class Date:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
         El 1-1-1900 fue domingo."""
         weekday = (self.delta_days() % 7) + 1
-        # weekday = 0
-        # for i in range(self.delta_days() + 1):
-        #     weekday += 1
-        #     if weekday == 7:
-        #         weekday = 0
         return weekday
 
     def is_weekend(self) -> bool:
