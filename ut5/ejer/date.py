@@ -63,21 +63,13 @@ class Date:
     def delta_days(self) -> int:
         """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
         delta_days = self.day
-        days_non_leap_years = self.year - 1901 * 365
+        days_non_leap_years = (self.year - 1900) * 365
+        qty_leap_years = (self.year - 1900) // 4
         for i in range(1, self.month):
             _, days_in_month = MONTHS[i]
             delta_days += days_in_month
-
+        delta_days = days_non_leap_years + qty_leap_years
         return delta_days
-        # if self.is_leap_year() and self.month == 2:
-        #     delta_days += 1
-        # days_non_leap_years = self.year - 1901 * 365
-        # qty_leap_years = self.year - 1901 // 4
-        # days_elapsed_full_years = days_non_leap_years + qty_leap_years
-        # if self.month == 2:
-        #     days_of_current_year = 31 + self.day
-        # if self.month == 1:
-        #     days_of_current_year = self.day
 
     def weekday(self) -> int:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
@@ -104,8 +96,7 @@ class Date:
         return f"día_semana {self.day} de {MONTHS[self.month]} de {self.year}"
 
 
-date1 = Date(9, 2, 1992)
-
+date1 = Date(14, 4, 2023)
 print(date1.is_leap_year())
 print(date1.days_in_month())
 print(date1.short_date())
