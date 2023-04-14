@@ -41,43 +41,36 @@ class Date:
         if self.year % 400 == 0:
             return True
         return False
-
+    
     def days_in_month(self) -> int:
+        """Número de días en el mes actual"""
         days_in_month = MONTHS[self.month][1]
-        if self.is_leap_year() and self.month == 2:
+        if self.month == 2 and self.is_leap_year():
             days_in_month += 1
         return days_in_month
 
     def qty_leap_years(self) -> int:
         """Cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
         return (self.year - 1900) // 4
-
+    
     def elapsed_days_in_current_year(self) -> int:
-        elapsed_days = self.day
-        for i in range(1, self.month):
-            days_in_month = MONTHS[i][1]
-            elapsed_days += days_in_month
-        return elapsed_days
-
+        """Número de días transcurridos en el año actual"""
+        days_in_previous_months = sum(MONTHS[i][1] for i in range(1, self.month))
+        return days_in_previous_months + self.day
+    
     def delta_days(self) -> int:
         """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
-        delta_days = self.elapsed_days_in_current_year()
-        days_in_previous_years = ((self.year - 1900) * 365) + (self.year - 1900) // 4
-        delta_days += days_in_previous_years
-        return delta_days - 1
+        days_in_previous_years = (self.year - 1900) * 365 + (self.year - 1900) // 4
+        return days_in_previous_years + self.elapsed_days_in_current_year() - 1
 
     def weekday(self) -> int:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
         El 1-1-1900 fue domingo."""
-        weekday = (self.delta_days() % 7) + 1
-        if weekday == 7:
-            weekday = 0
-        return weekday
+        weekday = (self.delta_days() + 1) % 7
+        return weekday if weekday != 7 else 0
 
     def is_weekend(self) -> bool:
-        if self.weekday() == 0 or self.weekday() == 6:
-            return True
-        return False
+        return self.weekday() in [0, 6]
 
     def short_date(self) -> str:
         """02/09/2003"""
@@ -98,7 +91,7 @@ class Date:
         pass
 
 
-date1 = Date(16, 4, 2023)
+date1 = Date(9, 5, 1992)
 print(date1.is_leap_year())
 print(date1.qty_leap_years())
 print(date1.elapsed_days_in_current_year())
