@@ -34,7 +34,6 @@ class Date:
         self.month = month
         self.year = year
         self.leap_year = False
-        
 
     def is_leap_year(self) -> bool:
         if self.year % 4 == 0 and self.year % 100 != 0:
@@ -44,28 +43,41 @@ class Date:
         return False
 
     def days_in_month(self) -> int:
-        if self.month != 2:
-            if self.month <= 7 and self.month % 2 == 0:
-                return 30
-            if self.month > 7 and (self.month - 7) % 2 == 0:
-                return 30
-            return 31
+        _, days_in_month = MONTHS[self.month]
         if self.is_leap_year():
-            return 29
-        return 28
+            days_in_month += 1
+        return days_in_month
+        # if self.month != 2:
+        #     if self.month <= 7 and self.month % 2 == 0:
+        #         return 30
+        #     if self.month > 7 and (self.month - 7) % 2 == 0:
+        #         return 30
+        #     return 31
+        # if self.is_leap_year():
+        #     return 29
+
+    def get_qty_leap_years(self) -> int:
+        """Cantidad de años bisiestos entre 1900 y hasta el año anterior a la fecha marcada"""
+        return (self.year - 1901) // 4
 
     def delta_days(self) -> int:
         """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
-        delta_days = 0
-        if self.is_leap_year() and self.month == 2:
-            delta_days += 1
+        delta_days = self.day
         days_non_leap_years = self.year - 1901 * 365
-        qty_leap_years = self.year - 1901 // 4
-        days_elapsed_full_years = days_non_leap_years + qty_leap_years
-        if self.month == 2:
-            days_of_current_year = 31 + self.day
-        if self.month == 1:
-            days_of_current_year = self.day
+        for i in range(1, self.month):
+            _, days_in_month = MONTHS[i]
+            delta_days += days_in_month
+
+        return delta_days
+        # if self.is_leap_year() and self.month == 2:
+        #     delta_days += 1
+        # days_non_leap_years = self.year - 1901 * 365
+        # qty_leap_years = self.year - 1901 // 4
+        # days_elapsed_full_years = days_non_leap_years + qty_leap_years
+        # if self.month == 2:
+        #     days_of_current_year = 31 + self.day
+        # if self.month == 1:
+        #     days_of_current_year = self.day
 
     def weekday(self) -> int:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
@@ -92,13 +104,13 @@ class Date:
         return f"día_semana {self.day} de {MONTHS[self.month]} de {self.year}"
 
 
-date1 = Date(9, 5, 1992)
+date1 = Date(9, 2, 1992)
 
 print(date1.is_leap_year())
 print(date1.days_in_month())
 print(date1.short_date())
-print(date1)
 print(date1.delta_days())
+print(date1)
 # operador + suma días a la fecha
 # operador - resta días a la fecha o calcula la diferencia entre dos fechas
 # operador == dice si dos fechas son iguales
