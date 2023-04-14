@@ -47,16 +47,8 @@ class Date:
         if self.is_leap_year():
             days_in_month += 1
         return days_in_month
-        # if self.month != 2:
-        #     if self.month <= 7 and self.month % 2 == 0:
-        #         return 30
-        #     if self.month > 7 and (self.month - 7) % 2 == 0:
-        #         return 30
-        #     return 31
-        # if self.is_leap_year():
-        #     return 29
 
-    def get_qty_leap_years(self) -> int:
+    def qty_leap_years(self) -> int:
         """Cantidad de años bisiestos entre 1900 y hasta el año anterior a la fecha marcada"""
         return (self.year - 1900) // 4
 
@@ -70,7 +62,7 @@ class Date:
             days_in_month = MONTHS[i][1]
             delta_days += days_in_month
         delta_days += days_in_previous_years
-        return delta_days
+        return delta_days - 1
 
     def weekday(self) -> int:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
@@ -99,6 +91,7 @@ class Date:
 
 date1 = Date(14, 4, 2023)
 print(date1.is_leap_year())
+print(date1.qty_leap_years())
 print(date1.days_in_month())
 print(date1.short_date())
 print(date1.delta_days())
