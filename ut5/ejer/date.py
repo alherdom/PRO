@@ -55,9 +55,7 @@ class Date:
     def delta_days(self) -> int:
         """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
         delta_days = self.day
-        days_non_leap_years = (self.year - 1900) * 365
-        qty_leap_years = (self.year - 1900) // 4
-        days_in_previous_years = days_non_leap_years + qty_leap_years
+        days_in_previous_years = ((self.year - 1900) * 365) + (self.year - 1900) // 4
         for i in range(1, self.month):
             days_in_month = MONTHS[i][1]
             delta_days += days_in_month
