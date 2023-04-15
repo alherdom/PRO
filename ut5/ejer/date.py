@@ -1,6 +1,6 @@
 MONTHS = {
     1: ("enero", 31),
-    2: ("febrero", 28),
+    2: ("febrero", 28, 29),
     3: ("marzo", 31),
     4: ("abril", 30),
     5: ("mayo", 31),
@@ -41,6 +41,11 @@ class Date:
         if self.year % 400 == 0:
             return True
         return False
+    
+    # def check_if_date_is_correct(self) -> bool:
+    #     if self.day:
+    #         return True
+    #     return False
     
     def days_in_month(self) -> int:
         """Número de días en el mes actual"""

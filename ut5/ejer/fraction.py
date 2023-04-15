@@ -1,5 +1,7 @@
 class Fraction:
     def __init__(self, num: int, den: int):
+        if not isinstance(num, int) or not isinstance(den, int):
+            raise ValueError("Numerador y denominador deben de ser de tipo entero.")
         gcd = self.gcd(num, den)
         self.num = num // gcd
         self.den = den // gcd
@@ -29,11 +31,19 @@ class Fraction:
         new_den = self.den * other.den
         return Fraction(new_num, new_den)
 
-    def __truediv__(self, other):
+    def __floordiv__(self, other):
         new_num = self.num * other.den
         new_den = self.den * other.num
         return Fraction(new_num, new_den)
 
+    def __eq__(self, other):
+        return self.num == other.num and self.den == other.den
+
+    def __lt__(self, other):
+        return self.num * other.den < other.num * self.den
+    
+    def __gt__(self, other):
+        return self.num * other.den > other.num * self.den
 
 fraction1 = Fraction(25, 30)
 fraction2 = Fraction(40, 45)
@@ -47,5 +57,5 @@ print(fraction4)
 fraction5 = fraction1 * fraction2
 print(fraction5)
 
-fraction6 = fraction1 / fraction2
+fraction6 = fraction1 // fraction2
 print(fraction6)
