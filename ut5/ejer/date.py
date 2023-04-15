@@ -42,11 +42,15 @@ class Date:
             return True
         return False
     
-    # def check_if_date_is_correct(self) -> bool:
-    #     if self.day:
-    #         return True
-    #     return False
-    
+    def check_if_date_is_correct(self) -> bool:
+        if not (1900 <= self.year <= 2050):
+            return False
+        if not (1 <= self.month <= 12):
+            return False
+        if not (1 <= self.day <= MONTHS[self.month][1]):
+            return False
+        return True
+        
     def days_in_month(self):
         """Número de días en el mes actual"""
         if self.month == 2 and self.is_leap_year():
@@ -85,7 +89,7 @@ class Date:
         return f"{WEEKDAYS[self.weekday()]} {self.day} de {MONTHS[self.month][0]} de {self.year}"
     
     def __add__(self, days_to_add) -> str:
-        """suma de días a la fecha marcada"""
+        """operador + suma de días a la fecha marcada"""
         self.day += days_to_add
         while self.day > self.days_in_month():
             self.day -= self.days_in_month()
@@ -96,7 +100,7 @@ class Date:
         return f"{self.day}/{self.month}/{self.year}"
 
     def __sub__(self, days_to_sub):
-        """resta de días a la fecha marcada"""
+        """operador - resta de días a la fecha marcada"""
         self.day -= days_to_sub
         while self.day < 1:
             self.day += self.days_in_month()
@@ -107,21 +111,22 @@ class Date:
         return f"{self.day}/{self.month}/{self.year}"
 
     def __eq__(self, other) -> bool:
+        """operador == dice si dos fechas son iguales"""
         if self.delta_days() == other.delta_days():
             return True
         return False
     
     def __lt__(self, other) -> bool:
+        """operador < dice si una fecha es menor que otra"""
         if self.delta_days() < other.delta_days():
             return True
         return False
     
     def __gt__(self, other) -> bool:
+        """operador > dice si una fecha es mayor que otra"""
         if self.delta_days() > other.delta_days():
             return False
         return False    
-
-
 
 date1 = Date(16, 4, 2023)
 date2 = Date(11, 4, 2023)
@@ -135,15 +140,7 @@ print(date1.delta_days())
 print(date1.weekday())
 print(date1.is_weekend())
 print(date1)
-new_date = date1 - 104
-print(new_date)
+print(date1 - 104)
 print(date2 == date3)
 print(date2 > date3)
 print(date2 < date3)
-
-# to do: validar fechas? (30-02-2023)?
-# operador + suma días a la fecha
-# operador - resta días a la fecha o calcula la diferencia entre dos fechas
-# operador == dice si dos fechas son iguales
-# operador > dice si una fecha es mayor que otra
-# operador < dice si una fecha es menor que otra
