@@ -81,14 +81,14 @@ class Date:
         return f"{WEEKDAYS[self.weekday()]} {self.day} de {MONTHS[self.month][0]} de {self.year}"
     
     def __add__(self, days_to_add):
-        new_day_date = self.day + days_to_add
-        if new_day_date > self.days_in_month():
-            new_day_date %= self.days_in_month()
+        self.day += days_to_add
+        if self.day > self.days_in_month():
+            self.day %= self.days_in_month()
             self.month += 1
             if self.month > 12:
                 self.month = 1
                 self.year += 1
-        return f"{new_day_date}/{self.month}/{self.year}"
+        return f"{self.day}/{self.month}/{self.year}"
         pass
 
     def __sub__(self, other):
