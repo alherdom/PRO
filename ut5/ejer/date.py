@@ -29,10 +29,15 @@ class Date:
         si el mes no es correcto, lo pondrá a 1; y si el año no es correcto, lo pondrá a 1900.
         Ojo con los años bisiestos.
         """
+        if not (1900 <= year <= 2050):
+            self.year = 1900
+        if not (1 <= month <= 12):
+            self.month = 1
+        if not (1 <= day <= MONTHS[self.month][1]):
+            self.day = 1
         self.day = day
         self.month = month
         self.year = year
-        self.leap_year = False
 
     def is_leap_year(self) -> bool:
         if self.year % 4 == 0 and self.year % 100 != 0:
@@ -40,18 +45,6 @@ class Date:
         if self.year % 400 == 0:
             return True
         return False
-    
-    def check_if_date_is_correct(self) -> bool:
-        if not (1900 <= self.year <= 2050):
-            self.year = 1900
-            return False
-        if not (1 <= self.month <= 12):
-            self.month = 1
-            return False
-        if not (1 <= self.day <= MONTHS[self.month][1]):
-            self.day = 1
-            return False
-        return True
         
     def days_in_month(self) -> int:
         """número de días en el mes actual"""
@@ -130,7 +123,7 @@ class Date:
             return False
         return False    
 
-date1 = Date(16, 4, 2023)
+date1 = Date(16, 4, 20023)
 date2 = Date(11, 4, 2023)
 date3 = Date(11, 4, 2023)
 print(date1.is_leap_year())
