@@ -1,3 +1,5 @@
+START_YEAR = 1900
+FINAL_YEAR = 2050
 MONTHS = {
     1: ("enero", 31),
     2: ("febrero", 28, 29),
@@ -32,17 +34,15 @@ class Date:
         self.day = day
         self.month = month
         self.year = year
-        if not (1900 <= year <= 2050):
-            self.year = 1900
+        if not (START_YEAR <= year <= FINAL_YEAR):
+            self.year = START_YEAR
         if not (1 <= month <= 12):
             self.month = 1
-        if not (1 <= day <= MONTHS[self.month][1]): # Y si es febrero bisiesto?
+        if not (1 <= day <= self.days_in_month()):
             self.day = 1
 
     def is_leap_year(self) -> bool:
-        if self.year % 4 == 0 and self.year % 100 != 0:
-            return True
-        if self.year % 400 == 0:
+        if (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0:
             return True
         return False
         
@@ -58,16 +58,15 @@ class Date:
     
     def elapsed_days_in_current_year(self) -> int:
         """número de días transcurridos en el año actual"""
-        days_in_previous_months = sum(MONTHS[i][1] for i in range(1, self.month))
-        return days_in_previous_months + self.day
+        return sum(MONTHS[i][1] for i in range(1, self.month)) + self.day
     
     def delta_days(self) -> int:
         """número de días transcurridos desde el 1-1-1900 hasta la fecha"""
-        days_in_previous_years = (self.year - 1900) * 365 + (self.year - 1900) // 4
+        days_in_previous_years = (self.year - 1900) * 365 + self.qty_leap_years()
         return days_in_previous_years + self.elapsed_days_in_current_year() - 1
 
     def weekday(self) -> int:
-        """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
+        """día de la semana de la fecha (de 0: domingo a 6: sábado).
         El 1-1-1900 fue domingo."""
         weekday = (self.delta_days() + 1) % 7
         return weekday if weekday != 7 else 0
@@ -123,7 +122,7 @@ class Date:
             return False
         return False    
 
-date1 = Date(16, 4, 20023)
+date1 = Date(29, 2, 1993)
 date2 = Date(11, 4, 2023)
 date3 = Date(11, 4, 2023)
 print(date1.is_leap_year())
