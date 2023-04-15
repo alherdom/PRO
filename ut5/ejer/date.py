@@ -49,10 +49,9 @@ class Date:
     
     def days_in_month(self) -> int:
         """Número de días en el mes actual"""
-        days_in_month = MONTHS[self.month][1]
         if self.month == 2 and self.is_leap_year():
-            days_in_month += 1
-        return days_in_month
+            return MONTHS[self.month][2]
+        return MONTHS[self.month][1]
 
     def qty_leap_years(self) -> int:
         """Cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
