@@ -36,7 +36,7 @@ class Date:
             self.year = 1900
         if not (1 <= month <= 12):
             self.month = 1
-        if not (1 <= day <= MONTHS[self.month][1]):
+        if not (1 <= day <= MONTHS[self.month][1]): # Y si es febrero bisiesto?
             self.day = 1
 
     def is_leap_year(self) -> bool:
@@ -94,7 +94,7 @@ class Date:
                 self.year += 1          
         return f"{self.day}/{self.month}/{self.year}"
 
-    def __sub__(self, days_to_sub) -> str:
+    def __sub__(self, days_to_sub) -> str: # Y restando una fecha?
         """operador - resta de días a la fecha marcada"""
         self.day -= days_to_sub
         while self.day < 1:
