@@ -136,6 +136,7 @@ print(new_date)
 print(date2 == date3)
 print(date2 > date3)
 print(date2 < date3)
+
 # to do: validar fechas? (30-02-2023)?
 # operador + suma días a la fecha
 # operador - resta días a la fecha o calcula la diferencia entre dos fechas
