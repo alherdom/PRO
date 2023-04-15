@@ -43,10 +43,13 @@ class Date:
     
     def check_if_date_is_correct(self) -> bool:
         if not (1900 <= self.year <= 2050):
+            self.year = 1900
             return False
         if not (1 <= self.month <= 12):
+            self.month = 1
             return False
         if not (1 <= self.day <= MONTHS[self.month][1]):
+            self.day = 1
             return False
         return True
         
