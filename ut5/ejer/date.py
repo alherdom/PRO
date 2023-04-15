@@ -29,15 +29,15 @@ class Date:
         si el mes no es correcto, lo pondrá a 1; y si el año no es correcto, lo pondrá a 1900.
         Ojo con los años bisiestos.
         """
+        self.day = day
+        self.month = month
+        self.year = year
         if not (1900 <= year <= 2050):
             self.year = 1900
         if not (1 <= month <= 12):
             self.month = 1
         if not (1 <= day <= MONTHS[self.month][1]):
             self.day = 1
-        self.day = day
-        self.month = month
-        self.year = year
 
     def is_leap_year(self) -> bool:
         if self.year % 4 == 0 and self.year % 100 != 0:
@@ -135,7 +135,7 @@ print(date1.delta_days())
 print(date1.weekday())
 print(date1.is_weekend())
 print(date1)
-print(date1 - 104)
+print(date1 - 10)
 print(date2 == date3)
 print(date2 > date3)
 print(date2 < date3)
