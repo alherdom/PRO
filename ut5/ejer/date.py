@@ -57,7 +57,7 @@ class Date:
         """Cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
         return (self.year - 1900) // 4
     
-    def elapsed_days_in_current_year(self) -> int:
+    def elapsed_days_in_current_year(self):
         """Número de días transcurridos en el año actual"""
         days_in_previous_months = sum(MONTHS[i][1] for i in range(1, self.month))
         return days_in_previous_months + self.day
