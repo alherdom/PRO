@@ -106,21 +106,15 @@ class Date:
 
     def __eq__(self, other) -> bool:
         """operador == dice si dos fechas son iguales"""
-        if self.delta_days() == other.delta_days():
-            return True
-        return False
+        return True if self.delta_days() == other.delta_days() else False
     
     def __lt__(self, other) -> bool:
         """operador < dice si una fecha es menor que otra"""
-        if self.delta_days() < other.delta_days():
-            return True
-        return False
+        return True if self.delta_days() < other.delta_days() else False
     
     def __gt__(self, other) -> bool:
         """operador > dice si una fecha es mayor que otra"""
-        if self.delta_days() > other.delta_days():
-            return False
-        return False    
+        return True if self.delta_days() > other.delta_days() else False    
 
 date1 = Date(29, 2, 1993)
 date2 = Date(11, 4, 2023)
