@@ -55,13 +55,13 @@ class Date:
     
     def elapsed_days_in_current_year(self) -> int:
         """Número de días transcurridos en el año actual"""
-        days_in_previous_months = sum(MONTHS[i][1] for i in range(1, self.month))
-        return days_in_previous_months + self.day
+        days_previous_months = sum(MONTHS[i][1] for i in range(1, self.month))
+        return days_previous_months + self.day
     
     def delta_days(self) -> int:
         """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
-        days_in_previous_years = (self.year - 1900) * 365 + (self.year - 1900) // 4
-        return days_in_previous_years + self.elapsed_days_in_current_year() - 1
+        days_previous_years = (self.year - 1900) * 365 + (self.year - 1900) // 4
+        return days_previous_years + self.elapsed_days_in_current_year() - 1
 
     def weekday(self) -> int:
         """día de la semana de la fecha (0 para domingo, ..., 6 para sábado).
