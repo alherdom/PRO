@@ -76,11 +76,11 @@ class Date:
         """02/09/2003"""
         return f"{self.day:02d}/{self.month:02d}/{self.year}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         """martes 2 de septiembre de 2003"""
         return f"{WEEKDAYS[self.weekday()]} {self.day} de {MONTHS[self.month][0]} de {self.year}"
     
-    def __add__(self, days_to_add):
+    def __add__(self, days_to_add) -> str:
         """suma de días a la fecha marcada"""
         self.day += days_to_add
         while self.day > self.days_in_month():
@@ -102,11 +102,26 @@ class Date:
                 self.year -= 1
         return f"{self.day}/{self.month}/{self.year}"
 
-    def __eq__(self, other):
-        pass
+    def __eq__(self, other) -> bool:
+        if self.delta_days() == other.delta_days():
+            return True
+        return False
+    
+    def __lt__(self, other) -> bool:
+        if self.delta_days() < other.delta_days():
+            return True
+        return False
+    
+    def __gt__(self, other) -> bool:
+        if self.delta_days() > other.delta_days():
+            return False
+        return False    
+
 
 
 date1 = Date(16, 4, 2023)
+date2 = Date(11, 4, 2023)
+date3 = Date(12, 4, 2023)
 print(date1.is_leap_year())
 print(date1.qty_leap_years())
 print(date1.elapsed_days_in_current_year())
@@ -118,6 +133,9 @@ print(date1.is_weekend())
 print(date1)
 new_date = date1 - 104
 print(new_date)
+print(date2 == date3)
+print(date2 > date3)
+print(date2 < date3)
 # operador + suma días a la fecha
 # operador - resta días a la fecha o calcula la diferencia entre dos fechas
 # operador == dice si dos fechas son iguales
