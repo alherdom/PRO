@@ -121,7 +121,7 @@ class Date:
 
 date1 = Date(16, 4, 2023)
 date2 = Date(11, 4, 2023)
-date3 = Date(12, 4, 2023)
+date3 = Date(11, 4, 2023)
 print(date1.is_leap_year())
 print(date1.qty_leap_years())
 print(date1.elapsed_days_in_current_year())
@@ -136,6 +136,7 @@ print(new_date)
 print(date2 == date3)
 print(date2 > date3)
 print(date2 < date3)
+# to do: validar fechas? (30-02-2023)?
 # operador + suma días a la fecha
 # operador - resta días a la fecha o calcula la diferencia entre dos fechas
 # operador == dice si dos fechas son iguales
