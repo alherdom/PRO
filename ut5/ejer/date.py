@@ -22,7 +22,6 @@ WEEKDAYS = {
     6: "sábado",
 }
 
-
 class Date:
     def __init__(self, day: int, month: int, year: int):
         """Validar día, mes y año. Se comprobará si la fecha es correcta
