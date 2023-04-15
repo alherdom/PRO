@@ -79,9 +79,16 @@ class Date:
     def __str__(self):
         """martes 2 de septiembre de 2003"""
         return f"{WEEKDAYS[self.weekday()]} {self.day} de {MONTHS[self.month][0]} de {self.year}"
-
-    def __add__(self, other):
-        new_date = self.day + other
+    
+    def __add__(self, days_to_add):
+        new_day_date = self.day + days_to_add
+        if new_day_date > self.days_in_month():
+            new_day_date %= self.days_in_month()
+            self.month += 1
+            if self.month > 12:
+                self.month = 1
+                self.year += 1
+        return f"{new_day_date}/{self.month}/{self.year}"
         pass
 
     def __sub__(self, other):
@@ -91,7 +98,7 @@ class Date:
         pass
 
 
-date1 = Date(9, 5, 1992)
+date1 = Date(31, 12, 1990)
 print(date1.is_leap_year())
 print(date1.qty_leap_years())
 print(date1.elapsed_days_in_current_year())
@@ -101,6 +108,8 @@ print(date1.delta_days())
 print(date1.weekday())
 print(date1.is_weekend())
 print(date1)
+new_date = date1 + 1
+print(new_date)
 # operador + suma días a la fecha
 # operador - resta días a la fecha o calcula la diferencia entre dos fechas
 # operador == dice si dos fechas son iguales
