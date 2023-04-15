@@ -91,8 +91,16 @@ class Date:
                 self.year += 1          
         return f"{self.day}/{self.month}/{self.year}"
 
-    def __sub__(self, other):
-        pass
+    def __sub__(self, days_to_sub):
+        """resta de días a la fecha marcada"""
+        self.day -= days_to_sub
+        while self.day < 1:
+            self.day += self.days_in_month()
+            self.month -= 1
+            if self.month < 1:
+                self.month = 12
+                self.year -= 1
+        return f"{self.day}/{self.month}/{self.year}"
 
     def __eq__(self, other):
         pass
