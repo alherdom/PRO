@@ -24,7 +24,7 @@ WEEKDAYS = {
 
 class Date:
     def __init__(self, day: int, month: int, year: int):
-        """Validar día, mes y año. Se comprobará si la fecha es correcta
+        """validar día, mes y año. Se comprobará si la fecha es correcta
         (entre el 1-1-1900 y el 31-12-2050); si el día no es correcto, lo pondrá a 1;
         si el mes no es correcto, lo pondrá a 1; y si el año no es correcto, lo pondrá a 1900.
         Ojo con los años bisiestos.
@@ -54,22 +54,22 @@ class Date:
         return True
         
     def days_in_month(self):
-        """Número de días en el mes actual"""
+        """número de días en el mes actual"""
         if self.month == 2 and self.is_leap_year():
             return MONTHS[self.month][2]
         return MONTHS[self.month][1]
 
     def qty_leap_years(self) -> int:
-        """Cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
+        """cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
         return (self.year - 1900) // 4
     
     def elapsed_days_in_current_year(self):
-        """Número de días transcurridos en el año actual"""
+        """número de días transcurridos en el año actual"""
         days_in_previous_months = sum(MONTHS[i][1] for i in range(1, self.month))
         return days_in_previous_months + self.day
     
     def delta_days(self) -> int:
-        """Número de días transcurridos desde el 1-1-1900 hasta la fecha"""
+        """número de días transcurridos desde el 1-1-1900 hasta la fecha"""
         days_in_previous_years = (self.year - 1900) * 365 + (self.year - 1900) // 4
         return days_in_previous_years + self.elapsed_days_in_current_year() - 1
 
