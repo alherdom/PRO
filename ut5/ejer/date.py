@@ -47,7 +47,7 @@ class Date:
     #         return True
     #     return False
     
-    def days_in_month(self) -> int:
+    def days_in_month(self):
         """Número de días en el mes actual"""
         if self.month == 2 and self.is_leap_year():
             return MONTHS[self.month][2]
