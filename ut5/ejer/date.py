@@ -106,7 +106,7 @@ class Date:
         pass
 
 
-date1 = Date(31, 12, 2023)
+date1 = Date(16, 4, 2023)
 print(date1.is_leap_year())
 print(date1.qty_leap_years())
 print(date1.elapsed_days_in_current_year())
@@ -116,7 +116,7 @@ print(date1.delta_days())
 print(date1.weekday())
 print(date1.is_weekend())
 print(date1)
-new_date = date1 + 1
+new_date = date1 - 104
 print(new_date)
 # operador + suma días a la fecha
 # operador - resta días a la fecha o calcula la diferencia entre dos fechas
