@@ -95,7 +95,6 @@ class Date:
                 self.month = 12
                 self.year -= 1
         return f"{self.day}/{self.month}/{self.year}"
- 
 
     @staticmethod
     def days_to_date(days: int) -> str:
