@@ -31,15 +31,9 @@ class Date:
         si el mes no es correcto, lo pondrá a 1; y si el año no es correcto, lo pondrá a START_YEAR.
         Ojo con los años bisiestos.
         """
-        self.day = day
-        self.month = month
-        self.year = year
-        self.validate_date()
-    
-    def validate_date(self):
-        if not (START_YEAR <= self.year <= FINAL_YEAR): self.year = START_YEAR
-        if not (1 <= self.month <= 12): self.month = 1
-        if not (1 <= self.day <= self.days_in_month()): self.day = 1
+        self.year = year if START_YEAR <= year <= FINAL_YEAR else START_YEAR
+        self.month = month if 1 <= month <= 12 else 1
+        self.day = day if 1 <= day <= self.days_in_month() else 1
 
     def is_leap_year(self) -> bool:
         return (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0
@@ -91,7 +85,7 @@ class Date:
                 self.year += 1          
         return f"{self.day}/{self.month}/{self.year}"
 
-    def __sub__(self, days_to_sub) -> str: # Y restando una fecha?
+    def __sub__(self, days_to_sub): # Y restando una fecha?
         """operador - resta de días a la fecha marcada"""
         self.day -= days_to_sub
         while self.day < 1:
@@ -101,6 +95,20 @@ class Date:
                 self.month = 12
                 self.year -= 1
         return f"{self.day}/{self.month}/{self.year}"
+ 
+
+    @staticmethod
+    def days_to_date(days: int) -> str:
+        years, rest_days = divmod(days, 365)
+        rest_days -= years // 4
+        month = 1
+        days_in_month = MONTHS[month][1]
+        while rest_days > days_in_month:
+            rest_days -= MONTHS[month][1]
+            month += 1
+            if month > 12:
+                month = 1
+        return f"{rest_days + 1}/{month}/{years + START_YEAR}"
 
     def __eq__(self, other) -> bool:
         """operador == dice si dos fechas son iguales"""
@@ -114,7 +122,7 @@ class Date:
         """operador > dice si una fecha es mayor que otra"""
         return self.delta_days() > other.delta_days()    
 
-date1 = Date(29, 2, 1993)
+date1 = Date(28, 2, 1993)
 date2 = Date(11, 4, 2023)
 date3 = Date(11, 4, 2023)
 print(date1.is_leap_year())
@@ -130,3 +138,4 @@ print(date1 - 10)
 print(date2 == date3)
 print(date2 > date3)
 print(date2 < date3)
+print(date2.days_to_date(34028))
