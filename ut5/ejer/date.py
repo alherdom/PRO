@@ -42,11 +42,9 @@ class Date:
             self.day = 1
 
     def is_leap_year(self) -> bool:
-        if (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0:
-            return True
-        return False
-        
-    def days_in_month(self): # -> int:
+        return (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0:
+    
+    def days_in_month(self) -> int:
         """número de días en el mes actual"""
         if self.month == 2 and self.is_leap_year():
             return MONTHS[self.month][2]
@@ -56,7 +54,7 @@ class Date:
         """cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
         return (self.year - START_YEAR) // 4
     
-    def elapsed_days_in_current_year(self): # -> int:
+    def elapsed_days_in_current_year(self) -> int:
         """número de días transcurridos en el año actual"""
         return sum(MONTHS[i][1] for i in range(1, self.month)) + self.day
     
@@ -106,15 +104,15 @@ class Date:
 
     def __eq__(self, other) -> bool:
         """operador == dice si dos fechas son iguales"""
-        return True if self.delta_days() == other.delta_days() else False
+        return self.delta_days() == other.delta_days()
     
     def __lt__(self, other) -> bool:
         """operador < dice si una fecha es menor que otra"""
-        return True if self.delta_days() < other.delta_days() else False
+        return self.delta_days() < other.delta_days()
     
     def __gt__(self, other) -> bool:
         """operador > dice si una fecha es mayor que otra"""
-        return True if self.delta_days() > other.delta_days() else False    
+        return self.delta_days() > other.delta_days()    
 
 date1 = Date(29, 2, 1993)
 date2 = Date(11, 4, 2023)
