@@ -46,7 +46,7 @@ class Date:
             return True
         return False
         
-    def days_in_month(self) -> int:
+    def days_in_month(self): # -> int:
         """número de días en el mes actual"""
         if self.month == 2 and self.is_leap_year():
             return MONTHS[self.month][2]
@@ -56,7 +56,7 @@ class Date:
         """cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
         return (self.year - START_YEAR) // 4
     
-    def elapsed_days_in_current_year(self) -> int:
+    def elapsed_days_in_current_year(self): # -> int:
         """número de días transcurridos en el año actual"""
         return sum(MONTHS[i][1] for i in range(1, self.month)) + self.day
     
