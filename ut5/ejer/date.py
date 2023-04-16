@@ -34,12 +34,12 @@ class Date:
         self.day = day
         self.month = month
         self.year = year
-        if not (START_YEAR <= year <= FINAL_YEAR):
-            self.year = START_YEAR
-        if not (1 <= month <= 12):
-            self.month = 1
-        if not (1 <= day <= self.days_in_month()):
-            self.day = 1
+        self.validate_date()
+    
+    def validate_date(self):
+        if not (START_YEAR <= self.year <= FINAL_YEAR): self.year = START_YEAR
+        if not (1 <= self.month <= 12): self.month = 1
+        if not (1 <= self.day <= self.days_in_month()): self.day = 1
 
     def is_leap_year(self) -> bool:
         return (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0
