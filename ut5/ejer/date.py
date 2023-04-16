@@ -42,7 +42,7 @@ class Date:
             self.day = 1
 
     def is_leap_year(self) -> bool:
-        return (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0:
+        return (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0
     
     def days_in_month(self) -> int:
         """número de días en el mes actual"""
