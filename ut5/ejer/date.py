@@ -81,6 +81,7 @@ class Date:
     
     def __add__(self, days_to_add) -> str:
         """operador + suma de días a la fecha marcada"""
+        
         self.day += days_to_add
         while self.day > self.days_in_month():
             self.day -= self.days_in_month()
@@ -101,9 +102,7 @@ class Date:
                     self.month = 12
                     self.year -= 1
             return f"{self.day}/{self.month}/{self.year}"
-        
-                       
-    
+            
     @staticmethod
     def days_to_date(days: int) -> str:
         years, rest_days = divmod(days, 365)
