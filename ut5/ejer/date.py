@@ -101,9 +101,7 @@ class Date:
                     self.month = 12
                     self.year -= 1
             return f"{self.day}/{self.month}/{self.year}"
-        day = self.day - other.day 
-        month = self.month - other.month
-        year = self.month - other. m
+        
                        
     
     @staticmethod
