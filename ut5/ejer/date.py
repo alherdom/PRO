@@ -43,6 +43,11 @@ class Date:
         if self.month == 2 and self.is_leap_year():
             return MONTHS[self.month][2]
         return MONTHS[self.month][1]
+        # if self.month == 2:
+        #     return 29 if self.is_leap_year() else 28
+        # if self.month in [4, 6, 9, 11]:
+        #     return 30
+        # return 31
 
     def qty_leap_years(self) -> int:
         """cantidad de años bisiestos entre 1900 hasta el año anterior a la fecha marcada"""
@@ -95,19 +100,18 @@ class Date:
                 self.month = 12
                 self.year -= 1
         return f"{self.day}/{self.month}/{self.year}"
-
+    
     @staticmethod
     def days_to_date(days: int) -> str:
         years, rest_days = divmod(days, 365)
         rest_days -= years // 4
         month = 1
-        days_in_month = MONTHS[month][1]
-        while rest_days > days_in_month:
+        while rest_days > MONTHS[month][1]:
             rest_days -= MONTHS[month][1]
             month += 1
             if month > 12:
                 month = 1
-        return f"{rest_days + 1}/{month}/{years + START_YEAR}"
+        return f"{1 + rest_days}/{month}/{START_YEAR + years}"
 
     def __eq__(self, other) -> bool:
         """operador == dice si dos fechas son iguales"""
@@ -137,4 +141,4 @@ print(date1 - 10)
 print(date2 == date3)
 print(date2 > date3)
 print(date2 < date3)
-print(date2.days_to_date(34037))
+print(date2.days_to_date(34027))
