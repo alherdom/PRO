@@ -90,16 +90,21 @@ class Date:
                 self.year += 1          
         return f"{self.day}/{self.month}/{self.year}"
 
-    def __sub__(self, days_to_sub): # Y restando una fecha?
+    def __sub__(self, other): # Y restando una fecha?
         """operador - resta de días a la fecha marcada"""
-        self.day -= days_to_sub
-        while self.day < 1:
-            self.day += self.days_in_month()
-            self.month -= 1
-            if self.month < 1:
-                self.month = 12
-                self.year -= 1
-        return f"{self.day}/{self.month}/{self.year}"
+        if isinstance(other, int):
+            self.day -= other
+            while self.day < 1:
+                self.day += self.days_in_month()
+                self.month -= 1
+                if self.month < 1:
+                    self.month = 12
+                    self.year -= 1
+            return f"{self.day}/{self.month}/{self.year}"
+        day = self.day - other.day 
+        month = self.month - other.month
+        year = self.month - other. m
+                       
     
     @staticmethod
     def days_to_date(days: int) -> str:
