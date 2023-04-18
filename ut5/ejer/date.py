@@ -59,7 +59,7 @@ class Date:
         return days_in_previous_years + self.days_elapsed_in_the_year() - 1
 
     def weekday(self) -> int:
-        weekday = (self.delta_days() + 1) % 7
+        weekday = (self.delta_days() % 7) + 1
         return weekday if weekday != 7 else 0
 
     def is_weekend(self) -> bool:
@@ -110,7 +110,7 @@ class Date:
 date1 = Date(18, 4, 2023)
 date2 = Date(11, 4, 2023)
 date3 = Date(11, 4, 2023)
-date4 = Date(9, 5, 2023)
+date4 = Date(9, 5, 1992)
 print(f"✓ Is leap year: {date1.is_leap_year()}")
 print(f"✓ Amount of the leap years is: {date1.qty_of_leap_years()}")
 print(f"✓ Days elapsed in the year is: {date1.days_elapsed_in_the_year()}")
@@ -124,6 +124,7 @@ print(f"✓ Is {date2.short_date()} equal to {date3.short_date()}: {date2 == dat
 print(f"✓ Is {date2.short_date()} greater than {date4.short_date()}: {date2 > date4}")
 print(f"✓ Is {date2.short_date()} lower than {date4.short_date()}: {date2 < date4}")
 print("✓ Calculation of additions and subtractions:")
-print(f"  - Result of the addition: {date1 + 60}")
+print(f"  - Result of the addition: {date1 + 10}")
 print(f"  - Result of the subtraction: {date1 - 24}")
 print(f"  - Result of the subtraction: {date1 - date4}")
+print(date4)
