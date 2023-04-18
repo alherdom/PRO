@@ -1,17 +1,17 @@
 START_YEAR, FINAL_YEAR = 1900, 2050
 MONTHS = {
-    1: ("january", 31),
-    2: ("february", 28),
-    3: ("march", 31),
-    4: ("april", 30),
-    5: ("may", 31),
-    6: ("june", 30),
-    7: ("july", 31),
-    8: ("august", 31),
-    9: ("september", 30),
-    10: ("october", 31),
-    11: ("november", 30),
-    12: ("december", 31),
+    1: "january",
+    2: "february",
+    3: "march",
+    4: "april",
+    5: "may",
+    6: "june",
+    7: "july",
+    8: "august",
+    9: "september",
+    10: "october",
+    11: "november",
+    12: "december"
 }
 WEEKDAYS = {
     0: "sunday",
@@ -20,7 +20,7 @@ WEEKDAYS = {
     3: "wednesday",
     4: "thursday",
     5: "friday",
-    6: "saturday",
+    6: "saturday"
 }
 class Date:
     def __init__(self, day: int, month: int, year: int):
@@ -34,23 +34,23 @@ class Date:
         return (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0
     
     def days_in_month(self) -> int:
-        if self.month == 2 and self.is_leap_year():
-            return MONTHS[self.month][1] + 1
-        return MONTHS[self.month][1]
+        if self.month == 2:
+            return 29 if self.is_leap_year() else 28
+        return 30 if self.month in [4,6,9,11] else 31
 
     @staticmethod
     def static_days_in_month(month: int, year: int) -> int:
         is_leap_year = (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
-        if month == 2 and is_leap_year:
-            return MONTHS[month][1] + 1
-        return MONTHS[month][1]
+        if month == 2:
+            return 29 if is_leap_year else 28
+        return 30 if month in [4,6,9,11] else 31
 
     def qty_of_leap_years(self) -> int:
         return (self.year - START_YEAR) // 4
     
     def days_elapsed_in_the_year(self) -> int:
         """days elapsed from the beginning of the year of the date to the exact date"""
-        return sum(MONTHS[i][1] for i in range(1, self.month)) + self.day
+        return sum(self.days_in_month() for i in range(1, self.month)) + self.day
     
     def delta_days(self) -> int:
         """days elapsed from 1-1-1900 to the marked date"""
@@ -68,7 +68,7 @@ class Date:
         return f"{self.day:02d}/{self.month:02d}/{self.year}"
 
     def __str__(self) -> str:
-        return f"{WEEKDAYS[self.weekday()]} {self.day} {MONTHS[self.month][0]} {self.year}"
+        return f"{WEEKDAYS[self.weekday()]} {self.day} {MONTHS[self.month]} {self.year}"
     
     def __add__(self, days_to_add) -> object:
         """addition operator, to add days to the marked date"""
@@ -84,15 +84,13 @@ class Date:
     def __sub__(self, other) -> object:
         """subtraction operator, to subtract days or a date from the marked date"""
         if isinstance(other, int):
-            new_day = abs(self.day - other)
-            new_month = self.month
-            new_year = self.year
-            while new_day > MONTHS[new_month][1]:
+            new_day, new_month, new_year = abs(self.day - other), self.month, self.year
+            while new_day > Date.static_days_in_month(new_month, new_year):
+                new_day -= Date.static_days_in_month(new_month, new_year)
                 new_month -= 1
-                new_new_day = MONTHS[new_month][1] - new_day
-                if new_month == 0:
-                    new_month = 12
-                    new_year -= 1
+                if new_month > 12:
+                    new_month = 1
+                    new_year += 1
             return Date(new_day, new_month, new_year)
         if isinstance(other, Date):
             pass
@@ -120,7 +118,7 @@ print(date1.is_weekend())
 print(date1)
 date5 = (date1 + 60)
 print(date5)
-# print(date1 - 24)
+print(date1 - 24)
 # print(date2 == date3)
 # print(date2 > date3)
 # print(date2 < date3)
