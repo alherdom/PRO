@@ -52,7 +52,7 @@ class Date:
     def days_elapsed_in_the_year(self) -> int:
         """days elapsed from the beginning of the self.year to the self.day"""
         return sum(Date.static_days_in_month(i, self.year) for i in range(1, self.month)) + self.day
-    
+        
     def delta_days(self) -> int:
         """days elapsed from 1-1-1900 to the marked date"""
         days_in_previous_years = (self.year - INITIAL_YEAR) * 365 + self.qty_of_leap_years()
@@ -110,19 +110,20 @@ class Date:
 date1 = Date(18, 4, 2023)
 date2 = Date(11, 4, 2023)
 date3 = Date(11, 4, 2023)
-print(date1.is_leap_year())
-print(date1.qty_of_leap_years())
-print(date1.days_elapsed_in_the_year())
-print(date1.days_in_month())
-print(date1.short_date())
-print(date1.delta_days())
-print(date1.weekday())
-print(date1.is_weekend())
-print(date1)
-print(date1 + 60)
-date6 = Date(18, 4, 2023)
-print(date1 - 24)
-print(date1 - date6)
-print(date2 == date3)
-print(date2 > date3)
-print(date2 < date3)
+date4 = Date(9, 5, 2023)
+print(f"✓ Is leap year: {date1.is_leap_year()}")
+print(f"✓ Amount of the leap years is: {date1.qty_of_leap_years()}")
+print(f"✓ Days elapsed in the year is: {date1.days_elapsed_in_the_year()}")
+print(f"✓ Days in month is: {date1.days_in_month()}")
+print(f"✓ The short date is: {date1.short_date()}")
+print(f"✓ Days elapsed from 01/01/1900 is: {date1.delta_days()}")
+print(f"✓ The weekday's number is: {date1.weekday()}")
+print(f"✓ Is weekend: {date1.is_weekend()}")
+print(f"✓ The STR format is: {date1}")
+print(f"✓ Is {date2.short_date()} equal to {date3.short_date()}: {date2 == date3}")
+print(f"✓ Is {date2.short_date()} greater than {date4.short_date()}: {date2 > date4}")
+print(f"✓ Is {date2.short_date()} lower than {date4.short_date()}: {date2 < date4}")
+print("✓ Calculation of additions and subtractions:")
+print(f"  - Result of the addition: {date1 + 60}")
+print(f"  - Result of the subtraction: {date1 - 24}")
+print(f"  - Result of the subtraction: {date1 - date4}")
