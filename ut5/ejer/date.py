@@ -1,5 +1,4 @@
-START_YEAR = 1900
-FINAL_YEAR = 2050
+START_YEAR, FINAL_YEAR = 1900, 2050
 MONTHS = {
     1: ("january", 31),
     2: ("february", 28),
@@ -34,18 +33,15 @@ class Date:
     def is_leap_year(self) -> bool:
         return (self.year % 4 == 0 and self.year % 100 != 0) or self.year % 400 == 0
     
-    @staticmethod
-    def static_is_leap_year(year: int) -> bool:
-        return (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
-    
     def days_in_month(self) -> int:
         if self.month == 2 and self.is_leap_year():
             return MONTHS[self.month][1] + 1
         return MONTHS[self.month][1]
 
     @staticmethod
-    def static_days_in_month(month: int) -> int:
-        if month == 2 and Date.static_is_leap_year(month):
+    def static_days_in_month(month: int, year: int) -> int:
+        is_leap_year = (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
+        if month == 2 and is_leap_year:
             return MONTHS[month][1] + 1
         return MONTHS[month][1]
 
@@ -76,53 +72,30 @@ class Date:
     
     def __add__(self, days_to_add) -> object:
         """addition operator, to add days to the marked date"""
-        self.day += days_to_add
-        while self.day > self.days_in_month():
-            self.day -= self.days_in_month()
-            self.month += 1
-            if self.month > 12:
-                self.month = 1
-                self.year += 1
-        return Date(self.day, self.month, self.year)
-    
-    def __add2__(self, days_to_add) -> object:
-        """addition operator, to add days to the marked date"""
-        self.day += days_to_add
-        while self.day > self.days_in_month():
-            self.day -= self.days_in_month()
-            self.month += 1
-            if self.month > 12:
-                self.month = 1
-                self.year += 1
-        return Date(self.day, self.month, self.year)
+        new_day, new_month, new_year = (self.day + days_to_add), self.month, self.year
+        while new_day > Date.static_days_in_month(new_month, new_year):
+            new_day -= Date.static_days_in_month(new_month, new_year)
+            new_month += 1
+            if new_month > 12:
+                new_month = 1
+                new_year += 1
+        return Date(new_day, new_month, new_year)
 
-    # def __sub__(self, other) -> object:
-    #     """subtraction operator, to subtract days or a date from the marked date"""
-    #     if isinstance(other, int):
-    #         new_day = abs(self.day - other)
-    #         new_month = self.month
-    #         new_year = self.year
-    #         while new_day > MONTHS[new_month][1]:
-    #             new_month -= 1
-    #             new_new_day = MONTHS[new_month][1] - new_day
-    #             if new_month == 0:
-    #                 new_month = 12
-    #                 new_year -= 1
-    #         return Date(new_day, new_month, new_year)
-        # if isinstance(other, Date):
-        #     pass
-            
-    # @staticmethod
-    # def days_to_date(days: int) -> str:
-    #     years, rest_days = divmod(days, 365)
-    #     rest_days -= years // 4
-    #     month = 1
-    #     while rest_days > MONTHS[month][1]:
-    #         rest_days -= MONTHS[month][1]
-    #         month += 1
-    #         if month > 12:
-    #             month = 1
-    #     return f"{1 + rest_days}/{month}/{START_YEAR + years}"
+    def __sub__(self, other) -> object:
+        """subtraction operator, to subtract days or a date from the marked date"""
+        if isinstance(other, int):
+            new_day = abs(self.day - other)
+            new_month = self.month
+            new_year = self.year
+            while new_day > MONTHS[new_month][1]:
+                new_month -= 1
+                new_new_day = MONTHS[new_month][1] - new_day
+                if new_month == 0:
+                    new_month = 12
+                    new_year -= 1
+            return Date(new_day, new_month, new_year)
+        if isinstance(other, Date):
+            pass
 
     def __eq__(self, other) -> bool:
         return self.delta_days() == other.delta_days()
@@ -133,7 +106,7 @@ class Date:
     def __gt__(self, other) -> bool:
         return self.delta_days() > other.delta_days()    
 
-date1 = Date(20, 2, 1993)
+date1 = Date(20, 2, 1992)
 date2 = Date(11, 4, 2023)
 date3 = Date(11, 4, 2023)
 print(date1.is_leap_year())
@@ -147,9 +120,7 @@ print(date1.is_weekend())
 print(date1)
 date5 = (date1 + 60)
 print(date5)
-print(date1)
 # print(date1 - 24)
 # print(date2 == date3)
 # print(date2 > date3)
 # print(date2 < date3)
-# print(date2.days_to_date(34027))
