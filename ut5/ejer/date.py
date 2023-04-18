@@ -81,7 +81,7 @@ class Date:
                 new_year += 1
         return Date(new_day, new_month, new_year)
 
-    def __sub__(self, other) -> object:
+    def __sub__(self, other):
         """subtraction operator, to subtract days or a date from the marked date"""
         if isinstance(other, int):
             new_day, new_month, new_year = abs(self.day - other), self.month, self.year
@@ -93,7 +93,7 @@ class Date:
                     new_year += 1
             return Date(new_day, new_month, new_year)
         if isinstance(other, Date):
-            pass
+            return self.delta_days() - other.delta_days()
 
     def __eq__(self, other) -> bool:
         return self.delta_days() == other.delta_days()
@@ -104,7 +104,7 @@ class Date:
     def __gt__(self, other) -> bool:
         return self.delta_days() > other.delta_days()    
 
-date1 = Date(20, 2, 1992)
+date1 = Date(1, 4, 2023)
 date2 = Date(11, 4, 2023)
 date3 = Date(11, 4, 2023)
 print(date1.is_leap_year())
@@ -118,7 +118,9 @@ print(date1.is_weekend())
 print(date1)
 date5 = (date1 + 60)
 print(date5)
+date6 = Date(9,5,1992)
 print(date1 - 24)
-# print(date2 == date3)
-# print(date2 > date3)
-# print(date2 < date3)
+print(date1 - date6)
+print(date2 == date3)
+print(date2 > date3)
+print(date2 < date3)
