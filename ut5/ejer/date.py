@@ -1,3 +1,4 @@
+from __future__ import annotations
 INITIAL_YEAR, FINAL_YEAR = 1900, 2050
 MONTHS_NAMES = {
     1: "january",
@@ -59,8 +60,7 @@ class Date:
         return days_in_previous_years + self.days_elapsed_in_the_year() - 1
 
     def weekday(self) -> int:
-        weekday = (self.delta_days() % 7) + 1
-        return weekday if weekday != 7 else 0
+        return self.delta_days() % 7
 
     def is_weekend(self) -> bool:
         return self.weekday() in [0, 6]
