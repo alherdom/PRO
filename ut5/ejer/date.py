@@ -50,7 +50,7 @@ class Date:
         return (self.year - INITIAL_YEAR) // 4
     
     def days_elapsed_in_the_year(self) -> int:
-        """days elapsed from the beginning of the year of the date to the exact date"""
+        """days elapsed from the beginning of the self.year to the self.day"""
         return sum(Date.static_days_in_month(i, self.year) for i in range(1, self.month)) + self.day
     
     def delta_days(self) -> int:
@@ -73,7 +73,8 @@ class Date:
     
     def __add__(self, days_to_add) -> object:
         """addition operator, to add days to the marked date"""
-        new_day, new_month, new_year = (self.day + days_to_add), self.month, self.year
+        new_day = self.day + days_to_add
+        new_month, new_year = self.month, self.year
         while new_day > Date.static_days_in_month(new_month, new_year):
             new_day -= Date.static_days_in_month(new_month, new_year)
             new_month += 1
@@ -85,7 +86,8 @@ class Date:
     def __sub__(self, other):
         """subtraction operator, to subtract days or a date from the marked date"""
         if isinstance(other, int):
-            new_day, new_month, new_year = (self.day - other), self.month, self.year
+            new_day = self.day - other
+            new_month, new_year = self.month, self.year
             while new_day < 0:
                 new_day += Date.static_days_in_month(new_month, new_year)
                 new_month -= 1
@@ -117,8 +119,7 @@ print(date1.delta_days())
 print(date1.weekday())
 print(date1.is_weekend())
 print(date1)
-date5 = (date1 + 60)
-print(date5)
+print(date1 + 60)
 date6 = Date(18, 4, 2023)
 print(date1 - 24)
 print(date1 - date6)
