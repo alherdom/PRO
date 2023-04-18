@@ -13,20 +13,6 @@ MONTHS_NAMES = {
     11: "november",
     12: "december"
 }
-MONTHS_DAYS = {
-    1: 31,
-    2: 28,
-    3: 31,
-    4: 30,
-    5: 31,
-    6: 30,
-    7: 31,
-    8: 31,
-    9: 30,
-    10: 31,
-    11: 30,
-    12: 31
-}
 WEEKDAYS_NAMES = {
     0: "sunday",
     1: "monday",
@@ -119,7 +105,7 @@ class Date:
     def __gt__(self, other) -> bool:
         return self.delta_days() > other.delta_days()    
 
-date1 = Date(4, 7, 1990)
+date1 = Date(18, 4, 2023)
 date2 = Date(11, 4, 2023)
 date3 = Date(11, 4, 2023)
 print(date1.is_leap_year())
