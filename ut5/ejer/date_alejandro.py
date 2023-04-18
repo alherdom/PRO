@@ -60,7 +60,8 @@ class Date:
         return days_in_previous_years + self.days_elapsed_in_the_year() - 1
 
     def weekday(self) -> int:
-        return self.delta_days() % 7
+        weekday = self.delta_days() % 7 + 1
+        return weekday if weekday != 0 else 7
 
     def is_weekend(self) -> bool:
         return self.weekday() in [0, 6]
