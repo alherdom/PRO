@@ -19,14 +19,14 @@ def test_build_date(date1: Date, date2: Date):
     assert date1.year == 1979
 
     assert isinstance(date2, Date)
-    assert date1.day == 24
-    assert date1.month == 6
-    assert date1.year == 1984
+    assert date2.day == 24
+    assert date2.month == 6
+    assert date2.year == 1984
 
 
 def test_build_date_when_out_of_range():
     date = Date(day=40, month=1, year=2000)
-    assert date.day == 31
+    assert date.day == 1
     assert date.month == 1
     assert date.year == 2000
 
@@ -55,7 +55,7 @@ def test_days_in_month():
     date = Date(day=1, month=2, year=2005)
     assert date.days_in_month == 28
 
-    date = Date(days=1, month=2, year=2004)
+    date = Date(day=1, month=2, year=2004)
     assert date.days_in_month == 29
 
 
