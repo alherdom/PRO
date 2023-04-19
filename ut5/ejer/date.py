@@ -77,9 +77,10 @@ class Date:
     def __add__(self, days: int) -> Date:
         '''Sumar un número de días a la fecha'''
         total_days = self.day + days
-        days_to_months, rest_days = divmod(total_days, self.days_in_month)
-        new_month = self.month + days_to_months
-        new_day = self.day + rest_days
+        
+        # days_to_months, rest_days = divmod(total_days, self.days_in_month)
+        # new_month = self.month + days_to_months
+        # new_day = self.day + rest_days
         # while new_day > Date.static_days_in_month(self.month, self.year):
         #     new_day -= Date.static_days_in_month(self.month, self.year)
         #     new_month += 1
