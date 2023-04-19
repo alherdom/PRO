@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 INITIAL_YEAR, FINAL_YEAR = 1900, 2050
 MONTHS_NAMES = {
     1: "ENERO",
