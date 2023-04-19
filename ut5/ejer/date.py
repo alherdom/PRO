@@ -25,8 +25,6 @@ WEEKDAYS_NAMES = {
 }
 class Date:
     def __init__(self, day: int, month: int, year: int):
-        """validate day-month-year (from 1-1-1990 to 31-12-2050) and leap years
-        incorrect day: day = 1, incorrect month: month = 1, incorrect year: year = 1900"""
         self.year = year if INITIAL_YEAR <= year <= FINAL_YEAR else INITIAL_YEAR
         self.month = month if 1 <= month <= 12 else 1
         self.day = day if 1 <= day <= Date.static_days_in_month(self.month, self.year) else 1
@@ -38,8 +36,12 @@ class Date:
     def days_of_first_approach(self) -> int:
         return (self.year - INITIAL_YEAR) * 365
     
+    @staticmethod
+    def static_qty_of_leap_years(year: int) -> int:
+        return sum(1 for i in range(INITIAL_YEAR, year) if Date.is_leap_year(i))
+
     def qty_of_leap_years(self) -> int:
-        return sum(1 for i in range(INITIAL_YEAR, self.year) if Date.is_leap_year(i))
+        return Date.static_qty_of_leap_years(self.year)
 
     def days_elapsed_in_year(self) -> int:
         return sum(Date.static_days_in_month(self.year, i) for i in range(1, self.month)) + self.day
@@ -67,38 +69,33 @@ class Date:
 
     @property
     def short_date(self) -> str:
-        '''02/09/2003'''
         return f"{self.day:02d}/{self.month:02d}/{self.year}"
 
     def __str__(self):
-        '''MARTES 2 DE SEPTIEMBRE DE 2003'''
         return f"{WEEKDAYS_NAMES[self.weekday]} {self.day} DE {MONTHS_NAMES[self.month]} DE {self.year}"
 
     def __add__(self, days: int) -> Date:
         new_day = self.day + days
         new_month, new_year = self.month, self.year
-        while new_day > Date.static_days_in_month(self.year, new_month):
-            new_day -= Date.static_days_in_month(self.year, new_month)
+        while new_day > Date.static_days_in_month(new_year, new_month):
+            new_day -= Date.static_days_in_month(new_year, new_month)
             new_month += 1
             if new_month > 12:
                 new_month = 1
                 new_year += 1
-        return Date(new_day, new_month, self.year)
+        return Date(new_day, new_month, new_year)
 
     def __sub__(self, other: Date | int) -> int | Date:
-        '''Dos opciones:
-        1) Restar una fecha a otra fecha -> Número de días
-        2) Restar un número de días la fecha -> Nueva fecha'''
         if isinstance(other, int):
-            new_day = self.day - other
-            new_month, new_year = self.month, self.year
-            while new_day < 0:
-                new_day += Date.static_days_in_month(new_month, new_year)
-                new_month -= 1
-                if new_month > 12:
-                    new_month = 1
-                    new_year += 1
-            return Date(new_day, new_month, new_year)
+            new_month = 1
+            total_days = self.get_delta_days() + 1 - other
+            new_year, rest_days = divmod(total_days, 365)
+            new_year += INITIAL_YEAR
+            rest_days -= Date.static_qty_of_leap_years(new_year)
+            while rest_days > Date.static_days_in_month(new_year, new_month):
+                rest_days -= Date.static_days_in_month(new_year, new_month)
+                new_month += 1
+            return Date(rest_days, new_month, new_year)
         if isinstance(other, Date):
             return abs(self.get_delta_days() - other.get_delta_days())
 
@@ -110,7 +107,3 @@ class Date:
 
     def __lt__(self, other: Date) -> bool:
         return self.get_delta_days() < other.get_delta_days()
-
-date1 = Date(1, 3, 1979)
-print(date1 + 145)
-print(24, 7, 1979)
