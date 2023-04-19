@@ -109,10 +109,8 @@ class Date:
     def __eq__(self, other: Date) -> bool:
         return self.get_delta_days() == other.get_delta_days()
 
-
     def __gt__(self, other: Date) -> bool:
         return self.get_delta_days() > other.get_delta_days()
-
 
     def __lt__(self, other: Date) -> bool:
         return self.get_delta_days() < other.get_delta_days()
