@@ -23,8 +23,6 @@ WEEKDAYS_NAMES = {
     5: "VIERNES",
     6: "SABADO"
 }
-MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12]
-MONTHS_WITH_30_DAYS = [4, 6, 9, 11]
 class Date:
     def __init__(self, day: int, month: int, year: int):
         """validate day-month-year (from 1-1-1990 to 31-12-2050) and leap years
@@ -35,34 +33,33 @@ class Date:
     
     @staticmethod
     def is_leap_year(year: int) -> bool:
-        return (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
+        return year % 4 == 0 and year % 100 != 0 or year % 400 == 0
 
+    def days_of_first_approach(self):
+        return (self.year - INITIAL_YEAR) * 365
+    
     def qty_of_leap_years(self) -> int:
-        return (self.year - INITIAL_YEAR) // 4
+        return sum(1 for i in range(INITIAL_YEAR, self.year) if Date.is_leap_year(i))
 
-    def days_elapsed_in_the_year(self) -> int:
-        """days elapsed from the beginning of the self.year to the self.day"""
-        return sum(Date.static_days_in_month(i, self.year) for i in range(1, self.month)) + self.day
-        
-    def get_delta_days(self) -> int:
-        """days elapsed from 1-1-1900 to the marked date"""
-        days_in_previous_years = (self.year - INITIAL_YEAR) * 365 + self.qty_of_leap_years()
-        return days_in_previous_years + self.days_elapsed_in_the_year() - 1
+    def days_elapsed_in_year(self) -> int:
+        return sum(Date.static_days_in_month(self.year, i) for i in range(1, self.month)) + self.day
+    
+    def get_delta_days(self):
+        return self.days_of_first_approach() + self.qty_of_leap_years() + self.days_elapsed_in_year() - 1
     
     @staticmethod
-    def static_days_in_month(month: int, year: int) -> int:
+    def static_days_in_month(year: int, month: int) -> int:
         if month == 2:
             return 29 if Date.is_leap_year(year) else 28
         return 30 if month in [4,6,9,11] else 31
 
     @property
     def days_in_month(self) -> int:
-        return Date.static_days_in_month(self.month, self.year)
+        return Date.static_days_in_month(self.year, self.month)
 
     @property
     def weekday(self) -> int:
-        weekday = (self.get_delta_days() + 1) % 7
-        return weekday if weekday != 1 else 0
+        return (self.get_delta_days() + 1) % 7
        
     @property
     def is_weekend(self) -> bool:
@@ -79,15 +76,17 @@ class Date:
 
     def __add__(self, days: int) -> Date:
         '''Sumar un número de días a la fecha'''
-        new_day = self.day + days
-        new_month, new_year = self.month, self.year
-        while new_day > Date.static_days_in_month(new_month, new_year):
-            new_day -= Date.static_days_in_month(new_month, new_year)
-            new_month += 1
-            if new_month > 12:
-                new_month = 1
-                new_year += 1
-        return Date(new_day, new_month, new_year)
+        total_days = self.day + days
+        days_to_months, rest_days = divmod(total_days, self.days_in_month)
+        new_month = self.month + days_to_months
+        new_day = self.day + rest_days
+        # while new_day > Date.static_days_in_month(self.month, self.year):
+        #     new_day -= Date.static_days_in_month(self.month, self.year)
+        #     new_month += 1
+        #     if new_month > 12:
+        #         new_month = 1
+        #         new_year += 1
+        return Date(new_day, new_month, self.year)
 
     def __sub__(self, other: Date | int) -> int | Date:
         '''Dos opciones:

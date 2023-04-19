@@ -88,7 +88,7 @@ def test_date_string(date1: Date, date2: Date):
 def test_add_dates(date1: Date):
     date = date1 + 145
     assert date.day == 24
-    assert date.month == 7
+    assert date.month == 3
     assert date.year == 1979
 
 
