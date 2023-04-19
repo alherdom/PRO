@@ -76,17 +76,14 @@ class Date:
 
     def __add__(self, days: int) -> Date:
         '''Sumar un número de días a la fecha'''
-        total_days = self.day + days
-        
-        # days_to_months, rest_days = divmod(total_days, self.days_in_month)
-        # new_month = self.month + days_to_months
-        # new_day = self.day + rest_days
-        # while new_day > Date.static_days_in_month(self.month, self.year):
-        #     new_day -= Date.static_days_in_month(self.month, self.year)
-        #     new_month += 1
-        #     if new_month > 12:
-        #         new_month = 1
-        #         new_year += 1
+        new_day = self.day + days
+        new_month, new_year = self.month, self.year
+        while new_day > Date.static_days_in_month(self.year, new_month):
+            new_day -= Date.static_days_in_month(self.year, new_month)
+            new_month += 1
+            if new_month > 12:
+                new_month = 1
+                new_year += 1
         return Date(new_day, new_month, self.year)
 
     def __sub__(self, other: Date | int) -> int | Date:
@@ -115,3 +112,6 @@ class Date:
     def __lt__(self, other: Date) -> bool:
         return self.get_delta_days() < other.get_delta_days()
 
+date1 = Date(1, 3, 1979)
+print(date1 + 145)
+print(24, 7, 1979)
