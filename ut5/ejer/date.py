@@ -62,7 +62,7 @@ class Date:
        
     @property
     def is_weekend(self) -> bool:
-        return self.weekday in [0, 6]
+        return self.weekday in {0, 6}
 
     @property
     def short_date(self) -> str:
