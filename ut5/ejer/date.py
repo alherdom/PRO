@@ -35,7 +35,7 @@ class Date:
     def is_leap_year(year: int) -> bool:
         return year % 4 == 0 and year % 100 != 0 or year % 400 == 0
 
-    def days_of_first_approach(self):
+    def days_of_first_approach(self) -> int:
         return (self.year - INITIAL_YEAR) * 365
     
     def qty_of_leap_years(self) -> int:
@@ -75,7 +75,6 @@ class Date:
         return f"{WEEKDAYS_NAMES[self.weekday]} {self.day} DE {MONTHS_NAMES[self.month]} DE {self.year}"
 
     def __add__(self, days: int) -> Date:
-        '''Sumar un número de días a la fecha'''
         new_day = self.day + days
         new_month, new_year = self.month, self.year
         while new_day > Date.static_days_in_month(self.year, new_month):
