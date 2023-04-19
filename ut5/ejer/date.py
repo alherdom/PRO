@@ -27,7 +27,7 @@ class Date:
     def __init__(self, day: int, month: int, year: int):
         self.year = year if INITIAL_YEAR <= year <= FINAL_YEAR else INITIAL_YEAR
         self.month = month if 1 <= month <= 12 else 1
-        self.day = day if 1 <= day <= Date.static_days_in_month(self.month, self.year) else 1
+        self.day = day if 1 <= day <= self.days_in_month else 1
     
     @staticmethod
     def is_leap_year(year: int) -> bool:
