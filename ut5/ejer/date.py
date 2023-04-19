@@ -87,15 +87,16 @@ class Date:
 
     def __sub__(self, other: Date | int) -> int | Date:
         if isinstance(other, int):
-            new_month = 1
-            total_days = self.get_delta_days() + 1 - other
-            new_year, rest_days = divmod(total_days, 365)
-            new_year += INITIAL_YEAR
-            rest_days -= Date.static_qty_of_leap_years(new_year)
-            while rest_days > Date.static_days_in_month(new_year, new_month):
-                rest_days -= Date.static_days_in_month(new_year, new_month)
-                new_month += 1
-            return Date(rest_days, new_month, new_year)
+            new_day = self.day - other
+            new_month, new_year = self.month, self.year
+            while new_day < 0:
+                new_day += Date.static_days_in_month(new_year, new_month)
+                new_month -= 1
+                if new_month == 0:
+                    new_month = 12
+                    new_year -= 1
+            return Date(new_day, new_month, new_year)
+
         if isinstance(other, Date):
             return abs(self.get_delta_days() - other.get_delta_days())
 
