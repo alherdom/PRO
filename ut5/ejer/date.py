@@ -36,12 +36,8 @@ class Date:
     def days_of_first_approach(self) -> int:
         return (self.year - INITIAL_YEAR) * 365
     
-    @staticmethod
-    def static_qty_of_leap_years(year: int) -> int:
-        return sum(1 for i in range(INITIAL_YEAR, year) if Date.is_leap_year(i))
-
     def qty_of_leap_years(self) -> int:
-        return Date.static_qty_of_leap_years(self.year)
+        return sum(1 for i in range(INITIAL_YEAR, self.year) if Date.is_leap_year(i))
 
     def days_elapsed_in_year(self) -> int:
         return sum(Date.static_days_in_month(self.year, i) for i in range(1, self.month)) + self.day
