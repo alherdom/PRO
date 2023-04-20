@@ -48,9 +48,7 @@ class Date:
     
     @staticmethod
     def static_days_in_month(year: int, month: int) -> int:
-        if month == 2:
-            return 29 if Date.is_leap_year(year) else 28
-        return 30 if month in [4,6,9,11] else 31
+        return 28 + Date.is_leap_year(year) if month == 2 else (30 if month in [4,6,9,11] else 31)
 
     @property
     def days_in_month(self) -> int:
