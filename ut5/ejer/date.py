@@ -50,7 +50,6 @@ class Date:
     def static_days_in_month(year: int, month: int) -> int:
         return 28 + Date.is_leap_year(year) if month == 2 else 30 + (month not in [4,6,9,11])
 
-
     @property
     def days_in_month(self) -> int:
         return Date.static_days_in_month(self.year, self.month)
