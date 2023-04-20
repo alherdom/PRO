@@ -40,9 +40,7 @@ class VideoFile(MediaFile):
         return f'{media_info}\n✓ Dimensions:{self.dimensions}'
     
 vanrossum = VideoFile('/home/python/vanrossum.mp4', 'h264', (23.5454, 31.4343), 487, (1920, 1080))
-print(vanrossum.info)
 vanrossum.add_content('audio/ogg')
 vanrossum.add_content('video/webm')
-vanrossum.add_content('img/jpg')
-print(f'✓ Size: {vanrossum.size}')
+print(vanrossum.info)
 print(vanrossum.show_contents())
