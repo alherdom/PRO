@@ -26,8 +26,7 @@ class MediaFile(File):
     
     @property
     def info(self):
-        file_info = super().info
-        return f'{file_info}\n✓ Codec: {self.duration}\n✓ Geolocation:{self.geoloc}\n✓ Duration: {self.duration}'
+        return f'{super().info}\n✓ Codec: {self.duration}\n✓ Geolocation:{self.geoloc}\n✓ Duration: {self.duration}'
     
 class VideoFile(MediaFile):
     def __init__(self, path: str, codec: str, geoloc: tuple, duration: int, dimensions: tuple):
@@ -36,8 +35,7 @@ class VideoFile(MediaFile):
     
     @property
     def info(self):
-        media_info = super().info
-        return f'{media_info}\n✓ Dimensions:{self.dimensions}'
+        return f'{super().info}\n✓ Dimensions:{self.dimensions}'
     
 vanrossum = VideoFile('/home/python/vanrossum.mp4', 'h264', (23.5454, 31.4343), 487, (1920, 1080))
 vanrossum.add_content('audio/ogg')
