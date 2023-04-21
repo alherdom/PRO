@@ -1,7 +1,7 @@
 class File:
     def __init__(self, path: str):
         self.path = path
-        self.contents = []
+        self.contents = [] # type: ignore
     
     def add_content(self, content: str) -> list[str]:
         return self.contents.append(content) # type: ignore
