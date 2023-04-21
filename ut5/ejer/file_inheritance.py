@@ -16,18 +16,14 @@ class File:
     @property 
     def info(self) -> str:
         return f'✓ Path: {self.path} [size={self.size}B]'
-        
 class MediaFile(File):
     def __init__(self, path: str, codec: str, geoloc: tuple, duration: int):
         super().__init__(path)
-        self.codec = codec
-        self.geoloc = geoloc
-        self.duration = duration
+        self.codec, self.geoloc, self.duration = codec, geoloc, duration
     
     @property
     def info(self):
         return f'{super().info}\n✓ Codec: {self.duration}\n✓ Geolocation:{self.geoloc}\n✓ Duration: {self.duration}'
-    
 class VideoFile(MediaFile):
     def __init__(self, path: str, codec: str, geoloc: tuple, duration: int, dimensions: tuple):
         super().__init__(path, codec, geoloc, duration)
