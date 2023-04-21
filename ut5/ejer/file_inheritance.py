@@ -1,11 +1,11 @@
 class File:
     def __init__(self, path: str):
         self.path = path
-        self.contents = [] # type: ignore
-    
-    def add_content(self, content: str) -> list[str]:
-        return self.contents.append(content) # type: ignore
-    
+        self.contents = []
+        
+    def add_content(self, content: str):
+        self.contents.append(content)
+        
     def show_contents(self) -> str:
         return f'✓ Contents:{self.contents}'
         
@@ -16,21 +16,25 @@ class File:
     @property 
     def info(self) -> str:
         return f'✓ Path: {self.path} [size={self.size}B]'
+
 class MediaFile(File):
     def __init__(self, path: str, codec: str, geoloc: tuple, duration: int):
         super().__init__(path)
-        self.codec, self.geoloc, self.duration = codec, geoloc, duration
+        self.codec = codec
+        self.geoloc = geoloc
+        self.duration = duration
     
     @property
-    def info(self):
+    def info(self) -> str:
         return f'{super().info}\n✓ Codec: {self.duration}\n✓ Geolocation:{self.geoloc}\n✓ Duration: {self.duration}'
+    
 class VideoFile(MediaFile):
     def __init__(self, path: str, codec: str, geoloc: tuple, duration: int, dimensions: tuple):
         super().__init__(path, codec, geoloc, duration)
         self.dimensions = dimensions
     
     @property
-    def info(self):
+    def info(self) -> str:
         return f'{super().info}\n✓ Dimensions:{self.dimensions}'
     
 vanrossum = VideoFile('/home/python/vanrossum.mp4', 'h264', (23.5454, 31.4343), 487, (1920, 1080))
