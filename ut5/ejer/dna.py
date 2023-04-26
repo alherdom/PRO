@@ -31,17 +31,21 @@ class DNA:
         new_sequence = ""
         for char1, char2 in zip(self.sequence, other.sequence):
             new_sequence += max(char1, char2)
-        return new_sequence
+        return DNA(new_sequence)
             
-    def percent_of_nitrogenous_base(self):
-        pct_of_A = (self.qty_of_adenine / len(self.sequence)) * 100
-        pct_of_C = (self.qty_of_cytosine / len(self.sequence)) * 100
-        pct_of_G = (self.qty_of_guanine / len(self.sequence)) * 100
-        pct_of_T = (self.qty_of_thymine / len(self.sequence)) * 100
+    def pct_of_nitro_base(self):
+        pct_of_A = round((self.qty_of_adenine / len(self.sequence)) * 100, 2)
+        pct_of_C = round((self.qty_of_cytosine / len(self.sequence)) * 100, 2)
+        pct_of_G = round((self.qty_of_guanine / len(self.sequence)) * 100, 2)
+        pct_of_T = round((self.qty_of_thymine / len(self.sequence)) * 100, 2)
         return pct_of_A, pct_of_C, pct_of_G, pct_of_T
         
         
 sequence1 = DNA("ATGCATGCATGC")
 sequence2 = DNA("CGTACTAGCTAAACCT")
 print(sequence2)
-print(sequence1 + sequence2)
+sequence3 = sequence1 + sequence2
+print(sequence3)
+print(sequence1.pct_of_nitro_base())
+print(sequence2.pct_of_nitro_base())
+print(sequence3.pct_of_nitro_base())
