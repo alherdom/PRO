@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 class DNA:
-    ACGT = ["A","C","G","T"]
     ADENINE = "A"
     CYTOSINE = "C"
     GUANINE = "G"
     THYMINE = "T"
+    ACGT = ["A","C","G","T"]
     
     def __init__(self, sequence: str):  
         self.sequence = sequence
@@ -51,7 +51,7 @@ class DNA:
 
     def stats(self) -> dict:
         dna_size = len(self)
-        pct_adenine = DNA.calc_percent(self.adenines, dna_size )
+        pct_adenine = DNA.calc_percent(self.adenines, dna_size)
         pct_cytosine = DNA.calc_percent(self.cytosines, dna_size)
         pct_guanine = DNA.calc_percent(self.guanines, dna_size)
         pct_thymine = DNA.calc_percent(self.thymines, dna_size)
