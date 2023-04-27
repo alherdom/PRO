@@ -33,14 +33,14 @@ class DNA:
         return len(self.sequence)
     
     @property
-    def dna_size(self) -> int:
+    def length(self) -> int:
         return len(self.sequence)
 
     def __add__(self, other) -> DNA:
         new_sequence = ""
         for char1, char2 in zip(self.sequence, other.sequence):
             new_sequence += max(char1, char2)
-        new_sequence += self.sequence[len(other):] if len(self) > len(other) else other.sequence[len(self):]
+        new_sequence += self.sequence[other.length:] if self.length > other.length else other.sequence[self.length:]
         return DNA(new_sequence)
 
     def __mul__(self, other) -> DNA:
@@ -61,10 +61,10 @@ class DNA:
         return (qty_base / dna_size) * 100
 
     def stats(self) -> dict:
-        pct_adenine = DNA.calc_percent(self.adenines, self.dna_size)
-        pct_cytosine = DNA.calc_percent(self.cytosines, self.dna_size)
-        pct_guanine = DNA.calc_percent(self.guanines, self.dna_size)
-        pct_thymine = DNA.calc_percent(self.thymines, self.dna_size)
+        pct_adenine = DNA.calc_percent(self.adenines, self.length)
+        pct_cytosine = DNA.calc_percent(self.cytosines, self.length)
+        pct_guanine = DNA.calc_percent(self.guanines, self.length)
+        pct_thymine = DNA.calc_percent(self.thymines, self.length)
         return {self.ADENINE:pct_adenine,self.CYTOSINE:pct_cytosine,self.GUANINE:pct_guanine,self.THYMINE:pct_thymine}    
 
     @classmethod
