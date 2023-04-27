@@ -35,11 +35,10 @@ class DNA:
         new_sequence = ""
         for char1, char2 in zip(self.sequence, other.sequence):
             new_sequence += max(char1, char2)
-        dif_size = abs(len(self) - len(other))
         if len(self) > len(other):
-            new_sequence += self.sequence[dif_size:]
+            new_sequence += self.sequence[len(other):]
         elif len(self) < len(other):
-            new_sequence += other.sequence[dif_size:]
+            new_sequence += other.sequence[len(self):]
         return DNA(new_sequence)
 
     def __mul__(self, other) -> DNA:
