@@ -58,7 +58,7 @@ class DNA:
         return {self.ADENINE:pct_adenine,self.CYTOSINE:pct_cytosine,self.GUANINE:pct_guanine,self.THYMINE:pct_thymine}    
 
     @classmethod
-    def build_from_file(cls, path: str):
+    def build_from_file(cls, path: str) -> DNA:
         return DNA(open(path).read())
     
     def dump_to_file(self, path):       
@@ -71,18 +71,3 @@ class DNA:
     def __setitem__(self, index: int, char: str):
         new_char = char if char in self.ACGT else self.ADENINE
         self.sequence = self.sequence[:index] + new_char + self.sequence[index + 1:]
-        
-        
-            
-# sequence1 = DNA("CAATGCATGCATGCAC")
-# sequence2 = DNA("CAGTACTAGCTAAC")
-# sequence3 = sequence1 + sequence2
-# sequence4 = sequence1 * sequence2
-# print(sequence1)
-# print(sequence2)
-# print(sequence3)
-# print(sequence4)
-# print(sequence1.stats())
-# print(sequence2.stats())
-# print(sequence3.stats())
-# print(sequence4.stats())
