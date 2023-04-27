@@ -1,7 +1,8 @@
+from __future__ import annotations
 
 class DNA:
     ADENINE = "A"
-    CYTOSINE = "c"
+    CYTOSINE = "C"
     GUANINE = "G"
     THYMINE = "T"
     
@@ -9,52 +10,63 @@ class DNA:
         self.sequence = sequence
     
     def __str__(self):
-        return self.sequence
+        return f'DNA sequence:{self.sequence}'
     
     @property
-    def qty_of_adenine(self):
+    def adenine_qty(self) -> int:
         return self.sequence.count(self.ADENINE)
 
     @property
-    def qty_of_cytosine(self):
+    def cytosine_qty(self) -> int:
         return self.sequence.count(self.CYTOSINE)
 
     @property       
-    def qty_of_guanine(self):
+    def guanine_qty(self) -> int:
         return self.sequence.count(self.GUANINE)
 
     @property
-    def qty_of_thymine(self):
+    def thymine_qty(self) -> int:
         return self.sequence.count(self.THYMINE)
-    
-    def __add__(self, other):
+
+    @property
+    def dna_size(self) -> int:
+        return len(self.sequence)
+
+    def __add__(self, other) -> DNA:
         new_sequence = ""
         for char1, char2 in zip(self.sequence, other.sequence):
             new_sequence += max(char1, char2)
         return DNA(new_sequence)
-    
-    def __mul__(self, other):
+
+    def __mul__(self, other) -> DNA:
         new_sequence = ""
         for char1, char2 in zip(self.sequence, other.sequence):
-            if char1 == char2:
-                new_sequence += char1
+            new_sequence += char1 if char1 == char2 else ""
         return DNA(new_sequence)
-            
-    def pct_of_nitro_base(self):
-        pct_of_A = round((self.qty_of_adenine / len(self.sequence)) * 100, 2)
-        pct_of_C = round((self.qty_of_cytosine / len(self.sequence)) * 100, 2)
-        pct_of_G = round((self.qty_of_guanine / len(self.sequence)) * 100, 2)
-        pct_of_T = round((self.qty_of_thymine / len(self.sequence)) * 100, 2)
-        return pct_of_A, pct_of_C, pct_of_G, pct_of_T
-        
-        
-sequence1 = DNA("ATGCATGCATGC")
-sequence2 = DNA("CGTACTAGCTAA")
-print(sequence2)
+    
+    @staticmethod
+    def percent_calc(qty_base: int, dna_size: int) -> float:
+        '''Operation to calculate the percent'''
+        return round((qty_base / dna_size) * 100, 2)
+
+    def pcts_nitro_bases(self) -> str:
+        '''Calculate the percents of each nitrogenous bases'''
+        pct_adenine = DNA.percent_calc(self.adenine_qty, self.dna_size)
+        pct_cytosine = DNA.percent_calc(self.cytosine_qty, self.dna_size)
+        pct_guanine = DNA.percent_calc(self.guanine_qty, self.dna_size)
+        pct_thymine = DNA.percent_calc(self.thymine_qty, self.dna_size)
+        return f'A:{pct_adenine}% C:{pct_cytosine}% G:{pct_guanine}% T:{pct_thymine}%'
+
+
+sequence1 = DNA("CAATGCATGCATGC")
+sequence2 = DNA("CAGTACTAGCTAAC")
 sequence3 = sequence1 + sequence2
-print(sequence3)
 sequence4 = sequence1 * sequence2
+print(sequence1)
+print(sequence2)
+print(sequence3)
 print(sequence4)
-print(sequence1.pct_of_nitro_base())
-print(sequence2.pct_of_nitro_base())
-print(sequence3.pct_of_nitro_base())
+print(sequence1.pcts_nitro_bases())
+print(sequence2.pcts_nitro_bases())
+print(sequence3.pcts_nitro_bases())
+print(sequence4.pcts_nitro_bases())
