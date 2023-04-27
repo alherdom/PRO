@@ -32,6 +32,13 @@ class DNA:
         for char1, char2 in zip(self.sequence, other.sequence):
             new_sequence += max(char1, char2)
         return DNA(new_sequence)
+    
+    def __mul__(self, other):
+        new_sequence = ""
+        for char1, char2 in zip(self.sequence, other.sequence):
+            if char1 == char2:
+                new_sequence += char1
+        return DNA(new_sequence)
             
     def pct_of_nitro_base(self):
         pct_of_A = round((self.qty_of_adenine / len(self.sequence)) * 100, 2)
@@ -42,10 +49,12 @@ class DNA:
         
         
 sequence1 = DNA("ATGCATGCATGC")
-sequence2 = DNA("CGTACTAGCTAAACCT")
+sequence2 = DNA("CGTACTAGCTAA")
 print(sequence2)
 sequence3 = sequence1 + sequence2
 print(sequence3)
+sequence4 = sequence1 * sequence2
+print(sequence4)
 print(sequence1.pct_of_nitro_base())
 print(sequence2.pct_of_nitro_base())
 print(sequence3.pct_of_nitro_base())
