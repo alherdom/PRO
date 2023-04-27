@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 class DNA:
+    ACGT = ["A","C","G","T"]
     ADENINE = "A"
     CYTOSINE = "C"
     GUANINE = "G"
@@ -64,11 +65,13 @@ class DNA:
         with open(path, "w") as f:
             f.write(self.sequence)
             
-    def __get__(self):
-        ...
+    def __getitem__(self, index: int) -> str:
+        return self.sequence[index]
+    
+    def __setitem__(self, index: int, char: str):
+        new_char = char if char in self.ACGT else self.ADENINE
+        self.sequence = self.sequence[:index] + new_char + self.sequence[index + 1:]
         
-    def __set__(self):
-        ...
         
             
 # sequence1 = DNA("CAATGCATGCATGCAC")
