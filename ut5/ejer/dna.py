@@ -9,33 +9,37 @@ class DNA:
     def __init__(self, sequence: str):  
         self.sequence = sequence
     
-    def __str__(self):
-        return f'DNA sequence:{self.sequence}'
+    def __str__(self) -> str:
+        return self.sequence
     
     @property
-    def adenine_qty(self) -> int:
+    def adenines(self) -> int:
         return self.sequence.count(self.ADENINE)
 
     @property
-    def cytosine_qty(self) -> int:
+    def cytosines(self) -> int:
         return self.sequence.count(self.CYTOSINE)
 
     @property       
-    def guanine_qty(self) -> int:
+    def guanines(self) -> int:
         return self.sequence.count(self.GUANINE)
 
     @property
-    def thymine_qty(self) -> int:
+    def thymines(self) -> int:
         return self.sequence.count(self.THYMINE)
-
-    @property
-    def dna_size(self) -> int:
+   
+    def __len__(self) -> int:
         return len(self.sequence)
 
     def __add__(self, other) -> DNA:
         new_sequence = ""
         for char1, char2 in zip(self.sequence, other.sequence):
             new_sequence += max(char1, char2)
+        dif_size = abs(len(self) - len(other))
+        if len(self) > len(other):
+            new_sequence += self.sequence[dif_size:]
+        elif len(self) < len(other):
+            new_sequence += other.sequence[dif_size:]
         return DNA(new_sequence)
 
     def __mul__(self, other) -> DNA:
@@ -46,27 +50,25 @@ class DNA:
     
     @staticmethod
     def percent_calc(qty_base: int, dna_size: int) -> float:
-        '''Operation to calculate the percent'''
-        return round((qty_base / dna_size) * 100, 2)
+        return (qty_base / dna_size) * 100
 
-    def pcts_nitro_bases(self) -> str:
-        '''Calculate the percents of each nitrogenous bases'''
-        pct_adenine = DNA.percent_calc(self.adenine_qty, self.dna_size)
-        pct_cytosine = DNA.percent_calc(self.cytosine_qty, self.dna_size)
-        pct_guanine = DNA.percent_calc(self.guanine_qty, self.dna_size)
-        pct_thymine = DNA.percent_calc(self.thymine_qty, self.dna_size)
-        return f'A:{pct_adenine}% C:{pct_cytosine}% G:{pct_guanine}% T:{pct_thymine}%'
+    def stats(self) -> dict:
+        dna_size = len(self)
+        pct_adenine = DNA.percent_calc(self.adenines, dna_size )
+        pct_cytosine = DNA.percent_calc(self.cytosines, dna_size)
+        pct_guanine = DNA.percent_calc(self.guanines, dna_size)
+        pct_thymine = DNA.percent_calc(self.thymines, dna_size)
+        return {self.ADENINE:pct_adenine,self.CYTOSINE:pct_cytosine,self.GUANINE:pct_guanine,self.THYMINE:pct_thymine}    
 
-
-sequence1 = DNA("CAATGCATGCATGC")
-sequence2 = DNA("CAGTACTAGCTAAC")
-sequence3 = sequence1 + sequence2
-sequence4 = sequence1 * sequence2
-print(sequence1)
-print(sequence2)
-print(sequence3)
-print(sequence4)
-print(sequence1.pcts_nitro_bases())
-print(sequence2.pcts_nitro_bases())
-print(sequence3.pcts_nitro_bases())
-print(sequence4.pcts_nitro_bases())
+# sequence1 = DNA("CAATGCATGCATGCAC")
+# sequence2 = DNA("CAGTACTAGCTAAC")
+# sequence3 = sequence1 + sequence2
+# sequence4 = sequence1 * sequence2
+# print(sequence1)
+# print(sequence2)
+# print(sequence3)
+# print(sequence4)
+# print(sequence1.stats())
+# print(sequence2.stats())
+# print(sequence3.stats())
+# print(sequence4.stats())
