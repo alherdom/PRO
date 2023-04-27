@@ -61,8 +61,7 @@ class DNA:
 
     @classmethod
     def build_from_file(cls, path: str):
-        with open(path) as f:
-            return DNA(f.read())
+        return DNA(open(path).read())
     
     def dump_to_file(self, path):       
         with open(path, "w") as f:
