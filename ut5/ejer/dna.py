@@ -31,6 +31,10 @@ class DNA:
    
     def __len__(self) -> int:
         return len(self.sequence)
+    
+    @property
+    def dna_size(self) -> int:
+        return len(self.sequence)
 
     def __add__(self, other) -> DNA:
         new_sequence = ""
@@ -57,18 +61,16 @@ class DNA:
         return (qty_base / dna_size) * 100
 
     def stats(self) -> dict:
-        dna_size = len(self)
-        pct_adenine = DNA.calc_percent(self.adenines, dna_size)
-        pct_cytosine = DNA.calc_percent(self.cytosines, dna_size)
-        pct_guanine = DNA.calc_percent(self.guanines, dna_size)
-        pct_thymine = DNA.calc_percent(self.thymines, dna_size)
+        pct_adenine = DNA.calc_percent(self.adenines, self.dna_size)
+        pct_cytosine = DNA.calc_percent(self.cytosines, self.dna_size)
+        pct_guanine = DNA.calc_percent(self.guanines, self.dna_size)
+        pct_thymine = DNA.calc_percent(self.thymines, self.dna_size)
         return {self.ADENINE:pct_adenine,self.CYTOSINE:pct_cytosine,self.GUANINE:pct_guanine,self.THYMINE:pct_thymine}    
 
     @classmethod
     def build_from_file(cls, path: str) -> DNA:
         return DNA(open(path).read())
     
-    def dump_to_file(self, path):       
+    def dump_to_file(self, path):    
         with open(path, "w") as f:
-            f.write(self.sequence)    
-        
+            f.write(self.sequence)
