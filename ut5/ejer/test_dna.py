@@ -143,3 +143,22 @@ def test_build_from_file(dna1: DNA):
     dna = DNA.build_from_file(test_file)
     assert test_file.read_text() == dna.sequence
     test_file.unlink(missing_ok=True)
+
+
+def test_getbase(dna1: DNA):
+    assert dna1[0] == 'T'
+    assert dna1[9] == 'A'
+
+
+def test_setbase(dna1: DNA):
+    dna1[0] = 'G'
+    assert dna1.sequence[0] == 'G'
+    dna1[9] = 'C'
+    assert dna1.sequence[9] == 'C'
+
+
+def test_setbase_when_unknown_base(dna1: DNA):
+    dna1[0] = 'X'
+    assert dna1.sequence[0] == 'A'
+    dna1[9] = 'X'
+    assert dna1.sequence[9] == 'A'

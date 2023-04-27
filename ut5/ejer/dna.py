@@ -37,7 +37,7 @@ class DNA:
             new_sequence += max(char1, char2)
         if len(self) > len(other):
             new_sequence += self.sequence[len(other):]
-        elif len(self) < len(other):
+        else:
             new_sequence += other.sequence[len(self):]
         return DNA(new_sequence)
 
@@ -66,6 +66,13 @@ class DNA:
     def dump_to_file(self, path):       
         with open(path, "w") as f:
             f.write(self.sequence)
+            
+    def __get__(self):
+        ...
+        
+    def __set__(self):
+        ...
+        
             
 # sequence1 = DNA("CAATGCATGCATGCAC")
 # sequence2 = DNA("CAGTACTAGCTAAC")
