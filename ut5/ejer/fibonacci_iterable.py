@@ -25,13 +25,5 @@ class Fibonacci:
             self.pointer += 1
             return result
 
-# fibo1 = Fibonacci(10)
-# print(fibo1)
-# print(next(fibo1))
-# print(next(fibo1))
-# print(next(fibo1))
-# print(next(fibo1))
-# print(next(fibo1))
-
 def run(n):
     return list(Fibonacci(n))
