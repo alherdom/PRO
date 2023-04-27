@@ -59,6 +59,15 @@ class DNA:
         pct_thymine = DNA.percent_calc(self.thymines, dna_size)
         return {self.ADENINE:pct_adenine,self.CYTOSINE:pct_cytosine,self.GUANINE:pct_guanine,self.THYMINE:pct_thymine}    
 
+    @classmethod
+    def build_from_file(cls, path: str):
+        with open(path) as f:
+            return DNA(f.read())
+    
+    def dump_to_file(self, path):       
+        with open(path, "w") as f:
+            f.write(self.sequence)
+            
 # sequence1 = DNA("CAATGCATGCATGCAC")
 # sequence2 = DNA("CAGTACTAGCTAAC")
 # sequence3 = sequence1 + sequence2
