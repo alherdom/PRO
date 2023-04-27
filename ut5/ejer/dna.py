@@ -10,9 +10,6 @@ class DNA:
     def __init__(self, sequence: str):  
         self.sequence = sequence
     
-    def __str__(self) -> str:
-        return self.sequence
-    
     @property
     def adenines(self) -> int:
         return self.sequence.count(self.ADENINE)
@@ -28,6 +25,9 @@ class DNA:
     @property
     def thymines(self) -> int:
         return self.sequence.count(self.THYMINE)
+    
+    def __str__(self) -> str:
+        return self.sequence
    
     def __len__(self) -> int:
         return len(self.sequence)
@@ -46,15 +46,15 @@ class DNA:
         return DNA(new_sequence)
     
     @staticmethod
-    def percent_calc(qty_base: int, dna_size: int) -> float:
+    def calc_percent(qty_base: int, dna_size: int) -> float:
         return (qty_base / dna_size) * 100
 
     def stats(self) -> dict:
         dna_size = len(self)
-        pct_adenine = DNA.percent_calc(self.adenines, dna_size )
-        pct_cytosine = DNA.percent_calc(self.cytosines, dna_size)
-        pct_guanine = DNA.percent_calc(self.guanines, dna_size)
-        pct_thymine = DNA.percent_calc(self.thymines, dna_size)
+        pct_adenine = DNA.calc_percent(self.adenines, dna_size )
+        pct_cytosine = DNA.calc_percent(self.cytosines, dna_size)
+        pct_guanine = DNA.calc_percent(self.guanines, dna_size)
+        pct_thymine = DNA.calc_percent(self.thymines, dna_size)
         return {self.ADENINE:pct_adenine,self.CYTOSINE:pct_cytosine,self.GUANINE:pct_guanine,self.THYMINE:pct_thymine}    
 
     @classmethod
