@@ -44,6 +44,13 @@ class DNA:
         for char1, char2 in zip(self.sequence, other.sequence):
             new_sequence += char1 if char1 == char2 else ""
         return DNA(new_sequence)
+        
+    def __getitem__(self, index: int) -> str:
+        return self.sequence[index]
+    
+    def __setitem__(self, index: int, char: str):
+        new_char = char if char in self.ACGT else self.ADENINE
+        self.sequence = self.sequence[:index] + new_char + self.sequence[index + 1:]
     
     @staticmethod
     def calc_percent(qty_base: int, dna_size: int) -> float:
@@ -63,11 +70,5 @@ class DNA:
     
     def dump_to_file(self, path):       
         with open(path, "w") as f:
-            f.write(self.sequence)
-            
-    def __getitem__(self, index: int) -> str:
-        return self.sequence[index]
-    
-    def __setitem__(self, index: int, char: str):
-        new_char = char if char in self.ACGT else self.ADENINE
-        self.sequence = self.sequence[:index] + new_char + self.sequence[index + 1:]
+            f.write(self.sequence)    
+        
