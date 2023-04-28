@@ -5,7 +5,7 @@ class DNA:
     CYTOSINE = "C"
     GUANINE = "G"
     THYMINE = "T"
-    ACGT = ["A","C","G","T"]
+    ACGT = [ADENINE,CYTOSINE,GUANINE,THYMINE]
 
     def __init__(self, sequence: str):  
         self.sequence = sequence
