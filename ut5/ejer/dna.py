@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 class DNA:
+    
+    
     ADENINE = "A"
     CYTOSINE = "C"
     GUANINE = "G"
@@ -62,8 +64,11 @@ class DNA:
 
     def stats(self) -> dict:
         pct_adenine = DNA.calc_percent(self.adenines, self.length)
+        
         pct_cytosine = DNA.calc_percent(self.cytosines, self.length)
+        
         pct_guanine = DNA.calc_percent(self.guanines, self.length)
+        
         pct_thymine = DNA.calc_percent(self.thymines, self.length)
         return {self.ADENINE:pct_adenine,self.CYTOSINE:pct_cytosine,self.GUANINE:pct_guanine,self.THYMINE:pct_thymine}    
 
