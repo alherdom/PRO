@@ -5,6 +5,7 @@ class DNA:
     CYTOSINE = "C"
     GUANINE = "G"
     THYMINE = "T"
+    BASES = (ADENINE,CYTOSINE,GUANINE,THYMINE)
 
     def __init__(self, sequence: str):  
         self.sequence = sequence
@@ -48,7 +49,7 @@ class DNA:
         return self.sequence[index]
 
     def __setitem__(self, index: int, char: str):
-        new_char = char if char in self.stats() else DNA.ADENINE
+        new_char = char if char in DNA.BASES else DNA.ADENINE
         self.sequence = self.sequence[:index] + new_char + self.sequence[index + 1:]
 
     @staticmethod
