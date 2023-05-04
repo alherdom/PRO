@@ -3,7 +3,7 @@ from __future__ import annotations
 
 class IntegerStack:
     def __init__(self, *, max_size: int = 10):
-        self.max_size= max_size
+        self.max_size = max_size
         self.items = []
     
     def push(self, item: int) -> bool:
@@ -13,7 +13,6 @@ class IntegerStack:
             return True
         return False
         
-
     def pop(self) -> int:
         '''Extraer el elemento que está en el TOP de la pila'''
         return self.items.pop(0)
@@ -42,7 +41,6 @@ class IntegerStack:
     def load_from_file(cls, path: str) -> IntegerStack:
         '''Crea una pila desde un fichero. Si la pila se llena al ir añadiendo elementos
         habrá que expandir con los valores por defecto'''
-        return IntegerStack(open(path).read())
         
     def __getitem__(self, index: int) -> int:
         '''Devuelve el elemento de la pila en el índice indicado'''
@@ -62,15 +60,22 @@ class IntegerStack:
 
     def __add__(self, other: IntegerStack) -> IntegerStack:
         '''La segunda pila va "encima" de la primera'''
-        ...        
-
+        new_stack = self.items + other.items
+        new_size = len(new_stack)
+        return IntegerStack(new_stack)
+    
     def __iter__(self) -> IntegerStackIterator:
         return IntegerStackIterator(self)
 
 
 class IntegerStackIterator:
     def __init__(self, stack: IntegerStack):
-        ...
+        self.stack = stack
+        self.counter = 0
 
     def __next__(self) -> int:
-        ...
+        if self.counter >= len(self.stack):
+            raise StopIteration
+        item = self.stack.items[self.counter]
+        self.counter += 1
+        return item        
