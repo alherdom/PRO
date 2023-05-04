@@ -41,8 +41,12 @@ class IntegerStack:
     def load_from_file(cls, path: str) -> IntegerStack:
         '''Crea una pila desde un fichero. Si la pila se llena al ir añadiendo elementos
         habrá que expandir con los valores por defecto'''
-        ...
-        
+        items = open(path).readlines()
+        stack = IntegerStack(len(items))
+        for item in items:
+            stack.push(item.strip())
+        return stack
+
     def __getitem__(self, index: int) -> int:
         '''Devuelve el elemento de la pila en el índice indicado'''
         return self.items[index]
