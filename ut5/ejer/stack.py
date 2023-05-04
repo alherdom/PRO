@@ -81,4 +81,4 @@ class IntegerStackIterator:
             raise StopIteration
         item = self.stack.items[self.counter]
         self.counter += 1
-        return item        
+        return item
