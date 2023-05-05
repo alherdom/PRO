@@ -42,9 +42,11 @@ class IntegerStack:
         '''Crea una pila desde un fichero. Si la pila se llena al ir añadiendo elementos
         habrá que expandir con los valores por defecto'''
         items = open(path).readlines()
-        stack = IntegerStack(len(items))
+        stack = IntegerStack()
         for item in items:
-            stack.push(item.strip())
+            stack.push(int(item.strip()))
+        if len(stack.items) >= stack.max_size:
+            stack.expand(2)
         return stack
 
     def __getitem__(self, index: int) -> int:
@@ -65,7 +67,10 @@ class IntegerStack:
 
     def __add__(self, other: IntegerStack) -> IntegerStack:
         '''La segunda pila va "encima" de la primera'''
-        ...
+        stack = IntegerStack()
+        stack.items = other.items + self.items
+        stack.max_size = len(stack.items)
+        return stack
     
     def __iter__(self) -> IntegerStackIterator:
         return IntegerStackIterator(self)
