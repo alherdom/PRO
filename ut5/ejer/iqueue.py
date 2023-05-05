@@ -86,7 +86,7 @@ class IntegerQueue:
         máximos de cada cola.'''
         queue = IntegerQueue()
         queue.items = self.items + other.items 
-        queue.max_size = len(queue.items)
+        queue.max_size = self.max_size + other.max_size
         return queue
 
     def __iter__(self) -> IntegerQueueIterator:
