@@ -43,10 +43,9 @@ class IntegerStack:
         habrá que expandir con los valores por defecto'''
         items = open(path).readlines()
         stack = IntegerStack()
-        for item in items:
-            stack.push(int(item.strip()))
-        if len(stack.items) >= stack.max_size:
-            stack.expand(2)
+        stack.items = [int(item.strip()) for item in items]
+        while len(stack.items) > stack.max_size:
+            stack.expand()
         return stack
 
     def __getitem__(self, index: int) -> int:
