@@ -44,8 +44,7 @@ class IntegerStack:
         items = open(path).readlines()
         stack = IntegerStack()
         stack.items = [int(item.strip()) for item in items]
-        while len(stack.items) > stack.max_size:
-            stack.expand()
+        while len(stack.items) > stack.max_size: stack.expand()
         return stack
 
     def __getitem__(self, index: int) -> int:
