@@ -56,10 +56,11 @@ class IntegerQueue:
         - Si la cola se llena al ir añadiendo elementos habrá que expandir con los valores
         por defecto'''
         items = open(path).read().split(',')
-        queue = IntegerQueue()
-        queue.items = [int(item) for item in items]
-        while len(queue.items) > queue.max_size:
-            queue.expand()
+        queue = IntegerQueue()       
+        for item in items:
+            if queue.is_full():
+                queue.expand()
+            queue.items.append(int(item))          
         return queue
 
     def __getitem__(self, index: int) -> int:
