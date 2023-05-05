@@ -60,7 +60,7 @@ class IntegerStack:
         '''Número de elementos que contiene la pila'''
         return len(self.items)
 
-    def __str__(self):
+    def __str__(self) -> str:
         '''Cada elemento en una línea distinta empezando por el TOP de la pila'''
         return '\n'.join([str(item) for item in self.items])
 
