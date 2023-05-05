@@ -16,7 +16,7 @@ class IntegerQueue:
     
     def enqueue(self, item: int) -> bool:
         '''Si la cola está llena retornar False, en otro caso retornar True'''
-        if len(self.items) < self.max_size:
+        if not self.is_full():
             self.items.append(item)
             return True
         return False
