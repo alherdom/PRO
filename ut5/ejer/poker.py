@@ -66,22 +66,20 @@ class Card:
 
     def __lt__(self, other: Card):
         '''Indica si una carta vale menos que otra'''
-        min_value = min(self.value, other.value)
-        if self.is_ace():
-            min_value = self.value
-        if other.is_ace():
-            min_value = self.value
-        return True if self.value == min_value else False
+        if self.is_ace() and not other.is_ace():
+            return False
+        if other.is_ace() and not self.is_ace():
+            return True
+        return True if self.value == min(self.value, other.value) else False
         
 
     def __gt__(self, other: Card):
         '''Indica si una carta vale más que otra'''
-        max_value = max(self.value, other.value)
-        if self.is_ace():
-            max_value = self.value
-        if other.is_ace():
-            max_value = self.value
-        return True if self.value == max_value else False
+        if self.is_ace() and not other.is_ace():
+            return True
+        if other.is_ace() and not self.is_ace():
+            return False
+        return True if self.value == max(self.value, other.value) else False
         
 
     def __add__(self, other: Card) -> Card:
