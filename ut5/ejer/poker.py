@@ -45,7 +45,6 @@ class Card:
         - self.value deberá almacenar el valor de la carta (1-13)'''
         if isinstance(value, str):
             value = int(value)
-            
         if suit not in Card.SUITS :
             raise InvalidCardError(f"🃏 Invalid card: {repr(suit)} is not a supported suit")
         
@@ -117,8 +116,7 @@ class InvalidCardError(Exception):
     '''Clase que representa un error de carta inválida.
     - El mensaje por defecto de esta excepción debe ser: 🃏 Invalid card
     - Si se añaden otros mensajes aparecerán como: 🃏 Invalid card: El mensaje que sea'''
-    def __init__(self, value, *, message: str):
-        self.value = value
+    def __init__(self,*, message: str = "🃏 Invalid card"):
         self.message = message
 
     def __str__(self):
