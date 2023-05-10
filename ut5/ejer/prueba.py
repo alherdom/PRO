@@ -1,7 +1,12 @@
-while True:
-    number = int(input("Please, type a number between 1 and 1000: "))
-    if number % 2 == 0:
-        print(f'Your number {number} is PAIR')
-    else:
-        print(f'Your number {number} is ODD')
-    
+path = 'cards.dat'
+
+with open(path) as f:
+    glyphs = {}
+    suits = []
+    cards = []
+    for line in f:
+        suits.append(line[0])
+        cards.append(line[2:].strip().replace(",",""))
+    for suit, card in zip(suits, cards):
+        glyphs[suit] = card
+    print(glyphs)

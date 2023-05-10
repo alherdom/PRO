@@ -12,22 +12,21 @@
 # Give me an integer number: 10
 # Trate de implementar tanto la versión recursiva como la versión iterativa.
 
-def getint():
-    while True:
-        value = int(input("Give me an integer number: "))
-        try:
-            return f"It's ok {value} is a integer"
-        except ValueError:
-            print("Not a valid integer. Try it again!")
-
-
 # def getint():
-#     try:
+#     while True:
 #         value = int(input("Give me an integer number: "))
-#     except ValueError:
-#         print("Not a valid integer. Try it again!")
-#         getint()
-#     else:
-#         print(f"It's ok {value} is a integer")
+#         try:
+#             return f"It's ok {value} is a integer"
+#         except ValueError:
+#             print("Not a valid integer. Try it again!")
+
+def getint():
+    try:
+        value = int(input("Give me an integer number: "))
+    except ValueError:
+        print("Not a valid integer. Try it again!")
+        getint()
+    else:
+        print(f"It's ok {value} is a integer")
 
 getint()
