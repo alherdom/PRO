@@ -20,7 +20,6 @@ class Card:
     DIAMONDS = '◆'
     HEARTS = '❤'
     SPADES = '♠'
-    SUITS = CLUBS+DIAMONDS+HEARTS+SPADES 
     #           1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13
     SYMBOLS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
     A_VALUE = 1
@@ -44,7 +43,7 @@ class Card:
             raise InvalidCardError(f"{repr(value)} is not a supported symbol")
         if value > Card.K_VALUE or value < Card.A_VALUE:
             raise InvalidCardError(f"{repr(value)} is not a supported value")
-        if suit not in Card.SUITS :
+        if suit not in Card.get_available_suits():
             raise InvalidCardError(f"{repr(suit)} is not a supported suit")
         self.value = value
         self.suit = suit
@@ -88,7 +87,7 @@ class Card:
     @classmethod
     def get_available_suits(cls) -> str:
         '''Devuelve todos los palos como una cadena de texto'''
-        return Card.SUITS
+        return Card.CLUBS+Card.DIAMONDS+Card.HEARTS+Card.SPADES 
 
     @classmethod
     def get_cards_by_suit(cls, suit: str):
