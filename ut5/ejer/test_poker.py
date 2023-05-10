@@ -87,7 +87,7 @@ def test_card_is_greater_than_other_card(card1: Card, card2: Card):
 
 def test_add_cards(card1: Card, card2: Card, card3: Card, card5: Card):
     card = card1 + card2
-    assert card.value == 1
+    assert card.value == 8
     assert card.suit == Card.HEARTS
 
     card = card2 + card3

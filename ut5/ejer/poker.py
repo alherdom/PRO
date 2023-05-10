@@ -89,6 +89,10 @@ class Card:
         de 13 se convertirá en un AS.'''
         suit = self.suit if self.value > other.value else other.suit 
         value = 1 if self.value + other.value > 13 else self.value + other.value
+        if self.is_ace() and not other.is_ace():
+            suit = self.suit
+        if other.is_ace() and not self.is_ace():
+            suit = self.suit
         return Card(value, suit)
 
     def is_ace(self) -> bool:
