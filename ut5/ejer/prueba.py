@@ -1,4 +1,4 @@
-path = 'cards.dat'
+path = "cards.dat"
 
 with open(path) as f:
     glyphs = {}
@@ -10,3 +10,8 @@ with open(path) as f:
     for suit, card in zip(suits, cards):
         glyphs[suit] = card
     print(glyphs)
+    
+    
+cards2 = glyphs["♣"]
+
+print(cards2[0])

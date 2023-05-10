@@ -43,11 +43,14 @@ class Card:
 
         - self.suit deberá almacenar el palo de la carta '♣◆❤♠'.
         - self.value deberá almacenar el valor de la carta (1-13)'''
-        
-        self.suit = suit if suit in Card.SUITS else None
         if isinstance(value, str):
             value = int(value)
+            
+        if suit not in Card.SUITS :
+            raise InvalidCardError(f"🃏 Invalid card: {repr(suit)} is not a supported suit")
+        
         self.value = value if value >= 1 and value <= 13 else None
+        self.suit = suit
 
     @property
     def cmp_value(self) -> int:
@@ -58,7 +61,7 @@ class Card:
     def __repr__(self):
         '''Devuelve el glifo de la carta'''
         cards = Card.GLYPHS[self.suit]
-        return cards[self.value]
+        return cards[self.value - 1]
 
     def __eq__(self, other: Card | object) -> bool:
         '''Indica si dos cartas son iguales'''
@@ -114,9 +117,12 @@ class InvalidCardError(Exception):
     '''Clase que representa un error de carta inválida.
     - El mensaje por defecto de esta excepción debe ser: 🃏 Invalid card
     - Si se añaden otros mensajes aparecerán como: 🃏 Invalid card: El mensaje que sea'''
-    def __init__(self, message: str = "🃏 Invalid card") -> None:
+    def __init__(self, value, *, message: str):
+        self.value = value
         self.message = message
-    
+
+    def __str__(self):
+        return self.message
     
     # 🃏 Invalid card: {repr(suit)} is not a supported suit
     #     - Si el value(como entero) no es válido (es menor que 1 o mayor que 13) hay que
