@@ -87,7 +87,7 @@ class Card:
     @classmethod
     def get_available_suits(cls) -> str:
         '''Devuelve todos los palos como una cadena de texto'''
-        return Card.CLUBS+Card.DIAMONDS+Card.HEARTS+Card.SPADES 
+        return Card.CLUBS + Card.DIAMONDS + Card.HEARTS + Card.SPADES 
 
     @classmethod
     def get_cards_by_suit(cls, suit: str):
