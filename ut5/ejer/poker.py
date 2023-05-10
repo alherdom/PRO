@@ -53,8 +53,6 @@ class Card:
     def cmp_value(self) -> int:
         '''Devuelve el valor (numérico) de la carta para comparar con otras.
         Tener en cuenta el AS.'''
-        if isinstance(self.value, str):
-            
         return self.value if not self.is_ace() else Card.A_VALUE + Card.K_VALUE
 
     def __repr__(self):
