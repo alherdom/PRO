@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 def load_card_glyphs(path: str = 'cards.dat') -> dict[str, str]:
     '''Retorna un diccionario donde las claves serán los palos
     y los valores serán cadenas de texto con los glifos de las
@@ -12,8 +11,6 @@ def load_card_glyphs(path: str = 'cards.dat') -> dict[str, str]:
             suit, cards = line.strip().split(":")
             glyphs[suit] = cards.replace(",","")
     return glyphs
-    
-
 
 class Card:
     CLUBS = '♣'
@@ -69,7 +66,6 @@ class Card:
     def __gt__(self, other: Card):
         '''Indica si una carta vale más que otra'''
         return self.cmp_value == max(self.cmp_value, other.cmp_value)
-        
 
     def __add__(self, other: Card) -> Card:
         '''Suma de dos cartas:
