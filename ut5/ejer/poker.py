@@ -86,7 +86,7 @@ class Card:
     @classmethod
     def get_cards_by_suit(cls, suit: str):
         '''Función generadora que devuelve los glifos de las cartas por su palo'''
-        for gliph in cls.GLYPHS[suit]:
+        for gliph in Card.GLYPHS[suit]:
             yield gliph
         #return Card.GLYPHS[suit]
 
