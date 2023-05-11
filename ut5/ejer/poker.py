@@ -88,7 +88,7 @@ class Card:
         '''Función generadora que devuelve los glifos de las cartas por su palo'''
         for gliphs in Card.GLYPHS[suit]:
             yield gliphs
-        #return Card.GLYPHS[suit]
+        # return Card.GLYPHS[suit]
 
 
 class InvalidCardError(Exception):
@@ -100,5 +100,6 @@ class InvalidCardError(Exception):
         if message:
             self.message += f": {message}"
         super().__init__(message)
+
     def __str__(self):
         return self.message
