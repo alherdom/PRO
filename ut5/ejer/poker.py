@@ -49,7 +49,7 @@ class Card:
         Tener en cuenta el AS.'''
         return self.value if not self.is_ace() else Card.A_VALUE + Card.K_VALUE
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''Devuelve el glifo de la carta'''
         return Card.GLYPHS[self.suit][self.value - 1]
 
@@ -57,11 +57,11 @@ class Card:
         '''Indica si dos cartas son iguales'''
         return self.value == other.value and self.suit == other.suit
 
-    def __lt__(self, other: Card):
+    def __lt__(self, other: Card) -> bool:
         '''Indica si una carta vale menos que otra'''
         return self.cmp_value == min(self.cmp_value, other.cmp_value)
 
-    def __gt__(self, other: Card):
+    def __gt__(self, other: Card) -> bool:
         '''Indica si una carta vale más que otra'''
         return self.cmp_value == max(self.cmp_value, other.cmp_value)
 
@@ -76,7 +76,7 @@ class Card:
 
     def is_ace(self) -> bool:
         '''Indica si una carta es un AS'''
-        return self.value == 1
+        return self.value == Card.A_VALUE
 
     @classmethod
     def get_available_suits(cls) -> str:
@@ -86,7 +86,9 @@ class Card:
     @classmethod
     def get_cards_by_suit(cls, suit: str):
         '''Función generadora que devuelve los glifos de las cartas por su palo'''
-        return Card.GLYPHS[suit]
+        for gliph in cls.GLYPHS[suit]:
+            yield gliph
+        #return Card.GLYPHS[suit]
 
 
 class InvalidCardError(Exception):
