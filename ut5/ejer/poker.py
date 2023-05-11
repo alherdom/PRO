@@ -23,7 +23,7 @@ class Card:
     GLYPHS = load_card_glyphs()
 
     def __init__(self, value: int | str, suit: str):
-        '''Notas:
+        '''
         - Si el suit(palo) no es válido hay que elevar una excepción de tipo
         InvalidCardError() con el mensaje: 🃏 Invalid card: {repr(suit)} is not a supported suit
         - Si el value(como entero) no es válido (es menor que 1 o mayor que 13) hay que
@@ -31,7 +31,6 @@ class Card:
         🃏 Invalid card: {repr(value)} is not a supported value
         - Si el value(como string) no es válido hay que elevar una excepción de tipo
         🃏 Invalid card: {repr(value)} is not a supported symbol
-
         - self.suit deberá almacenar el palo de la carta '♣◆❤♠'.
         - self.value deberá almacenar el valor de la carta (1-13)'''
         if isinstance(value, str) and value not in Card.SYMBOLS:
