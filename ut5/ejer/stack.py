@@ -23,11 +23,11 @@ class IntegerStack:
 
     def is_empty(self) -> bool:
         '''Indica si la pila está vacía'''
-        return True if len(self.items) == 0 else False
+        return len(self.items) == 0
 
     def is_full(self) -> bool:
         '''Indica si la pila está llena -> max_size'''
-        return True if len(self.items) == self.max_size else False
+        return len(self.items) == self.max_size
 
     def expand(self, factor: int = 2) -> None:
         '''Expande el tamaño máximo de la pila en el factor indicado'''
@@ -36,7 +36,7 @@ class IntegerStack:
     def dump_to_file(self, path: str) -> None:
         '''Vuelca la pila a un fichero. Cada item en una línea'''
         with open(path, 'w') as f:
-            f.write('\n'.join([str(item) for item in self.items]))
+            f.write('\n'.join(str(item) for item in self.items))
         
     @classmethod
     def load_from_file(cls, path: str) -> IntegerStack:
@@ -70,7 +70,7 @@ class IntegerStack:
         '''La segunda pila va "encima" de la primera'''
         stack = IntegerStack()
         stack.items = other.items + self.items
-        stack.max_size = len(stack.items)
+        stack.max_size = other.max_size + self.max_size
         return stack
     
     def __iter__(self) -> IntegerStackIterator:
