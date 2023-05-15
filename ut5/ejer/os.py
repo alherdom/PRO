@@ -61,8 +61,10 @@ class OS:
 
     @audit
     def get_number_hosts(self):
-        if self.cidr > 30:
-            return 0
+        if self.cidr == 31:
+            return 2
+        if self.cidr == 32:
+            return 1
         num_hosts = 2 ** (32 - self.cidr) - 2
         print(f"The number of hosts is: {num_hosts}")
 
