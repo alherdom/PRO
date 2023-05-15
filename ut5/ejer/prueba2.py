@@ -74,12 +74,12 @@
 # for oct in ip1:
 #     print(oct)
 
-numero_decimal = 29
+# numero_decimal = 29
 
-modulos = []
-while numero_decimal != 0:
-    # se almacena el módulo en el orden correcto
-    modulos.insert(0, numero_decimal % 2)
-    numero_decimal //= 2
+# modulos = []
+# while numero_decimal != 0:
+#     # se almacena el módulo en el orden correcto
+#     modulos.insert(0, numero_decimal % 2)
+#     numero_decimal //= 2
 
-print(modulos)
+# print(modulos)
