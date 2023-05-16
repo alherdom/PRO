@@ -46,8 +46,10 @@ def get_type_mask(cidr: int):
             return "A"
         if 9 <= cidr <= 16:
             return "B"
-        if 24 <= cidr <= 32:
+        if 17 <= cidr <= 24:
             return "C"
+        if 25 <= cidr <= 32:
+            return "D"
         
                     
 # print(binary_ip)
@@ -63,4 +65,4 @@ def get_type_mask(cidr: int):
 # print(highest_cidr('172.140.35.10','172.140.35.63'))
 # print(from_mask_to_cidr('255.255.255.192'))
 print(get_number_hosts(26))
-print(get_type_mask(23))
+print(get_type_mask(17))
