@@ -6,51 +6,48 @@ def load_ip(path: str = 'ip.dat') -> str:
 class IP:
     
     def __init__(self, ip: str):
-        self.ip = ip
+        ip, cidr = input_ip.split("/")
+        ip_list = [int(i) for i in ip.split(".")]
+        for octeto in ip_list:
+            if octeto < 0 or octeto < 255:
+                raise InvalidIPError(f"{repr(octeto)} is not a supported value")
+        self.ip = ip_list
+        self.cidr = int(cidr)
+    
+    def get_number_hosts(self):
+        if self.cidr == 31:
+            return 2
+        if self.cidr == 32:
+            return 1
+        num_hosts = 2 ** (32 - self.cidr) - 2
+        print(f"The number of hosts is: {num_hosts}")
+        
+    def unmask(self):
+        ...
 
-    @property
-    def cmp_value(self) -> int:
-        return self.value if not self.is_ace() else Card.A_VALUE + Card.K_VALUE
-
+    def __str__(self) -> str:
+        pass
     def __repr__(self) -> str:
-        return Card.GLYPHS[self.suit][self.value - 1]
-
-    def __eq__(self, other: Card | object) -> bool:
-        return self.value == other.value and self.suit == other.suit
-
-    def __lt__(self, other: Card) -> bool:
-        return self.cmp_value == min(self.cmp_value, other.cmp_value)
-
-    def __gt__(self, other: Card) -> bool:
-        return self.cmp_value == max(self.cmp_value, other.cmp_value)
-
-    def __add__(self, other: Card) -> Card:
-        suit = self.suit if self.cmp_value > other.cmp_value else other.suit 
-        value = Card.A_VALUE if self.cmp_value + other.cmp_value > Card.K_VALUE else self.value + other.value
-        return Card(value, suit)
-
-    def is_ace(self) -> bool:
-        '''Indica si una carta es un AS'''
-        return self.value == Card.A_VALUE
-
-    @classmethod
-    def get_available_suits(cls) -> str:
-        '''Devuelve todos los palos como una cadena de texto'''
-        return Card.CLUBS + Card.DIAMONDS + Card.HEARTS + Card.SPADES 
-
-    @classmethod
-    def get_cards_by_suit(cls, suit: str):
-        for gliphs in Card.GLYPHS[suit]:
-            yield gliphs
-        # return Card.GLYPHS[suit]
-
-
+        pass
+    def __eq__(self, other: IP | object) -> bool:
+        pass
+    def __lt__(self, other: IP) -> bool:
+        pass
+    def __gt__(self, other: IP) -> bool:
+        pass
+    def __add__(self, other: IP) -> IP:
+        pass
+        
 class InvalidIPError(Exception):
     def __init__(self, message: str = ""):
-        self.message = "🃏 Invalid card"
+        self.message = "Invalid ip"
         if message:
             self.message += f": {message}"
         super().__init__(message)
 
-    def __str__(self):
-        return self.message
+
+ip1 = IP("172.140.35.10")
+print(load_ip())
+input_ip = "172.140.35.10/26"
+ip_list = [int(i) for i in ip.split(".")]
+print(ip_list)
