@@ -140,14 +140,9 @@ class Host:
         '''
         if len(bip) > 32:
             raise IPAddressError(f"IP address is invalid: Binary address is too long")
-        new_bip = ""
-        for i, bit in enumerate(bip):
-            new_bip += bit
-            if i % 8 == 0:
-                new_bip += "."
-        decimal_bip = '.'.join(str(int(octet,2)) for octet in new_bip.split('.'))
-        return Host(decimal_bip, mask)
-        
+        splited_bip = ".".join(bip[i:i+8] for i in range(0, len(bip), 8))
+        ip = '.'.join(str(int(octet,2)) for octet in splited_bip.split('.'))
+        return Host(ip,mask=mask)        
 
 
 
