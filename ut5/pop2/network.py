@@ -110,9 +110,7 @@ class Host:
     def ping(self, host: Host) -> bool:
         '''Indica si un host puede hacer ping a otro host.
         Para que dos hosts puedan hacer ping deben estar en la misma red.'''
-        nh_index  = host.mask // 8
-        return self.ip_octets[:nh_index] == host.ip_octets
-
+        return self.mask == host.mask
 
     def __repr__(self):
         '''Devuelve la representación del host en formato.
@@ -143,7 +141,6 @@ class Host:
         splited_bip = ".".join(bip[i:i+8] for i in range(0, len(bip), 8))
         ip = '.'.join(str(int(octet,2)) for octet in splited_bip.split('.'))
         return Host(ip,mask=mask)        
-
 
 
 class IPAddressError(Exception):
