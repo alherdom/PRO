@@ -1,6 +1,6 @@
 class OS:
     graphical_interface = True
-    ip = "172.18.99.202/16"
+    ip = "172.18.99.202/31"
 
     def __init__(
         self,
@@ -61,12 +61,9 @@ class OS:
 
     @audit
     def get_number_hosts(self):
-        if self.cidr == 31:
-            return 2
-        if self.cidr == 32:
-            return 1
-        num_hosts = 2 ** (32 - self.cidr) - 2
-        print(f"The number of hosts is: {num_hosts}")
+        if self.cidr in (31, 32):
+            return 2 ** (32 - self.cidr)
+        return 2 ** (32 - self.cidr) - 2
 
     @audit
     def get_type_mask(self):
@@ -155,28 +152,28 @@ class OS:
 
 
 linux = OS("Linux Mint", "21.0", "Stallman", "monolithic hybrid", "system file", "xorg")
-print(linux.get_os_info())
 print(linux.get_subnet_mask())
 print(linux.get_wildcard_mask())
-linux.get_number_hosts()
-print(linux.get_os_categories())
+print(linux.get_number_hosts())
 print(linux.get_type_mask())
-linux.add_user("Alejandro", "123456")
-linux.add_user("Pepe", "654321")
-linux.add_user("Alejandro", "123456")
-linux.add_user("Raquel", "222222")
-linux.add_group("admins", "manage the system")
-linux.add_group("lp", "control the printer")
-linux.add_group("scanner", "control the scanner")
-print(linux.get_users())
-print(linux.get_groups())
-print(linux.get_passwords())
-linux.del_user("Pepe", "654321")
-print(linux.get_users())
-print(linux.del_group("matraca"))
-linux.del_group("scanner")
-print(linux.get_groups())
-linux.execute_process("firefox", "xeyes", "chrome")
-print(linux.show_processes())
-linux.kill_process(["firefox", "xeyes"])
-print(linux.show_processes())
+# print(linux.get_os_info())
+# print(linux.get_os_categories())
+# linux.add_user("Alejandro", "123456")
+# linux.add_user("Pepe", "654321")
+# linux.add_user("Alejandro", "123456")
+# linux.add_user("Raquel", "222222")
+# linux.add_group("admins", "manage the system")
+# linux.add_group("lp", "control the printer")
+# linux.add_group("scanner", "control the scanner")
+# print(linux.get_users())
+# print(linux.get_groups())
+# print(linux.get_passwords())
+# linux.del_user("Pepe", "654321")
+# print(linux.get_users())
+# print(linux.del_group("matraca"))
+# linux.del_group("scanner")
+# print(linux.get_groups())
+# linux.execute_process("firefox", "xeyes", "chrome")
+# print(linux.show_processes())
+# linux.kill_process(["firefox", "xeyes"])
+# print(linux.show_processes())
