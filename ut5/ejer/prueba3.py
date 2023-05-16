@@ -26,15 +26,12 @@ def decimal_2_binary(octets: str):
     return '.'.join(f'{int(octet):08b}' for octet in octets.split('.'))
 
 def get_number_hosts(cidr: int):
-        if cidr in (31, 32):
-            return 2 ** (32 - cidr)
-        return 2 ** (32 - cidr) - 2
+        return 2 ** (32 - cidr) if cidr in (31, 32) else 2 ** (32 - cidr) - 2
 
 def from_mask_to_cidr(mask: str | list):
     if isinstance(mask, str):
-        binary_mask = decimal_2_binary(mask)
-    
-
+        return decimal_2_binary(mask).count('1')
+        
 def highest_cidr(ip1: str, ip2: str):
     common_ip = ""
     binary_ip1 = decimal_2_binary(ip1)
@@ -43,6 +40,14 @@ def highest_cidr(ip1: str, ip2: str):
         if bit1 != bit2:
             return len(common_ip.replace('.',''))
         common_ip += bit1
+
+def get_type_mask(cidr: int):
+        if cidr <= 8:
+            return "A"
+        if 9 <= cidr <= 16:
+            return "B"
+        if 24 <= cidr <= 32:
+            return "C"
         
                     
 # print(binary_ip)
@@ -53,6 +58,9 @@ def highest_cidr(ip1: str, ip2: str):
 # print(decimal_broadcast)
 # print(binary_broadcast)
 # print(decimal_mask)
-print(decimal_2_binary('172.140.35.10'))
-print(decimal_2_binary('172.140.35.63'))
-print(highest_cidr('172.140.35.10','172.140.35.63'))
+# print(decimal_2_binary('172.140.35.10'))
+# print(decimal_2_binary('172.140.35.63'))
+# print(highest_cidr('172.140.35.10','172.140.35.63'))
+# print(from_mask_to_cidr('255.255.255.192'))
+print(get_number_hosts(26))
+print(get_type_mask(23))
