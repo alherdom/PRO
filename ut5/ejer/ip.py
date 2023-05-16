@@ -1,33 +1,12 @@
 from __future__ import annotations
 
-def load_card_glyphs(path: str = 'cards.dat') -> dict[str, str]:
-    f = open(path)
-    glyphs = {}
-    for line in f:
-        suit, cards = line.strip().split(":")
-        glyphs[suit] = cards.replace(",","")
-    return glyphs
+def load_ip(path: str = 'ip.dat') -> str:   
+    return open(path).read()
 
-class Card:
-    CLUBS = '♣'
-    DIAMONDS = '◆'
-    HEARTS = '❤'
-    SPADES = '♠'
-    #           1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13
-    SYMBOLS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
-    A_VALUE = 1
-    K_VALUE = 13
-    GLYPHS = load_card_glyphs()
-
-    def __init__(self, value: int | str, suit: str):
-        if isinstance(value, str) and value not in Card.SYMBOLS:
-            raise InvalidCardError(f"{repr(value)} is not a supported symbol")
-        if value > Card.K_VALUE or value < Card.A_VALUE:
-            raise InvalidCardError(f"{repr(value)} is not a supported value")
-        if suit not in Card.get_available_suits():
-            raise InvalidCardError(f"{repr(suit)} is not a supported suit")
-        self.value = value
-        self.suit = suit
+class IP:
+    
+    def __init__(self, ip: str):
+        self.ip = ip
 
     @property
     def cmp_value(self) -> int:
@@ -66,7 +45,7 @@ class Card:
         # return Card.GLYPHS[suit]
 
 
-class InvalidCardError(Exception):
+class InvalidIPError(Exception):
     def __init__(self, message: str = ""):
         self.message = "🃏 Invalid card"
         if message:
