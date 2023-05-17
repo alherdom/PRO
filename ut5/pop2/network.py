@@ -28,7 +28,7 @@ class Host:
         items = list(args)
         if isinstance(items[0], str):
             if len(items) > 4:
-                raise IPAddressError(f"IP address is invalid: Only 4 octets are allowed")
+                raise IPAddressError("IP address is invalid: Only 4 octets are allowed")
             self.ip_octets = tuple(int(i) for i in items[0].split('.'))
         
         if isinstance(items[0], int):
@@ -38,16 +38,16 @@ class Host:
                 zeros_int = [int(i) for i in zeros]
                 self.ip_octets = tuple(items + zeros_int)
             if len(items) > 4:
-                raise IPAddressError(f"IP address is invalid: Only 4 octets are allowed")
+                raise IPAddressError("IP address is invalid: Only 4 octets are allowed")
         if mask < 0 or mask > Host.IPV4_BITS:
-            raise IPAddressError(f"IP address is invalid: Mask is out of range")
+            raise IPAddressError("IP address is invalid: Mask is out of range")
         self.mask = mask
 
     @property
     def ip(self) -> str:
         '''Devuelve la IP del host en formato string.
         Ejemplo: "192.168.1.5"'''
-        return f'{self.ip_octets}'
+        return '.'.join(str(i) for i in self.ip_octets)
 
     @property
     def bip(self) -> str:
@@ -137,7 +137,7 @@ class Host:
           indicando en el mensaje: "Binary address is too long"
         '''
         if len(bip) > 32:
-            raise IPAddressError(f"IP address is invalid: Binary address is too long")
+            raise IPAddressError("IP address is invalid: Binary address is too long")
         splited_bip = ".".join(bip[i:i+8] for i in range(0, len(bip), 8))
         ip = '.'.join(str(int(octet,2)) for octet in splited_bip.split('.'))
         return Host(ip,mask=mask)        
@@ -147,10 +147,10 @@ class IPAddressError(Exception):
     '''Clase que representa un error en la dirección IP.
     - Mensaje por defecto: IP address is invalid
     - Si pasamos un mensaje: IP address is invalid: <message>'''
-    def __init__(self, message: str = ""):
+    def __init__(self, message):
         self.message = "IP address is invalid"
         if message:
-            self.message += f": {message}"
+            self.message = message
             
         super().__init__(message)
 
