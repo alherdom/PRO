@@ -147,12 +147,11 @@ class IPAddressError(Exception):
     '''Clase que representa un error en la dirección IP.
     - Mensaje por defecto: IP address is invalid
     - Si pasamos un mensaje: IP address is invalid: <message>'''
-    def __init__(self, message):
-        self.message = "IP address is invalid"
+    def __init__(self, message: str = ''):
+        base_message = "IP address is invalid"
         if message:
-            self.message = message
-            
-        super().__init__(message)
+            base_message += f': {message}'
+        super().__init__(base_message)
 
 
 class NetworkIter:
