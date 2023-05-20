@@ -1,5 +1,7 @@
 from __future__ import annotations
 from card import Card
+import random
+from typing import Generator, Iterable, MutableSequence
 
 class Deck:
     def __init__(self):
@@ -22,8 +24,11 @@ class Deck:
 
     def __iter__(self) -> DeckIterator:
         return DeckIterator(self)
-
-
+    
+    def shuffle(self):
+        random.shuffle(self.deck)
+        return self.deck
+    
 class DeckIterator:
     def __init__(self, deck: Deck):
         self.deck = deck
@@ -37,6 +42,18 @@ class DeckIterator:
         return item
 
 new_deck = Deck()
-for card in new_deck:
-    print(card)
-print(new_deck)
+# for card in new_deck:
+#     print(card)
+# print(new_deck)
+print(new_deck.shuffle())
+
+# - Datos:
+#   - 52 cartas
+# - Responsabilidades:
+#   - Dar una carta aleatoria
+#   - Dar la carta de "arriba"
+#   - Dar la carta de "abajo"
+#   - Barajar
+#   - Ver una carta aleatoria
+#   - Ver la carta de "arriba"
+#   - Ver la carta de "abajo"
