@@ -14,10 +14,10 @@ class Deck:
     def __setitem__(self, index: int, item: int) -> None:
         self.deck[index] = item
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.deck)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return ','.join([str(item) for item in self.deck])
 
     def __iter__(self) -> DeckIterator:
