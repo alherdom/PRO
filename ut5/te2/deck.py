@@ -1,42 +1,42 @@
-import card
+from __future__ import annotations
+from card import Card
 
 class Deck:
     def __init__(self):
-        self.cards = []
-        for suit in card.Card.GLYPHS.keys():
+        self.deck = []
+        for suit in Card.GLYPHS.keys():
             for value in range(1,14):
-                self.cards.append(card.Card(value, suit))
-                
-        # self.cards = []
-        # for suit in Card.GLYPHS.keys():
-        #     self.cards += [card for card in Card.GLYPHS[suit]] 
+                self.deck.append(Card(value, suit))
     
-    def hola(self):
-        return self.cards
+    def __getitem__(self, index: int) -> int:
+        return self.deck[index]
 
-#     def __iter__(self) -> CardIterator:
-#         return CardIterator(self)
+    def __setitem__(self, index: int, item: int) -> None:
+        self.deck[index] = item
+
+    def __len__(self):
+        return len(self.deck)
+
+    def __str__(self):
+        return ','.join([str(item) for item in self.deck])
+
+    def __iter__(self) -> DeckIterator:
+        return DeckIterator(self)
 
 
-# class CardIterator:
-#     def __init__(self, deck: Deck):
-#         self.deck = deck
-#         self.counter = 0
+class DeckIterator:
+    def __init__(self, deck: Deck):
+        self.deck = deck
+        self.counter = 0
 
-#     def __next__(self) -> int:
-#         if self.counter >= len(self.deck):
-#             raise StopIteration
-#         item = self.queue.items[self.counter]
-#         self.counter += 1
-#         return item
-    
-#     for byte in self.host_bip_segments:
-#             byte_length = len(byte)
-#             if byte.count(1) == byte_length:
-#                 raise StopIteration
-#             if byte.count(0) != byte_length:
-#                 new_ip = self.host.addr_bmask + "".join(str(bit) for bit in byte)
-#                 return Host.from_bip(new_ip, self.host.mask)
+    def __next__(self) -> int:
+        if self.counter >= len(self.deck):
+            raise StopIteration
+        item = self.deck[self.counter]
+        self.counter += 1
+        return item
 
 new_deck = Deck()
-print(new_deck.hola())
+for card in new_deck:
+    print(card)
+print(new_deck)
