@@ -16,7 +16,7 @@ class Card:
                     raise InvalidCardError(f"{repr(value)} is not a supported value")
             if suit not in Card.GLYPHS.keys():
                 raise InvalidCardError(f"{repr(suit)} is not a supported suit")
-        if isinstance(value, str) and suit == None:
+        if isinstance(value, str) and not suit:
             for suit, glyphs in Card.GLYPHS.items():
                 for i, glyph in enumerate (glyphs):
                     if value == glyph:
