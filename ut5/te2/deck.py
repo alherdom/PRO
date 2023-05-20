@@ -29,6 +29,16 @@ class Deck:
         random.shuffle(self.deck)
         return self.deck
     
+    def randint(a: int = -1, b: int = -1, /) -> int:
+        '''Genera un valor aleatorio entre a y b (incluidos)'''
+        if b == -1:
+            a, b = 0, a
+        if a < 0 or b < 0:
+            raise ValueError('Args must be positive!')
+        if a > b:
+            raise ValueError('Upper bound must be greater than lower bound!')
+        return random.randint(a, b)
+    
 class DeckIterator:
     def __init__(self, deck: Deck):
         self.deck = deck
