@@ -56,8 +56,8 @@ new_deck = Deck()
 # print(new_deck)
 # print(new_deck.shuffle())
 print(new_deck.draws_random_card())
-print(new_deck.draws_random_card())
-print(new_deck.draws_random_card())
+print(new_deck.draws_first_card())
+print(new_deck.draws_last_card())
 
 # - Datos:
 #   - 52 cartas
