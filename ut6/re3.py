@@ -2,8 +2,8 @@ import re
 # Escriba un programa en Python que indique si un determinado número es o no 
 # un flotante válido en Python.
 
-numbers = ('02.00', '02', '30.00.00', '3e0000', '3.0000_0000', '4.')
-regex = r'\d+\.?e?\d+_?\d+?'
+numbers = ('4.0', '4.', '04.0', '04.', '4.000_000', '4e0', '40', '1,000')
+regex = r'(\d+\.)|(\de0\b)'
 for number in numbers:
     output = re.match(regex, number)
     print(output)
