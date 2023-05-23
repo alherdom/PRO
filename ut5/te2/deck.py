@@ -29,15 +29,14 @@ class Deck:
         random.shuffle(self.deck)
         return self.deck
     
-    def randint(a: int = -1, b: int = -1, /) -> int:
-        '''Genera un valor aleatorio entre a y b (incluidos)'''
-        if b == -1:
-            a, b = 0, a
-        if a < 0 or b < 0:
-            raise ValueError('Args must be positive!')
-        if a > b:
-            raise ValueError('Upper bound must be greater than lower bound!')
-        return random.randint(a, b)
+    def draws_random_card(self) -> Card:
+        return self.deck.pop(random.randrange(len(self.deck)))
+    
+    def draws_first_card(self) -> Card:
+        return self.deck.pop(0)
+    
+    def draws_last_card(self) -> Card:
+        return self.deck.pop(-1)
     
 class DeckIterator:
     def __init__(self, deck: Deck):
@@ -55,7 +54,10 @@ new_deck = Deck()
 # for card in new_deck:
 #     print(card)
 # print(new_deck)
-print(new_deck.shuffle())
+# print(new_deck.shuffle())
+print(new_deck.draws_random_card())
+print(new_deck.draws_random_card())
+print(new_deck.draws_random_card())
 
 # - Datos:
 #   - 52 cartas
