@@ -11,18 +11,25 @@ class Task:
     '''Crear atributos de clase:
     - con: para la conexión a la base de datos.
     - cur: para el cursor de manejo.'''
-
-    pass
+    con = sqlite3.connect(DB_PATH)
+    con.row_factory = sqlite3.Row
+    cur = cur = con.cursor() 
 
     def __init__(self, name: str, done: bool = False, id: int = -1):
         '''Crea los atributos homónimos a los parámetros'''
-        pass
+        self.name = name
+        self.done = done
+        self.id = id     
 
     def save(self):
         '''Guarda esta tarea en la base de datos.
         El identificador asignado en la base de datos se debe usar para actualizar el
         atributo id de la tarea.'''
-        pass
+        sql = 'INSERT INTO tasks VALUES(:name, :done, :id)'
+        Task.cur.execute(sql, dict(name=self.name, done=self.done, id=self.id))
+        current_id = Task.cur.lastrowid
+        #Task.cur.execute(f'UPDATE tasks SET id={current_id} WHERE id={self.id}')
+
 
     def update(self):
         '''Actualiza la tarea (nombre y estado) en la base de datos'''
@@ -63,7 +70,12 @@ class ToDo:
 
     def create_db(self):
         '''Crea la base de datos con los campos "id", "name" y "done"'''
-        pass
+        sql = '''CREATE TABLE IF NOT EXISTS tasks (
+                    id INTEGER PRIMARY KEY,
+                    name CHAR,
+                    done INTEGER
+                )'''
+        
 
     def get_tasks(self, *, done: int = -1):
         '''Devuelve todas las tareas como objetos de tipo Task consultando la BBDD.
