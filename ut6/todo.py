@@ -12,8 +12,7 @@ class Task:
     - con: para la conexión a la base de datos.
     - cur: para el cursor de manejo.'''
     con = sqlite3.connect(DB_PATH)
-    con.row_factory = sqlite3.Row
-    cur = cur = con.cursor() 
+    cur = con.cursor() 
 
     def __init__(self, name: str, done: bool = False, id: int = -1):
         '''Crea los atributos homónimos a los parámetros'''
@@ -25,38 +24,47 @@ class Task:
         '''Guarda esta tarea en la base de datos.
         El identificador asignado en la base de datos se debe usar para actualizar el
         atributo id de la tarea.'''
-        sql = 'INSERT INTO tasks VALUES(:name, :done, :id)'
-        Task.cur.execute(sql, dict(name=self.name, done=self.done, id=self.id))
-        current_id = Task.cur.lastrowid
-        #Task.cur.execute(f'UPDATE tasks SET id={current_id} WHERE id={self.id}')
-
-
+        sql = 'INSERT INTO tasks(name,done) VALUES(?,?)'
+        Task.cur.execute(sql,(self.name, self.done))
+        Task.con.commit()
+        self.id = Task.cur.lastrowid
+    
+    
     def update(self):
         '''Actualiza la tarea (nombre y estado) en la base de datos'''
-        pass
+        Task.cur.execute(f'UPDATE tasks SET name="{self.name}", done={self.done} WHERE id={self.id}')
+        Task.con.commit()
 
     def check(self):
         '''Marca la tarea como completada. Haz uso también de .update()'''
-        pass
+        self.done = True
+        Task.cur.execute(f'UPDATE tasks SET done={self.done} WHERE id={self.id}')
+        Task.con.commit()
+
 
     def uncheck(self):
         '''Marca la tarea como no completada. Haz uso también de .update()'''
-        pass
+        self.done = False
+        Task.cur.execute(f'UPDATE tasks SET done={self.done} WHERE id={self.id}')
+        Task.con.commit()
 
     def __repr__(self):
         '''Muestra la tarea en formato:
         <SYMBOL> <name> (id=<id>)'''
-        pass
+        SYMBOL = TASK_DONE_SYMBOL if self.done else TASK_PENDING_SYMBOL
+        return f'{SYMBOL} {self.name} (id={self.id})'
 
     @classmethod
     def from_db_row(cls, row: sqlite3.Row) -> Task:
         '''Construye una nueva tarea a partir de una fila de consulta devuelta por execute()'''
-        pass
+        return Task(row['name'], row['done'], row['id'])
 
     @classmethod
     def get(cls, task_id: int) -> Task:
         '''Devuelve un objeto Task desde la consulta a la base de datos'''
-        pass
+        res = Task.cur.execute(f'SELECT * FROM tasks WHERE id={task_id}')
+        id, name, done = res.fetchone()
+        return Task(name, done, id)
 
 
 class ToDo:
@@ -82,16 +90,21 @@ class ToDo:
         - Si done = 0 se devuelven las tareas pendientes.
         - Si done = 1 se devuelven las tareas completadas.
         Ojo! Esto es una función generadora.'''
-        pass
+        for row in Task.cur.execute(f'SELECT * FROM tasks WHERE done={done}'):
+            yield Task(row)
 
     def add_task(self, name: str):
         '''Añade la tarea con nombre "name"'''
-        pass
+        Task.con.cursor().execute('INSERT INTO tasks(name) VALUES(?)',(name,))
+        Task.con.commit()
+
 
     def complete_task(self, task_id: int):
         '''Marca la tarea con identificador "task_id" como completada'''
-        pass
+        Task.cur.execute(f'UPDATE tasks SET done={True} WHERE id={task_id}')
+        Task.con.commit()
 
     def reopen_task(self, task_id: int):
         '''Marca la tarea con identificador "task_id" como pendiente'''
-        pass
+        Task.cur.execute(f'UPDATE tasks SET done={False} WHERE id={task_id}')
+        Task.con.commit()
