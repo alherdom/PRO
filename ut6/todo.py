@@ -38,15 +38,12 @@ class Task:
     def check(self):
         '''Marca la tarea como completada. Haz uso también de .update()'''
         self.done = True
-        Task.cur.execute(f'UPDATE tasks SET done={self.done} WHERE id={self.id}')
-        Task.con.commit()
-
+        self.update()
 
     def uncheck(self):
         '''Marca la tarea como no completada. Haz uso también de .update()'''
         self.done = False
-        Task.cur.execute(f'UPDATE tasks SET done={self.done} WHERE id={self.id}')
-        Task.con.commit()
+        self.update()
 
     def __repr__(self):
         '''Muestra la tarea en formato:
