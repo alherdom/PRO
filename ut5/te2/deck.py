@@ -29,14 +29,26 @@ class Deck:
         random.shuffle(self.deck)
         return self.deck
     
+    # Dar carta aleatroia
     def draws_random_card(self) -> Card:
         return self.deck.pop(random.randrange(len(self.deck)))
     
+    # Dar primera carta
     def draws_first_card(self) -> Card:
         return self.deck.pop(0)
     
+    # Dar última carta
     def draws_last_card(self) -> Card:
         return self.deck.pop(-1)
+    
+    def show_random_card(self) -> str:
+        print(self.draws_random_card())
+    
+    def show_first_card(self) -> str:
+        print(self.draws_first_card())
+        
+    def show_last_card(self) -> str:
+        print(self.draws_first_card())
     
 class DeckIterator:
     def __init__(self, deck: Deck):
@@ -55,17 +67,17 @@ new_deck = Deck()
 #     print(card)
 # print(new_deck)
 # print(new_deck.shuffle())
-print(new_deck.draws_random_card())
-print(new_deck.draws_first_card())
-print(new_deck.draws_last_card())
+new_deck.draws_random_card()
+new_deck.show_random_card()
+
 
 # - Datos:
 #   - 52 cartas
 # - Responsabilidades:
-#   - Dar una carta aleatoria
-#   - Dar la carta de "arriba"
-#   - Dar la carta de "abajo"
-#   - Barajar
-#   - Ver una carta aleatoria
+#   - Dar una carta aleatoria ✔
+#   - Dar la carta de "arriba" ✔
+#   - Dar la carta de "abajo" ✔
+#   - Barajar ✔
+#   - Ver una carta aleatoria 
 #   - Ver la carta de "arriba"
 #   - Ver la carta de "abajo"

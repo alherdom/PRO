@@ -32,7 +32,7 @@ class Card:
         - Si el value(como string) no es válido hay que elevar una excepción de tipo
         🃏 Invalid card: {repr(value)} is not a supported symbol
         - self.suit deberá almacenar el palo de la carta '♣◆❤♠'.
-        - self.value deberá almacenar el valor de la carta (1-13)'''
+        - self.value deberá almacenar el valor de la carta (1-13)'''       
         if isinstance(value, str) and value not in Card.SYMBOLS:
             raise InvalidCardError(f"{repr(value)} is not a supported symbol")
         if value > Card.K_VALUE or value < Card.A_VALUE:
