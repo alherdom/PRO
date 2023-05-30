@@ -30,15 +30,15 @@ class Deck:
         return self.deck
     
     # Dar carta aleatroia
-    def draws_random_card(self) -> Card:
+    def draw_random_card(self) -> Card:
         return self.deck.pop(random.randrange(len(self.deck)))
     
     # Dar primera carta
-    def draws_first_card(self) -> Card:
+    def draw_first_card(self) -> Card:
         return self.deck.pop(0)
     
     # Dar última carta
-    def draws_last_card(self) -> Card:
+    def draw_last_card(self) -> Card:
         return self.deck.pop(-1)
     
     def show_random_card(self) -> str:
@@ -61,15 +61,6 @@ class DeckIterator:
         item = self.deck[self.counter]
         self.counter += 1
         return item
-
-new_deck = Deck()
-# for card in new_deck:
-#     print(card)
-# print(new_deck)
-# print(new_deck.shuffle())
-new_deck.draws_random_card()
-new_deck.show_random_card()
-
 
 # - Datos:
 #   - 52 cartas

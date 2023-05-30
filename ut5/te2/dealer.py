@@ -7,7 +7,21 @@ class Dealer:
         self.players = players
         self.community_cards = []
         
-    def 
+    def give_cards(self):
+        for player in self.players:
+            player.hole_cards = [self.deck.draw_random_card(), self.deck.draw_random_card()]
+    
+    def draw_community_cards(self):
+        self.community_cards = [self.deck.draw_random_card() for _ in range(7)]
+
+    def __str__(self):
+        return ','.join(card for card in self.community_cards)
+    
+    def show_community_cards(self):
+        print(self.community_cards)
+
+new_dealer = Dealer(Deck(), Player('Alejandro', 'Antonio'))
+
 # - Datos:
 #   - Mazo
 #   - Jugadores
