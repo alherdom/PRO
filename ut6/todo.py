@@ -15,7 +15,6 @@ class Task:
     con.row_factory = sqlite3.Row
     cur = con.cursor()
     
-
     def __init__(self, name: str, done: bool = False, id: int = -1):
         '''Crea los atributos homónimos a los parámetros'''
         self.name = name
@@ -58,12 +57,12 @@ class Task:
         # return Task(row[1], row[2], row[0])
         return Task(row['name'], row['done'], row['id'])
 
-
     @classmethod
     def get(cls, task_id: int) -> Task:
         '''Devuelve un objeto Task desde la consulta a la base de datos'''
         res = Task.cur.execute(f'SELECT * FROM tasks WHERE id={task_id}')
         return cls.from_db_row(res.fetchone())
+
 
 class ToDo:
     '''Crear atributos de clase:
