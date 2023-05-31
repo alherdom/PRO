@@ -4,7 +4,6 @@ class Hand:
     def __init__(self) -> None:
         pass
 
-
 # 1º Escalera Real: 5 cartas seguidas del mismo palo desde el 10 al As.
 # 4 posibles escaleras reales (por palo)
 # tener mismo palo, y consecutivas desde value 10 al 14 (24)
