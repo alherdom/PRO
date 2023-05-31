@@ -77,7 +77,7 @@ class User:
         con el mensaje: User <usuario> is not logged in!
         - Si el tweet supera el límite de caracteres hay que lanzar una excepción de tipo
         TwitterError con el mensaje: Tweet hasta more than 280 chars!'''
-        if len(content) > 280:
+        if len(content) > MAX_TWEET_LENGTH:
             raise TwitterError('Tweet hasta more than 280 chars!')
         sql = 'INSERT INTO tweet(content, user_id, retweet_from) VALUES(?,?,?)'
         self.cur.execute(sql,(content, self.id, 0))
@@ -197,4 +197,5 @@ class Twitter:
 
 
 class TwitterError(Exception):
-    pass
+    def __init__(self, message: str = ""):
+        super().__init__(message)
