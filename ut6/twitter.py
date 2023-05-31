@@ -80,10 +80,7 @@ class User:
             raise TwitterError(f'User {self.username} is not logged in!')
         if len(content) > MAX_TWEET_LENGTH:
             raise TwitterError(f'Tweet has more than 280 chars!')
-        sql = 'INSERT INTO tweet(content, user_id, retweet_from) VALUES(?,?,?)'
-        self.cur.execute(sql,(content, self.id, 0))
-        self.con.commit()
-        return Tweet(self.cur.lastrowid, content, self.id)
+        return Tweet(content=content).save(self)
     
     def retweet(self, tweet_id: int) -> Tweet:
         '''Crea un retweet con el contenido indicado y lo almacena en la base de datos.
@@ -93,14 +90,23 @@ class User:
         con el mensaje: User <usuario> is not logged in!
         - Si tweet_id no existe en la base de datos hay que lanzar una excepción de tipo
         TwitterError con el mensaje: Tweet with id <id> does not exist!'''
-        pass
-
+        if self.logged == False:
+            raise TwitterError(f'User {self.username} is not logged in!')
+        sql = f'SELECT id FROM tweet WHERE tweet.id = {tweet_id}'
+        result = self.cur.execute(sql).fetchone()
+        if result[0] == None:
+            raise TwitterError(f'Tweet with id {tweet_id} does not exist!')
+        sql = f'SELECT content FROM tweet WHERE tweet.id = {tweet_id}'
+        tweet_content = self.cur.execute(sql).fetchone()
+        return Tweet(tweet_content)
+    
     @property
     def tweets(self):
         '''Función generadora que devuelve todos los tweets propios del usuario.
         - Lo que se devuelven son objetos de tipo Tweet (usar el método from_db_row).'''
-        pass
-
+        for row in self.cur.execute(f'SELECT * FROM tweet WHERE user_id={self.id}'):
+            yield Tweet(content=row['content'])
+        
     def __repr__(self):
         '''Representa un usuario con el formato:
         <usuario>: <bio>'''
@@ -134,7 +140,7 @@ class Tweet:
     @property
     def is_retweet(self) -> bool:
         '''Indica si el tweet es un retweet.'''
-        return self.content == ''
+        return self.retweet_from > 0
 
     @property
     def content(self) -> str:
@@ -143,7 +149,7 @@ class Tweet:
         if self.is_retweet:
             sql = 'SELECT content FROM tweet'
             result = self.cur.execute(sql).fetchone()
-            return result
+            return result[0]
         return self._content
 
     def save(self, user: User) -> None:
@@ -159,7 +165,7 @@ class Tweet:
         '''Representa un tweet con el formato:
         <emoji> <content> (id=<id>)'''
         emoji = TWEET_EMOJI if self._content else RETWEET_EMOJI
-        return f'{emoji} {self._content} (id={self.id})'
+        return f'{emoji} {self.content} (id={self.id})'
 
     @classmethod
     def from_db_row(cls, row: sqlite3.Row) -> Tweet:
@@ -176,7 +182,6 @@ class Twitter:
         self.con.row_factory = sqlite3.Row
         self.cur = self.con.cursor()
         
-
     def add_user(self, username: str, password: str, bio: str = '') -> User:
         '''Crea un objeto de tipo User y lo guarda en la base de datos.
         - Haz uso de los métodos ya creados.
