@@ -1,3 +1,4 @@
+from __future__ import annotations
 from deck import Deck
 from players import Player
 
@@ -12,7 +13,7 @@ class Dealer:
             player.hole_cards = [self.deck.draw_random_card(), self.deck.draw_random_card()]
     
     def draw_community_cards(self):
-        self.community_cards = [self.deck.draw_random_card() for _ in range(7)]
+        self.community_cards = [self.deck.draw_random_card() for _ in range(5)]
 
     def __str__(self):
         return ','.join(card for card in self.community_cards)
@@ -20,11 +21,9 @@ class Dealer:
     def show_community_cards(self):
         print(self.community_cards)
 
-new_dealer = Dealer(Deck(), Player('Alejandro', 'Antonio'))
-
 # - Datos:
-#   - Mazo
-#   - Jugadores
+#   - Mazo ✔
+#   - Jugadores ✔ 
 # - Responsabilidades:
-#   - Dar cartas a los jugadores
-#   - Destapar cartas comunes
+#   - Dar cartas a los jugadores ✔
+#   - Destapar cartas comunes ✔

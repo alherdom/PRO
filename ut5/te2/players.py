@@ -9,9 +9,10 @@ class Player:
     def __str__(self) -> str:
         return f'{self.name}, {self.hole_cards}, {self.community_cards}'
 
+
 # - Datos:
-#   - Nombre
-#   - 2 cartas propias
-#   - 5 cartas comunes
+#   - Nombre ✔ 
+#   - 2 cartas propias ✔
+#   - 5 cartas comunes ✔
 # - Responsabilidades:
 #   - Encontrar su mejor combinación de cartas
