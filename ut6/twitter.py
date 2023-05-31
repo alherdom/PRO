@@ -82,7 +82,7 @@ class User:
         sql = 'INSERT INTO tweet(content, user_id, retweet_from) VALUES(?,?,?)'
         self.cur.execute(sql,(content, self.id, 0))
         self.con.commit()
-        return Tweet(content, 0, self.cur.lastrowid)
+        return Tweet(content,)
 
     def retweet(self, tweet_id: int) -> Tweet:
         '''Crea un retweet con el contenido indicado y lo almacena en la base de datos.
@@ -140,18 +140,18 @@ class Tweet:
         '''Devuelve el contenido del tweet.
         - Si es un retweet el contenido habrá que buscarlo en el tweet retuiteado.'''
         if self.is_retweet:
-            return self._content
-        else:
-            return self._content
+            sql = 'SELECT content FROM tweet'
+            result = self.cur.execute(sql).fetchone()
+            return result
+        return self._content
 
     def save(self, user: User) -> None:
         '''Guarda el tweet en la base de datos.
         - El parámetro user es el usuario que escribe el tweet.
         Además actualiza el atributo "id" del objeto a partir de lo que devuelve la inserción.'''
-        sql = 'INSERT INTO tweet(content, user_id, retweet_from)) VALUES(?,?,?)'
-        self.cur.execute(sql,(self._content, self.user_id, self.bio))
+        sql = 'INSERT INTO tweet(content, user_id, retweet_from) VALUES(?,?,?)'
+        self.cur.execute(sql,(self._content, user.id, self.retweet_from))
         self.con.commit()
-        self.id = self.cur.lastrowid
         self.id = self.cur.lastrowid
 
     def __repr__(self):
@@ -163,8 +163,8 @@ class Tweet:
     @classmethod
     def from_db_row(cls, row: sqlite3.Row) -> Tweet:
         '''Crea un objeto de tipo Tweet a partir de una fila de consulta SQL'''
-        pass
-
+        tweet_id = cls.cur.lastrowid
+        return Tweet(row['content'], row['retweet_from'], tw)
 
 class Twitter:
     def __init__(self):
