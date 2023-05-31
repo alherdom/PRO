@@ -1,7 +1,6 @@
 from __future__ import annotations
 from card import Card
 import random
-from typing import Generator, Iterable, MutableSequence
 
 class Deck:
     def __init__(self):
