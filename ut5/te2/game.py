@@ -3,14 +3,12 @@ from deck import Deck
 from players import Player
 from dealer import Dealer
 
-
 class Game:
     def __init__(self, number_players: int):
         self.number_players = number_players
         self.deck = Deck()
         self.players = [Player(f'Player{i}') for i in range(number_players)]
         self.dealer = Dealer(self.deck, self.players)
-
 
 # - Datos:
 #   - Deck ✔
