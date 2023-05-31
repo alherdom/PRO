@@ -62,9 +62,8 @@ class User:
     def login(self, password: str) -> None:
         '''Realiza el login del usuario.'''
         sql = 'SELECT password FROM user'
-        result = self.cur.execute(sql)
-        query_password = result.fetchone()
-        if query_password[0] == password:
+        password_query = self.cur.execute(sql).fetchone()
+        if password_query[0] == password:
             self.logged = True
         else:
             self.logged = False
@@ -76,14 +75,14 @@ class User:
         - Si el usuario no está logeado hay que lanzar una excepción de tipo TwitterError
         con el mensaje: User <usuario> is not logged in!
         - Si el tweet supera el límite de caracteres hay que lanzar una excepción de tipo
-        TwitterError con el mensaje: Tweet hasta more than 280 chars!'''
+        TwitterError con el mensaje: Tweet has more than 280 chars!'''
         if len(content) > MAX_TWEET_LENGTH:
-            raise TwitterError('Tweet hasta more than 280 chars!')
+            raise TwitterError('Tweet has more than 280 chars!')
         sql = 'INSERT INTO tweet(content, user_id, retweet_from) VALUES(?,?,?)'
         self.cur.execute(sql,(content, self.id, 0))
         self.con.commit()
-        return Tweet(content,)
-
+        return Tweet(self.cur.lastrowid, content, self.id)
+    
     def retweet(self, tweet_id: int) -> Tweet:
         '''Crea un retweet con el contenido indicado y lo almacena en la base de datos.
         - Utiliza el método save propio de la clase Tweet.
