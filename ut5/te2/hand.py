@@ -1,15 +1,9 @@
 from __future__ import annotations
 
-class Player:
-    def __init__(self, name: str) -> None:
-        self.name = name
-        self.hole_cards = []
-        self.community_cards = []
-    
-    def find_best_hand(self):
-        ...
-        
-        
+class Hand:
+    def __init__(self) -> None:
+        pass
+
 # 1º Escalera Real: 5 cartas seguidas del mismo palo desde el 10 al As.
 # 2º Escalera color: 5 cartas consecutivas del mismo color.
 # 3º Poker: 4 cartas iguales.
@@ -24,8 +18,8 @@ class Player:
 # la que desempata dos combinaciones idénticas.
 
 # - Datos:
-#   - Nombre ✔ 
-#   - 2 cartas propias ✔
-#   - 5 cartas comunes ✔
+#   - 5 cartas
 # - Responsabilidades:
-#   - Encontrar su mejor combinación de cartas
+#   - Descubrir la categoría de la mano
+#   - Asignar una puntuación a la categoría
+#   - Saber si una mano es mejor que otra (ranking)
