@@ -80,7 +80,8 @@ class User:
             raise TwitterError(f'User {self.username} is not logged in!')
         if len(content) > MAX_TWEET_LENGTH:
             raise TwitterError(f'Tweet has more than 280 chars!')
-        return Tweet(content=content).save(self)
+        Tweet(content).save(self)
+        return Tweet(content)
     
     def retweet(self, tweet_id: int) -> Tweet:
         '''Crea un retweet con el contenido indicado y lo almacena en la base de datos.
@@ -96,9 +97,8 @@ class User:
         result = self.cur.execute(sql).fetchone()
         if result[0] == None:
             raise TwitterError(f'Tweet with id {tweet_id} does not exist!')
-        sql = f'SELECT content FROM tweet WHERE tweet.id = {tweet_id}'
-        tweet_content = self.cur.execute(sql).fetchone()
-        return Tweet(tweet_content)
+        Tweet(Tweet.content).save(self)
+        return Tweet(Tweet.content)
     
     @property
     def tweets(self):
@@ -112,11 +112,10 @@ class User:
         <usuario>: <bio>'''
         return f'{self.username}: {self.bio}'
 
-
     @classmethod
     def from_db_row(cls, row: sqlite3.Row):
         '''Crea un objeto de tipo User a partir de una fila de consulta SQL'''
-        return User(row['username'], row['password'], row['bio'], row['user_id'])
+        return User(row['username'], row['password'], row['bio'], row['id'])
 
 
 class Tweet:
@@ -170,8 +169,7 @@ class Tweet:
     @classmethod
     def from_db_row(cls, row: sqlite3.Row) -> Tweet:
         '''Crea un objeto de tipo Tweet a partir de una fila de consulta SQL'''
-        tweet_id = cls.cur.lastrowid
-        return Tweet(row['content'], row['retweet_from'], tw)
+        return Tweet(row['content'], row['retweet_from'], row['id'])
 
 class Twitter:
     def __init__(self):
@@ -199,8 +197,11 @@ class Twitter:
         '''Devuelve el usuario con el user_id indicado.
         Si el usuario no existe hay elevar una excepción de tipo TwitterError con el mensaje:
         User with id <id> does not exist!'''
-        pass
-
+        sql = f'SELECT * FROM user, tweet WHERE user.id = {user_id}'
+        result = self.cur.execute(sql).fetchone()
+        if result == None:
+            raise TwitterError(f'User with id {user_id} does not exist!')
+        return User(result['username'], result['password'],result['bio'],result['user_id'])
 
 class TwitterError(Exception):
     def __init__(self, message: str = ""):
