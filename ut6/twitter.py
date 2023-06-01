@@ -142,7 +142,7 @@ class Tweet:
         '''Devuelve el contenido del tweet.
         - Si es un retweet el contenido habrá que buscarlo en el tweet retuiteado.'''
         if self.is_retweet:
-            sql = 'SELECT content FROM tweet'
+            sql = f'SELECT content FROM tweet WHERE id = {self.retweet_from}'
             result = self.cur.execute(sql).fetchone()
             return result[0]
         return self._content
@@ -152,7 +152,7 @@ class Tweet:
         - El parámetro user es el usuario que escribe el tweet.
         Además actualiza el atributo "id" del objeto a partir de lo que devuelve la inserción.'''
         sql = 'INSERT INTO tweet(content, user_id, retweet_from) VALUES(?,?,?)'
-        self.cur.execute(sql,(self._content, user.id, self.retweet_from))
+        self.cur.execute(sql,(self.content, user.id, self.retweet_from))
         self.con.commit()
         self.id = self.cur.lastrowid
 
