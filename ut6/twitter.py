@@ -20,17 +20,18 @@ def create_db(db_path: str = DB_PATH) -> None:
     cur = con.cursor()
     sql = '''CREATE TABLE IF NOT EXISTS user (
                     id INTEGER PRIMARY KEY,
-                    username CHAR,
-                    password CHAR,
-                    bio CHAR
+                    username TEXT,
+                    password TEXT,
+                    bio TEXT
                 )'''
     cur.execute(sql)
     con.commit()
     sql = '''CREATE TABLE IF NOT EXISTS tweet (
                     id INTEGER PRIMARY KEY,
-                    content CHAR,
+                    content TEXT,
                     user_id INTEGER,
-                    retweet_from CHAR,
+                    retweet_from INTEGER,
+                    FOREIGN KEY(user_id) REFERENCES user(id),                  
                     FOREIGN KEY(retweet_from) REFERENCES tweet(id)                  
                 )'''
     cur.execute(sql)
@@ -61,9 +62,9 @@ class User:
 
     def login(self, password: str) -> None:
         '''Realiza el login del usuario.'''
-        sql = 'SELECT password FROM user'
+        sql = f'SELECT COUNT(*) FROM user WHERE id = {self.id} and password = "{password}"'
         password_query = self.cur.execute(sql).fetchone()
-        self.logged = True if password_query[0] == password else False
+        self.logged = password_query[0] > 0 
 
     def tweet(self, content: str) -> Tweet:
         '''Crea un tweet con el contenido indicado y lo almacena en la base de datos.
@@ -91,11 +92,11 @@ class User:
         TwitterError con el mensaje: Tweet with id <id> does not exist!'''
         if self.logged == False:
             raise TwitterError(f'User {self.username} is not logged in!')
-        sql = f'SELECT id FROM tweet WHERE tweet.id = {tweet_id}'
+        sql = f'SELECT COUNT(*) FROM tweet WHERE id = {tweet_id}'
         result = self.cur.execute(sql).fetchone()
-        if result == None:
+        if result[0] == 0:
             raise TwitterError(f'Tweet with id {tweet_id} does not exist!')
-        new_tweet = Tweet(tweet_id)
+        new_tweet = Tweet(retweet_from = tweet_id)
         new_tweet.save(self)
         return new_tweet
     
@@ -103,7 +104,7 @@ class User:
     def tweets(self):
         '''Función generadora que devuelve todos los tweets propios del usuario.
         - Lo que se devuelven son objetos de tipo Tweet (usar el método from_db_row).'''
-        for row in self.cur.execute(f'SELECT * FROM tweet WHERE user_id={self.id}'):
+        for row in self.cur.execute(f'SELECT * FROM tweet WHERE user_id = {self.id}'):
             yield Tweet.from_db_row(row)
         
     def __repr__(self):
@@ -144,7 +145,7 @@ class Tweet:
         if self.is_retweet:
             sql = f'SELECT content FROM tweet WHERE id = {self.retweet_from}'
             result = self.cur.execute(sql).fetchone()
-            return result[0]
+            return result['content']
         return self._content
 
     def save(self, user: User) -> None:
@@ -191,7 +192,7 @@ class Twitter:
         output = re.match(regex, password)
         if output == None:
             raise TwitterError('Password does not follow security rules!')
-        new_user = User(username, password, bio)
+        new_user = User(username=username, password=password, bio=bio)
         new_user.save()
         return new_user
 
