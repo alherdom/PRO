@@ -97,7 +97,7 @@ class User:
         new_tweet = Tweet(retweet_from = tweet_id)
         new_tweet.save(self)
         return new_tweet
-    
+
     @property
     def tweets(self):
         '''Función generadora que devuelve todos los tweets propios del usuario.
