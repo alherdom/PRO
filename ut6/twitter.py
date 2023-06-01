@@ -192,7 +192,7 @@ class Twitter:
         output = re.match(regex, password)
         if output == None:
             raise TwitterError('Password does not follow security rules!')
-        new_user = User(username=username, password=password, bio=bio)
+        new_user = User(username, password, bio)
         new_user.save()
         return new_user
 
