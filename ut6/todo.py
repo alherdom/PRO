@@ -76,28 +76,28 @@ class ToDo:
         '''Crea la base de datos con los campos "id", "name" y "done"'''
         sql = '''CREATE TABLE IF NOT EXISTS tasks (
                     id INTEGER PRIMARY KEY,
-                    name CHAR,
+                    name TEXT,
                     done INTEGER
                 )'''
-        Task.cur.execute(sql)
-        Task.con.commit()
+        ToDo.cur.execute(sql)
+        ToDo.con.commit()
 
     def get_tasks(self, *, done: int = -1):
         '''Devuelve todas las tareas como objetos de tipo Task consultando la BBDD.
         - Si done = 0 se devuelven las tareas pendientes.
         - Si done = 1 se devuelven las tareas completadas.
         Ojo! Esto es una función generadora.'''
-        for row in Task.cur.execute(f'SELECT * FROM tasks WHERE done={done}'):
-            yield Task(row)
+        for row in ToDo.cur.execute(f'SELECT * FROM tasks WHERE done={done}'):
+            yield ToDo(row)
 
     def add_task(self, name: str):
         '''Añade la tarea con nombre "name"'''
-        Task(name).save()
+        ToDo(name).save()
         
     def complete_task(self, task_id: int):
         '''Marca la tarea con identificador "task_id" como completada'''
-        Task.get(task_id).check()
+        ToDo.get(task_id).check()
 
     def reopen_task(self, task_id: int):
         '''Marca la tarea con identificador "task_id" como pendiente'''
-        Task.get(task_id).uncheck()
+        ToDo.get(task_id).uncheck()

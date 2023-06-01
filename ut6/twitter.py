@@ -34,6 +34,7 @@ def create_db(db_path: str = DB_PATH) -> None:
                 )'''
     cur.execute(sql)
     con.commit()
+    # Cambiar por script
 
 class User:
     def __init__(self, username: str, password: str, bio: str = '', user_id: int = 0):
@@ -53,7 +54,7 @@ class User:
     def save(self) -> None:
         '''Guarda en la base de datos un objeto de tipo User.
         Además actualiza el atributo "id" del objeto a partir de lo que devuelve la inserción.'''
-        sql = 'INSERT INTO user(username, password, bio) VALUES(?,?,?)'
+        sql = 'INSERT INTO user (username, password, bio) VALUES (?, ?, ?)'
         self.cur.execute(sql,(self.username, self.password, self.bio))
         self.con.commit()
         self.id = self.cur.lastrowid
@@ -61,8 +62,8 @@ class User:
     def login(self, password: str) -> None:
         '''Realiza el login del usuario.'''
         sql = f'SELECT COUNT(*) FROM user WHERE id = {self.id} and password = "{password}"'
-        password_query = self.cur.execute(sql).fetchone()
-        self.logged = password_query[0] > 0 
+        row = self.cur.execute(sql).fetchone()
+        self.logged = row[0] > 0 
 
     def tweet(self, content: str) -> Tweet:
         '''Crea un tweet con el contenido indicado y lo almacena en la base de datos.
@@ -75,7 +76,7 @@ class User:
         if self.logged == False:
             raise TwitterError(f'User {self.username} is not logged in!')
         if len(content) > MAX_TWEET_LENGTH:
-            raise TwitterError(f'Tweet has more than 280 chars!')
+            raise TwitterError(f'Tweet has more than {MAX_TWEET_LENGTH} chars!')
         new_tweet = Tweet(content)
         new_tweet.save(self)
         return new_tweet
@@ -111,10 +112,10 @@ class User:
         return f'{self.username}: {self.bio}'
 
     @classmethod
-    def from_db_row(cls, row: sqlite3.Row):
+    def from_db_row(cls, row: sqlite3.Row) -> User:
         '''Crea un objeto de tipo User a partir de una fila de consulta SQL'''
         return User(row['username'], row['password'], row['bio'], row['id'])
-
+        # return User(**row)
 
 class Tweet:
     def __init__(self, content: str = '', retweet_from: int = 0, tweet_id: int = 0):
@@ -127,14 +128,14 @@ class Tweet:
         self.con = sqlite3.connect(DB_PATH)
         self.con.row_factory = sqlite3.Row
         self.cur = self.con.cursor()
-        self._content = content
+        self._content = '' if retweet_from > 0 else content
         self.id = tweet_id
         self.retweet_from = retweet_from
 
     @property
     def is_retweet(self) -> bool:
         '''Indica si el tweet es un retweet.'''
-        return self._content == ''
+        return self.retweet_from > 0
 
     @property
     def content(self) -> str:
@@ -150,7 +151,7 @@ class Tweet:
         '''Guarda el tweet en la base de datos.
         - El parámetro user es el usuario que escribe el tweet.
         Además actualiza el atributo "id" del objeto a partir de lo que devuelve la inserción.'''
-        sql = 'INSERT INTO tweet(content, user_id, retweet_from) VALUES(?,?,?)'
+        sql = 'INSERT INTO tweet (content, user_id, retweet_from) VALUES (?, ?, ?)'
         self.cur.execute(sql,(self._content, user.id, self.retweet_from))
         self.con.commit()
         self.id = self.cur.lastrowid
