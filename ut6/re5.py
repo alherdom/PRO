@@ -4,18 +4,18 @@ import re
 # multiplicación o división, y puede haber espacios (o no) entre los operandos
 # y el operador.
 operations = ('  5 *  1 ', '4  +2', '3-  2', '4 * 2', '7/2' )
-regexp = r'(\d)\s*([+\-*\/])\s*(\d)'
+regexp = r'(\d)\s*([+\-*/])\s*(\d)'
 for operation in operations:
     m = re.search(regexp, operation)
-    first_num = int(m[1])
-    operator = m[2]
-    second_num = int(m[3])
+    left_oper, operator, rigth_oper = m.groups()
+    left_oper = int(left_oper)
+    rigth_oper = int(rigth_oper)
     match operator:
         case '+':
-            print(first_num + second_num)
+            print(left_oper + rigth_oper)
         case '-':
-            print(first_num - second_num)
+            print(left_oper - rigth_oper)
         case '*':
-            print(first_num * second_num)
+            print(left_oper * rigth_oper)
         case '/':
-            print(first_num / second_num)
+            print(left_oper / rigth_oper)
