@@ -80,8 +80,9 @@ class User:
             raise TwitterError(f'User {self.username} is not logged in!')
         if len(content) > MAX_TWEET_LENGTH:
             raise TwitterError(f'Tweet has more than 280 chars!')
-        Tweet(content).save(self)
-        return Tweet(content)
+        new_tweet = Tweet(content)
+        new_tweet.save(self)
+        return new_tweet
     
     def retweet(self, tweet_id: int) -> Tweet:
         '''Crea un retweet con el contenido indicado y lo almacena en la base de datos.
@@ -95,17 +96,18 @@ class User:
             raise TwitterError(f'User {self.username} is not logged in!')
         sql = f'SELECT id FROM tweet WHERE tweet.id = {tweet_id}'
         result = self.cur.execute(sql).fetchone()
-        if result[0] == None:
+        if result == None:
             raise TwitterError(f'Tweet with id {tweet_id} does not exist!')
-        Tweet(Tweet.content).save(self)
-        return Tweet(Tweet.content)
+        new_tweet = Tweet(tweet_id)
+        new_tweet.save(self)
+        return new_tweet
     
     @property
     def tweets(self):
         '''Función generadora que devuelve todos los tweets propios del usuario.
         - Lo que se devuelven son objetos de tipo Tweet (usar el método from_db_row).'''
         for row in self.cur.execute(f'SELECT * FROM tweet WHERE user_id={self.id}'):
-            yield Tweet(content=row['content'])
+            yield Tweet.from_db_row(row)
         
     def __repr__(self):
         '''Representa un usuario con el formato:
@@ -129,17 +131,14 @@ class Tweet:
         self.con = sqlite3.connect(DB_PATH)
         self.con.row_factory = sqlite3.Row
         self.cur = self.con.cursor()
-        self.retweet_from = retweet_from
-        if retweet_from > 0:
-            self._content = ''
-        else:
-            self._content = content
+        self._content = content
         self.id = tweet_id
+        self.retweet_from = retweet_from
 
     @property
     def is_retweet(self) -> bool:
         '''Indica si el tweet es un retweet.'''
-        return self.retweet_from > 0
+        return self._content == ''
 
     @property
     def content(self) -> str:
@@ -191,17 +190,23 @@ class Twitter:
           * Terminar con una exclamación o un asterisco.
         Si no sigue este formato hay que elevar una excepción de tipo TwitterError
         con el mensaje: Password does not follow security rules!'''
-        pass
+        regex = r'^[@=]\d{2,4}\w{2,4}[!*]$'
+        output = re.match(regex, password)
+        if output == None:
+            raise TwitterError('Password does not follow security rules!')
+        new_user = User(username, password, bio)
+        new_user.save()
+        return new_user
 
     def get_user(self, user_id: int) -> User:
         '''Devuelve el usuario con el user_id indicado.
         Si el usuario no existe hay elevar una excepción de tipo TwitterError con el mensaje:
         User with id <id> does not exist!'''
-        sql = f'SELECT * FROM user, tweet WHERE user.id = {user_id}'
+        sql = f'SELECT * FROM user WHERE id = {user_id}'
         result = self.cur.execute(sql).fetchone()
         if result == None:
             raise TwitterError(f'User with id {user_id} does not exist!')
-        return User(result['username'], result['password'],result['bio'],result['user_id'])
+        return User.from_db_row(result)
 
 class TwitterError(Exception):
     def __init__(self, message: str = ""):
