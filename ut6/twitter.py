@@ -63,11 +63,8 @@ class User:
         '''Realiza el login del usuario.'''
         sql = 'SELECT password FROM user'
         password_query = self.cur.execute(sql).fetchone()
-        if password_query[0] == password:
-            self.logged = True
-        else:
-            self.logged = False
-            
+        self.logged = True if password_query[0] == password else False
+
     def tweet(self, content: str) -> Tweet:
         '''Crea un tweet con el contenido indicado y lo almacena en la base de datos.
         - Utiliza el método save propio de la clase Tweet.
