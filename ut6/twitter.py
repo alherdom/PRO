@@ -159,7 +159,7 @@ class Tweet:
     def __repr__(self):
         '''Representa un tweet con el formato:
         <emoji> <content> (id=<id>)'''
-        emoji = TWEET_EMOJI if self._content else RETWEET_EMOJI
+        emoji = RETWEET_EMOJI if self.is_retweet else TWEET_EMOJI
         return f'{emoji} {self.content} (id={self.id})'
 
     @classmethod
