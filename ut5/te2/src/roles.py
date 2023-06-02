@@ -1,5 +1,5 @@
 from __future__ import annotations
-from ut5.te2.src.cards import Deck
+from cards import Card, Deck
 
 class Dealer:
     def __init__(self, deck: Deck, players: list[Player]):

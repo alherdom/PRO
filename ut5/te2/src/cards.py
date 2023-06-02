@@ -1,4 +1,5 @@
 from __future__ import annotations
+from helpers import randint, shuffle, combinations
 
 class Card:
     GLYPHS = {'♣':'🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞', '◆':'🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎','❤':'🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾','♠':'🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮'}
@@ -73,31 +74,30 @@ class Deck:
         return len(self.deck)
 
     def __str__(self) -> str:
-        return ','.join([str(item) for item in self.deck])
+        return ','.join([str(item) for item in self])
 
     def __iter__(self) -> DeckIterator:
         return DeckIterator(self)
     
-    def shuffle(self):
-        random.shuffle(self.deck)
-        return self.deck
+    def shuffle_deck(self) -> None:
+        shuffle(self.deck)
     
     def draw_random_card(self) -> Card:
-        return self.deck.pop(random.randrange(len(self.deck)))
+        return self.deck.pop(randint(len(self.deck)-1))
     
-    def draw_first_card(self) -> Card:
+    def draw_top_card(self) -> Card:
         return self.deck.pop(0)
     
-    def draw_last_card(self) -> Card:
+    def draw_bottom_card(self) -> Card:
         return self.deck.pop(-1)
     
     def show_random_card(self) -> str:
         print(self.draws_random_card())
     
-    def show_first_card(self) -> str:
+    def show_top_card(self) -> str:
         print(self.draws_first_card())
         
-    def show_last_card(self) -> str:
+    def show_bottom_card(self) -> str:
         print(self.draws_first_card())
     
 class DeckIterator:
@@ -129,6 +129,21 @@ class Hand:
     
     def __contains__(a, b) -> bool:
         pass
+    
+    def __str__(self) -> str:
+        return ','.join([str(item) for item in self])
+    
+class HandIterator:
+    def __init__(self, hand: Hand):
+        self.cards = hand
+        self.counter = 0
+
+    def __next__(self) -> int:
+        if self.counter >= len(self.deck):
+            raise StopIteration
+        item = self.deck[self.counter]
+        self.counter += 1
+        return item
     
 # 1º Escalera Real: 5 cartas seguidas del mismo palo desde el 10 al As.
 # 4 posibles escaleras reales (por palo)
