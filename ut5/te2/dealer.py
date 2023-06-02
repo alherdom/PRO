@@ -14,7 +14,7 @@ class Dealer:
     
     def draw_community_cards(self):
         self.community_cards = [self.deck.draw_random_card() for _ in range(5)]
-
+        
     def __str__(self):
         return ','.join(card for card in self.community_cards)
     
