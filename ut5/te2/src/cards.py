@@ -174,4 +174,3 @@ royal_flush_spades = ('♠', '🂪🂫🂭🂮🂡')
 #   - Descubrir la categoría de la mano
 #   - Asignar una puntuación a la categoría
 #   - Saber si una mano es mejor que otra (ranking)
-
