@@ -2,6 +2,7 @@ from __future__ import annotations
 from deck import Deck
 from players import Player
 from dealer import Dealer
+from hand import Hand
 
 class Game:
     def __init__(self, number_players: int):
@@ -9,6 +10,10 @@ class Game:
         self.deck = Deck()
         self.players = [Player(f'Player{i}') for i in range(number_players)]
         self.dealer = Dealer(self.deck, self.players)
+    
+    def start_game(self):
+        Dealer.give_cards(self)
+        
 
 # - Datos:
 #   - Deck ✔
