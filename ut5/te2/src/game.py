@@ -50,5 +50,4 @@ game1.create_dealer
 game1.deal_cards_to_players()
 game1.deal_community_cards()
 print(game1.show_dealer())
-while game1.players[0].is_royal_flush() == False:
-    print(game1.players[0].is_royal_flush())
+print(game1.players[0].is_royal_flush())
