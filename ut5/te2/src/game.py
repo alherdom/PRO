@@ -23,13 +23,16 @@ class Game:
     def show_dealer(self):
         return f'{self.dealer}'
     
+    def shuffles_cards(self):
+        pass
+    
     def deal_cards_to_players(self):
         self.dealer.draw_random_cards()
         
     def deal_community_cards(self):
         self.dealer.draw_community_cards()
         
-        
+
 # - Datos:
 #   - Deck ✔
 #   - Players ✔

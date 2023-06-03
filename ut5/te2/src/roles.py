@@ -12,9 +12,11 @@ class Dealer:
     
     def draw_community_cards(self):
         self.community_cards = [self.deck.draw_random_card() for _ in range(5)]
+        for player in self.players:
+            player.community_cards = self.community_cards
         
     def __repr__(self) -> str:
-        return f'Deck:{self.deck} Players:{self.players}'
+        return f'Deck:{self.deck}\nPlayers:{self.players}\n'
     
     def show_community_cards(self):
         return f'{self.community_cards}'
@@ -33,7 +35,7 @@ class Player:
         self.community_cards = []
         
     def __repr__(self) -> str:
-        return f'Player: {self.name} Hole Cards: {self.hole_cards} Community Cards: {self.community_cards})'
+        return f'\n 🤺 Player{self.name}, \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards})'
        
     def find_best_hand(self):
         pass
