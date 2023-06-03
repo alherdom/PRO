@@ -40,10 +40,13 @@ class Player:
     def get_best_hand(self):
         player_cards = self.hole_cards + self.community_cards
         self.cards_combinations =  list(combinations(player_cards, n = 5))
-        
-        # for card in self.cards_combinations:
-            
-        return self.cards_combinations
+        suits = []
+        values = []
+        for combination in self.cards_combinations:
+            for card in combination:
+                values.append(card.cmp_value)
+                suits.append(card.suit)
+        return f'\nSuits:{set(suits)}\nValues:{set(values)}'
     
     def __repr__(self) -> str:
         return f'\n 🤺 Player{self.name}, \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards})'
