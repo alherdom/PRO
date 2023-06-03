@@ -13,12 +13,12 @@ class Game:
     def create_players(self):
         self.players = [Player(str(i)) for i in range(1,self.number_players + 1)]
     
-    def show_players(self) -> str:
-        return f'{self.players}'
-    
     @property
     def create_dealer(self):
         self.dealer = Dealer(self.deck, self.players)
+        
+    def show_players(self) -> str:
+        return f'{self.players}'
         
     def show_dealer(self):
         return f'{self.dealer}'
@@ -46,8 +46,9 @@ class Game:
 
 game1 = Game(4)
 game1.create_players
-# print(game1.show_players())
 game1.create_dealer
 game1.deal_cards_to_players()
 game1.deal_community_cards()
 print(game1.show_dealer())
+
+print(game1.players[0].get_best_hand(self))

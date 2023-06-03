@@ -1,5 +1,6 @@
 from __future__ import annotations
-from cards import Card, Deck
+from cards import Card, Deck, Hand
+from helpers import combinations
 
 class Dealer:
     def __init__(self, deck: Deck, players: list[Player]):
@@ -33,12 +34,19 @@ class Player:
         self.name = name
         self.hole_cards = []
         self.community_cards = []
-        
+        self.hand = Hand
+        self.cards_combinations = []
+    
+    def get_best_hand(self):
+        player_cards = self.hole_cards + self.community_cards
+        self.cards_combinations =  list(combinations(player_cards, 5))
+        return self.cards_combinations
+    
     def __repr__(self) -> str:
         return f'\n 🤺 Player{self.name}, \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards})'
        
-    def find_best_hand(self):
-        pass
+    
+        
         
 # 1º Escalera Real: 5 cartas seguidas del mismo palo desde el 10 al As.
 # 2º Escalera color: 5 cartas consecutivas del mismo color.
