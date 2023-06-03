@@ -40,16 +40,14 @@ class Player:
     def get_best_hand(self):
         player_cards = self.hole_cards + self.community_cards
         self.cards_combinations =  list(combinations(player_cards, n = 5))
+        
         # for card in self.cards_combinations:
             
         return self.cards_combinations
     
     def __repr__(self) -> str:
         return f'\n 🤺 Player{self.name}, \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards})'
-       
-    
-        
-        
+
 # 1º Escalera Real: 5 cartas seguidas del mismo palo desde el 10 al As.
 # 2º Escalera color: 5 cartas consecutivas del mismo color.
 # 3º Poker: 4 cartas iguales.

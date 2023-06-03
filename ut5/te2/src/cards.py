@@ -19,7 +19,7 @@ class Card:
         
     def is_ace(self) -> bool:
         return self.value == Card.A_VALUE
-    
+
     @property
     def cmp_value(self) -> int:
         return self.value if not self.is_ace() else Card.A_VALUE + Card.K_VALUE
@@ -29,7 +29,7 @@ class Card:
 
     def __eq__(self, other: Card) -> bool:
         return self.cmp_value == other.cmp_value and self.suit == other.suit
-    
+
     def __lt__(self, other: Card) -> bool:
         return self.cmp_value == min(self.cmp_value, other.cmp_value)
 
@@ -113,7 +113,7 @@ class DeckIterator:
 class Hand:
     def __init__(self, player_cards = list[Card]):
         self.player_cards = player_cards
-    
+        
     def __contains__(a, b) -> bool:
         pass
   
