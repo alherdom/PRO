@@ -39,7 +39,7 @@ class Player:
     
     def get_best_hand(self):
         player_cards = self.hole_cards + self.community_cards
-        self.cards_combinations =  list(combinations(player_cards, 5))
+        self.cards_combinations =  list(combinations(player_cards, n = 5))
         return self.cards_combinations
     
     def __repr__(self) -> str:
