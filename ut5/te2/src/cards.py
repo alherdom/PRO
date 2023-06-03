@@ -13,7 +13,7 @@ class Card:
     A_VALUE = 1
     K_VALUE = 13
 
-    def __init__(self, value: int | str, suit: str = ''):
+    def __init__(self, value: int | str, suit: str = ''):           
         self.value = value
         self.suit = suit
         
@@ -86,6 +86,9 @@ class Deck:
         
     def show_bottom_card(self) -> str:
         return f'{self.draw_bottom_card()}'
+    
+    def __repr__(self) -> str:
+        return ','.join(str(card) for card in self.deck)
     
 class DeckIterator:
     def __init__(self, deck: Deck):

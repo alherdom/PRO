@@ -44,10 +44,11 @@ class Game:
 #   - Comenzar la partida (repartir cartas, buscar mejor combinación)
 #   - Finalizar la partida (mostrar el ganador y su mano)
 
-game1 = Game(4)
+game1 = Game(1)
 game1.create_players
 game1.create_dealer
 game1.deal_cards_to_players()
 game1.deal_community_cards()
 print(game1.show_dealer())
-print(game1.players[0].get_best_hand())
+while game1.players[0].is_royal_flush() == False:
+    print(game1.players[0].is_royal_flush())
