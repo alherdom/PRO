@@ -63,9 +63,6 @@ class Deck:
     def __len__(self) -> int:
         return len(self.deck)
 
-    def __str__(self) -> str:
-        return ','.join(str(item) for item in self)
-
     def __iter__(self) -> DeckIterator:
         return DeckIterator(self)
     
@@ -114,79 +111,15 @@ class DeckIterator:
 #   - Ver la carta de "abajo" ✔
 
 class Hand:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, player_cards = list[Card]):
+        self.player_cards = player_cards
     
     def __contains__(a, b) -> bool:
         pass
-    
-    def __str__(self) -> str:
-        return ','.join([str(item) for item in self])
-    
-class HandIterator:
-    def __init__(self, hand: Hand):
-        self.cards = hand
-        self.counter = 0
-
-    def __next__(self) -> int:
-        if self.counter >= len(self.deck):
-            raise StopIteration
-        item = self.deck[self.counter]
-        self.counter += 1
-        return item
-    
-# 1º Escalera Real: 5 cartas seguidas del mismo palo desde el 10 al As.
-# 4 posibles escaleras reales (por palo)
-# tener mismo palo, y consecutivas desde value 10 al 14 (24)
-royal_flush_clubs = ('♣', '🃚🃛🃝🃞🃑')
-royal_flush_diamonds = ('◆', '🃊🃋🃍🃎🃁')
-royal_flush_hearts = ('❤', '🂺🂻🂽🂾🂱')
-royal_flush_spades = ('♠', '🂪🂫🂭🂮🂡')
-
-# 2º Escalera color: 5 cartas consecutivas del mismo color.
-# 5 values de menos a mas, consecutivos, y del mismo suit
-
-# 3º Poker: 4 cartas iguales.
-# 4 values iguales
-
-# 4º Full: 3 cartas iguales más otras 2 iguales. Es decir, un trio y una pareja.
-# En caso de empate, gana el que tiene el trio más alto.
-# 3 values iguales, y 2 values iguales, value de 3 más alto gana
-
-# 5º Color: 5 cartas del mismo palo.
-# mismo suit en la mano
-
-# 6º Escalera: 5 cartas consecutivas que no son del mismo palo.
-# 5 values de menos a mas, consecutivos, y de distinto suit
-
-# 7º Trío: 3 cartas iguales.
-# sólo 3 values iguales
-
-# 8º Doble pareja: Dos parejas de cartas iguales.
-# dos 2 values iguales
-
-# 9º Pareja: Una pareja de cartas iguales.
-# uno 2 values iguales
-
-# 10º Carta más alta: Si en el transcurso de la partida ningún jugador consigue formar alguna de las combinaciones presentadas más arriba,
-# el ganador de la partida será el que tenga la carta más fuerte, siendo el As la mejor en estos casos. Es también la carta más fuerte 
-# la que desempata dos combinaciones idénticas.
-# value más alto
-
+  
 # - Datos:
 #   - 5 cartas
 # - Responsabilidades:
 #   - Descubrir la categoría de la mano
 #   - Asignar una puntuación a la categoría
 #   - Saber si una mano es mejor que otra (ranking)
-
-new_card = Card(1,'♣')
-print(new_card)
-new_deck1 = Deck()
-new_deck2 = Deck()
-# print(new_deck)
-# new_deck.shuffle_deck()
-# print(new_deck)
-# print(new_deck.show_bottom_card())
-# print(new_deck.show_top_card())
-# print(new_deck.show_random_card())
