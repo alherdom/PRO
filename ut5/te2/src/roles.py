@@ -5,20 +5,19 @@ class Dealer:
     def __init__(self, deck: Deck, players: list[Player]):
         self.deck = deck
         self.players = players
-        self.community_cards = []
         
-    def give_cards(self):
+    def draw_random_cards(self):
         for player in self.players:
-            player.hole_cards = [self.deck.draw_random_card(), self.deck.draw_random_card()]
+            player.hole_cards = [self.deck.draw_random_card() for _ in range(2)]
     
     def draw_community_cards(self):
         self.community_cards = [self.deck.draw_random_card() for _ in range(5)]
         
-    def __str__(self):
-        return ','.join(card for card in self.community_cards)
+    def __repr__(self) -> str:
+        return f'Deck:{self.deck} Players:{self.players}'
     
     def show_community_cards(self):
-        print(self.community_cards)
+        return f'{self.community_cards}'
 
 # - Datos:
 #   - Mazo ✔

@@ -2,30 +2,21 @@ from __future__ import annotations
 from helpers import randint, shuffle, combinations
 
 class Card:
-    GLYPHS = {'♣':'🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞', '◆':'🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎','❤':'🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾','♠':'🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮'}
+    GLYPHS = {
+        '♣':'🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞',
+        '◆':'🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎',
+        '❤':'🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾',
+        '♠':'🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮'
+        }
+    
     SYMBOLS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
     A_VALUE = 1
     K_VALUE = 13
 
     def __init__(self, value: int | str, suit: str = ''):
-        if suit:
-            if isinstance(value, str) and value not in Card.SYMBOLS:
-                raise InvalidCardError(f"{repr(value)} is not a supported symbol")
-            if isinstance(value, int) and not (Card.A_VALUE <= value <= Card.K_VALUE):
-                raise InvalidCardError(f"{repr(value)} is not a supported value")
-            if suit not in Card.GLYPHS.keys():
-                raise InvalidCardError(f"{repr(suit)} is not a supported suit")
-        elif isinstance(value, str):
-            for suit, glyphs in Card.GLYPHS.items():
-                if value in glyphs:
-                    self.value = glyphs.index(value) + 1
-                    self.suit = suit
-                    return
-            raise InvalidCardError(f"{repr(value)} is not a supported symbol")
-        else:
-            self.value = int(value)
-            self.suit = suit
-
+        self.value = value
+        self.suit = suit
+        
     def is_ace(self) -> bool:
         return self.value == Card.A_VALUE
     
@@ -52,7 +43,6 @@ class InvalidCardError(Exception):
 # - Datos:
 #   - Número de la carta ✔
 #   - Palo de la carta ✔
-#   - Glifo de la carta ✔
 # - Responsabilidades:
 #   - Saber si una carta es menor que otra ✔
 #   - Representar la carta ✔
@@ -74,7 +64,7 @@ class Deck:
         return len(self.deck)
 
     def __str__(self) -> str:
-        return ','.join([str(item) for item in self])
+        return ','.join(str(item) for item in self)
 
     def __iter__(self) -> DeckIterator:
         return DeckIterator(self)
@@ -92,13 +82,13 @@ class Deck:
         return self.deck.pop(-1)
     
     def show_random_card(self) -> str:
-        return f'{self.draws_random_card()}'
+        return f'{self.draw_random_card()}'
     
     def show_top_card(self) -> str:
-        return f'{self.draws_top_card()}'
+        return f'{self.draw_top_card()}'
         
     def show_bottom_card(self) -> str:
-        return f'{self.draws_bottom_card()}'
+        return f'{self.draw_bottom_card()}'
     
 class DeckIterator:
     def __init__(self, deck: Deck):
@@ -189,3 +179,14 @@ royal_flush_spades = ('♠', '🂪🂫🂭🂮🂡')
 #   - Descubrir la categoría de la mano
 #   - Asignar una puntuación a la categoría
 #   - Saber si una mano es mejor que otra (ranking)
+
+new_card = Card(1,'♣')
+print(new_card)
+new_deck1 = Deck()
+new_deck2 = Deck()
+# print(new_deck)
+# new_deck.shuffle_deck()
+# print(new_deck)
+# print(new_deck.show_bottom_card())
+# print(new_deck.show_top_card())
+# print(new_deck.show_random_card())
