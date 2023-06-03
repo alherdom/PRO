@@ -92,13 +92,13 @@ class Deck:
         return self.deck.pop(-1)
     
     def show_random_card(self) -> str:
-        print(self.draws_random_card())
+        return f'{self.draws_random_card()}'
     
     def show_top_card(self) -> str:
-        print(self.draws_first_card())
+        return f'{self.draws_top_card()}'
         
     def show_bottom_card(self) -> str:
-        print(self.draws_first_card())
+        return f'{self.draws_bottom_card()}'
     
 class DeckIterator:
     def __init__(self, deck: Deck):

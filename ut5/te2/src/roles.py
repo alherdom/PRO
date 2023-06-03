@@ -27,24 +27,14 @@ class Dealer:
 #   - Dar cartas a los jugadores ✔
 #   - Destapar cartas comunes ✔
 
-from typing import Generator, Iterable, MutableSequence
-
-def combinations(values: Iterable, *, n: int = 5) -> Generator:
-        '''Genera todas las combinaciones de "values" de tamaño "n"'''
-        def combinations_helper(items, k=0, h=0):
-            if k == n:
-                yield tuple(items)
-            else:
-                for i in range(h, len(values)):
-                    items[k] = values[i]
-                    yield from combinations_helper(items, k + 1, i + 1)
-        return combinations_helper([None] * n)
-
 class Player:
     def __init__(self, name: str) -> None:
         self.name = name
         self.hole_cards = []
         self.community_cards = []
+        
+    def __repr__(self) -> str:
+        return f'Player: {self.name} Hole Cards: {self.hole_cards} Community Cards: {self.community_cards})'
        
     def find_best_hand(self):
         pass
