@@ -61,7 +61,6 @@ class Player:
                 return f'Three: {set(suits_values)}'
             if values.count(value) == 2:
                 return f'Pair: {set(suits_values)}'
-                
         return f'\nPalo-Valor: {set(suits_values)}\nPalos: {set(suits)}\nMax Value: {max(values)}'
     
     def __repr__(self) -> str:
