@@ -53,6 +53,7 @@ class Deck:
         for suit in Card.GLYPHS.keys():
             for value in range(1,14):
                 self.deck.append(Card(value, suit))
+        shuffle(self.deck)
     
     def __getitem__(self, index: int) -> int:
         return self.deck[index]
