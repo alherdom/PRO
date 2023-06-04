@@ -43,8 +43,29 @@ class Player:
         self.cards_combinations = list(combinations(player_cards, n = 5))
         return self.cards_combinations
     
+    def is_royal_flush(self):
+        suits = []
+        values = []
+        suits_values = []
+        for combination in self.cards_combinations:
+            for card in combination:
+                suit_value = (card.suit, card.cmp_value)
+                suits.append(suit_value[0])
+                suits_values.append(suit_value)
+        for suit_value in set(suits_values):
+            values.append(suit_value[1])
+        for value in values:
+            if values.count(value) == 4:
+                return f'Poker: {set(suits_values)}'
+            if values.count(value) == 3:
+                return f'Three: {set(suits_values)}'
+            if values.count(value) == 2:
+                return f'Pair: {set(suits_values)}'
+                
+        return f'\nPalo-Valor: {set(suits_values)}\nPalos: {set(suits)}\nMax Value: {max(values)}'
+    
     def __repr__(self) -> str:
-        return f'\n 🤺 Player{self.name} \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards}'
+        return f'\n 🤺 Player{self.name} \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards}\n'
 
 # 1º Escalera Real: 5 cartas seguidas del mismo palo desde el 10 al As.
     
