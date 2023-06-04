@@ -40,29 +40,38 @@ class Player:
     @property
     def get_cards_combinations(self):
         player_cards = self.hole_cards + self.community_cards
-        self.cards_combinations =  list(combinations(player_cards, n = 5))
+        self.cards_combinations = list(combinations(player_cards, n = 5))
         return self.cards_combinations
-        
-    def is_royal_flush(self):        
-        suits = []
-        values = []
+    
+    def distinct_suits_values(self) -> bool:      
+        cards = {}
         for combination in self.cards_combinations:
             for card in combination:
-                values.append(card.cmp_value)
-                suits.append(card.suit)
-        if len(suits) == 1 and sum[values] >= 60:
-            return True
-        else:
-            return False
+                cards[card.suit] = card.cmp_value
+        # return (len(set(suits)) <= 2 and sum(set(values)) >= 60, combination)
+        return f'{cards}'
+    
+    # def is_pair(self):
+    #     counts = []
+    #     suits, values = self.distinct_suits_values()
+    #     for value in values:
+    #         for combination in self.cards_combinations:
+    #             print(combination.count(str(value)))
+   
+            
+        
+        
+                
+    # def is_straight_flush(self) -> bool:
+        
     
     def __repr__(self) -> str:
-        return f'\n 🤺 Player{self.name} \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards})'
+        return f'\n 🤺 Player{self.name} \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards}'
 
 # 1º Escalera Real: 5 cartas seguidas del mismo palo desde el 10 al As.
     # 5 cartas del mismo palo, y consecutivas desde el 10 al AS (14)
     # len(suits) == 1 vale, todas las cartas son del mismo palo porque es igual 1
-    # ahora tocaria comporbar, si da 24 la suma de todos los values
-    
+    # ahora tocaria comporbar, si da 60 o más la suma de todos los values
     
 # 2º Escalera color: 5 cartas consecutivas del mismo color.
 
