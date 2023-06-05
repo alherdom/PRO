@@ -35,33 +35,38 @@ class Player:
         self.hole_cards = []
         self.community_cards = []
         self.hand = Hand
-        self.cards_combinations = []
+
+    # @property
+    # def get_cards_combinations(self):
+    #     player_cards = self.hole_cards + self.community_cards
+    #     self.cards_combinations = list(combinations(player_cards, n = 5))
+    #     return self.cards_combinations
     
     @property
-    def get_cards_combinations(self):
-        player_cards = self.hole_cards + self.community_cards
-        self.cards_combinations = list(combinations(player_cards, n = 5))
-        return self.cards_combinations
+    def mixed_cards(self):
+        return self.hole_cards + self.community_cards
     
     def is_royal_flush(self):
         suits = []
         values = []
         suits_values = []
-        for combination in self.cards_combinations:
-            for card in combination:
-                suit_value = (card.suit, card.cmp_value)
-                suits.append(suit_value[0])
-                suits_values.append(suit_value)
-        for suit_value in set(suits_values):
-            values.append(suit_value[1])
+        
+        for card in sorted(self.mixed_cards, key = lambda c: c.cmp_value):
+            suit_value = (card.suit, card.cmp_value)
+            suits.append(suit_value[0])
+            suits_values.append(suit_value)
+            
+        values = [suit_value[1] for suit_value in suits_values]        
+        
         for value in values:
             if values.count(value) == 4:
-                return f'Poker: {set(suits_values)}'
+                return f'Poker: {suits_values}'
             if values.count(value) == 3:
-                return f'Three: {set(suits_values)}'
+                return f'Three: {suits_values}'
             if values.count(value) == 2:
-                return f'Pair: {set(suits_values)}'
-        return f'\nPalo-Valor: {set(suits_values)}\nPalos: {set(suits)}\nMax Value: {max(values)}'
+                return f'Pair: {suits_values}'
+            
+        return f'\nPalo-Valor: {suits_values}\nPalos: {suits}\nMax Value: {values}'
     
     def __repr__(self) -> str:
         return f'\n 🤺 Player{self.name} \n 🔒 Hole Cards: {self.hole_cards} \n 🃏 Community Cards: {self.community_cards}\n'

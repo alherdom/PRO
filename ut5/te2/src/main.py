@@ -23,16 +23,12 @@ class Game:
     def show_dealer(self):
         return f'{self.dealer}'
     
-    def shuffles_cards(self):
-        pass
-    
     def deal_cards_to_players(self):
         self.dealer.draw_random_cards()
         
     def deal_community_cards(self):
         self.dealer.draw_community_cards()
         
-
 # - Datos:
 #   - Deck ✔
 #   - Players ✔
@@ -51,5 +47,4 @@ game1.deal_cards_to_players()
 game1.deal_community_cards()
 # print(game1.show_dealer())
 print(game1.players[0])
-print(game1.players[0].get_cards_combinations)
 print(game1.players[0].is_royal_flush())
