@@ -92,12 +92,12 @@ class ToDo:
 
     def add_task(self, name: str):
         '''Añade la tarea con nombre "name"'''
-        ToDo(name).save()
+        Task(name).save()
         
     def complete_task(self, task_id: int):
         '''Marca la tarea con identificador "task_id" como completada'''
-        ToDo.get(task_id).check()
+        Task.get(task_id).check()
 
     def reopen_task(self, task_id: int):
         '''Marca la tarea con identificador "task_id" como pendiente'''
-        ToDo.get(task_id).uncheck()
+        Task.get(task_id).uncheck()
