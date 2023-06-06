@@ -140,7 +140,7 @@ class MailServer(DbUtils):
             sql = 'SELECT * FROM activity WHERE recipient = ?'
             rows = self.cur.execute(sql,(self.domain,)).fetchall()
         for row in rows:
-            yield Mail(row[0], row[1], row[2], row[3], row[4])
+            yield Mail(row['sender'], row['recipient'], row['subject'], row['body'])
 
 
 class MailError(Exception):
@@ -148,5 +148,5 @@ class MailError(Exception):
         '''Hay que cerrar la conexión a la base de datos'''
         self.message = message
         self.mail_handler = mail_handler
+        self.mail_handler.con.close()
         super().__init__(self.message)
-        
