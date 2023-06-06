@@ -28,6 +28,9 @@ class Game:
         
     def deal_community_cards(self):
         self.dealer.draw_community_cards()
+    
+    # if __name__ == '__main__':
+
         
 # - Datos:
 #   - Deck ✔
