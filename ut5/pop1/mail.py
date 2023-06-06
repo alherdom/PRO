@@ -97,13 +97,10 @@ class MailServer(DbUtils):
 
         Ojo! La excepción recibe en su constructor tanto el mensaje de error
         como el objeto actual de tipo MailServer.'''
-
         def wrapper(self, *args, **kwargs):
-            if MailServer.logged == False:
-                message = 'User not logged in!'
-                raise MailServer(MailServer.username, message)
+            if not self.logged:
+                raise MailError(f'User "{self.username}" not logged in!', self)
             return method(self, *args, **kwargs)
-        
         return wrapper
 
     @property
@@ -124,8 +121,9 @@ class MailServer(DbUtils):
 
         Ojo! La excepción recibe en el constructor tanto el mensaje
         como el objeto actual de tipo MailServer.'''
-        new_mail = Mail(recipient = recipient, subject = subject, body = body)
-        new_mail.send(self)
+        
+        new_mail = Mail(sender = self.sender, recipient = recipient, subject = subject, body = body)
+        new_mail.send()
 
     @login_required
     def get_emails(self, sent: bool = True):
