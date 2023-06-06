@@ -16,25 +16,23 @@ def create_db(db_path: str = DB_PATH) -> None:
         └ retweet_from es clave ajena de tweet(id)'''
     con = sqlite3.connect(db_path)
     cur = con.cursor()
-    sql = '''CREATE TABLE IF NOT EXISTS user (
-                    id INTEGER PRIMARY KEY,
-                    username TEXT,
-                    password TEXT,
-                    bio TEXT
-                )'''
-    cur.execute(sql)
+    sql='''CREATE TABLE user(
+        id INTEGER PRIMARY KEY,
+        username TEXT,
+        password TEXT,
+        bio TEXT
+    );
+    CREATE TABLE tweet(
+        id INTEGER PRIMARY KEY,
+        content TEXT,
+        user_id INTEGER,
+        retweet_from INTEGER,
+        FOREIGN KEY (user_id) REFERENCES user(id),
+        FOREIGN KEY (retweet_from) REFERENCES tweet(id)
+    );
+    '''
+    cur.executescript(sql)
     con.commit()
-    sql = '''CREATE TABLE IF NOT EXISTS tweet (
-                    id INTEGER PRIMARY KEY,
-                    content TEXT,
-                    user_id INTEGER,
-                    retweet_from INTEGER,
-                    FOREIGN KEY(user_id) REFERENCES user(id),                  
-                    FOREIGN KEY(retweet_from) REFERENCES tweet(id)                  
-                )'''
-    cur.execute(sql)
-    con.commit()
-    # Cambiar por script
 
 class User:
     def __init__(self, username: str, password: str, bio: str = '', user_id: int = 0):
@@ -61,8 +59,8 @@ class User:
 
     def login(self, password: str) -> None:
         '''Realiza el login del usuario.'''
-        sql = f'SELECT COUNT(*) FROM user WHERE id = {self.id} and password = "{password}"'
-        row = self.cur.execute(sql).fetchone()
+        sql = 'SELECT COUNT(*) FROM user WHERE username = ? AND password = ?'
+        row = self.cur.execute(sql, (self.username, password)).fetchone()
         self.logged = row[0] > 0 
 
     def tweet(self, content: str) -> Tweet:
@@ -73,7 +71,7 @@ class User:
         con el mensaje: User <usuario> is not logged in!
         - Si el tweet supera el límite de caracteres hay que lanzar una excepción de tipo
         TwitterError con el mensaje: Tweet has more than 280 chars!'''
-        if self.logged == False:
+        if not self.logged:
             raise TwitterError(f'User {self.username} is not logged in!')
         if len(content) > MAX_TWEET_LENGTH:
             raise TwitterError(f'Tweet has more than {MAX_TWEET_LENGTH} chars!')
@@ -89,11 +87,11 @@ class User:
         con el mensaje: User <usuario> is not logged in!
         - Si tweet_id no existe en la base de datos hay que lanzar una excepción de tipo
         TwitterError con el mensaje: Tweet with id <id> does not exist!'''
-        if self.logged == False:
+        if not self.logged:
             raise TwitterError(f'User {self.username} is not logged in!')
-        sql = f'SELECT COUNT(*) FROM tweet WHERE id = {tweet_id}'
-        result = self.cur.execute(sql).fetchone()
-        if result[0] == 0:
+        sql = 'SELECT COUNT(*) FROM tweet WHERE id = ?'
+        row = self.cur.execute(sql,(tweet_id,)).fetchone()
+        if row[0] == 0:
             raise TwitterError(f'Tweet with id {tweet_id} does not exist!')
         new_tweet = Tweet(retweet_from = tweet_id)
         new_tweet.save(self)

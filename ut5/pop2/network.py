@@ -38,9 +38,9 @@ class Host:
                 zeros_int = [int(i) for i in zeros]
                 self.ip_octets = tuple(items + zeros_int)
             if len(items) > 4:
-                raise IPAddressError("IP address is invalid: Only 4 octets are allowed")
+                raise IPAddressError("Only 4 octets are allowed")
         if mask < 0 or mask > Host.IPV4_BITS:
-            raise IPAddressError("IP address is invalid: Mask is out of range")
+            raise IPAddressError("Mask is out of range")
         self.mask = mask
 
     @property
@@ -137,10 +137,10 @@ class Host:
           indicando en el mensaje: "Binary address is too long"
         '''
         if len(bip) > 32:
-            raise IPAddressError("IP address is invalid: Binary address is too long")
+            raise IPAddressError("Binary address is too long")
         splited_bip = ".".join(bip[i:i+8] for i in range(0, len(bip), 8))
         ip = '.'.join(str(int(octet,2)) for octet in splited_bip.split('.'))
-        return Host(ip,mask=mask)        
+        return Host(ip,mask = mask)        
 
 
 class IPAddressError(Exception):
@@ -148,11 +148,9 @@ class IPAddressError(Exception):
     - Mensaje por defecto: IP address is invalid
     - Si pasamos un mensaje: IP address is invalid: <message>'''
     def __init__(self, message: str = ''):
-        base_message = "IP address is invalid"
-        if message:
-            base_message += f': {message}'
-        super().__init__(base_message)
-
+        default_message = "IP address is invalid"
+        self.messsage = f'{default_message}: {message}' if message else default_message
+        super().__init__(self.message)
 
 class NetworkIter:
     def __init__(self, host: Host):
@@ -177,8 +175,15 @@ class NetworkIter:
         - Hay que dejar fuera el host que representa la red.
         - Hay que dejar fuera el host que representa el broadcast.
         '''
-        self.counter += 1
-
+        next_available_host = next(self.host_bip_segments)
+        host_dicriminant = sum(next_available_host)
+        if host_dicriminant == 0:
+            next_available_host = next(self.host_bip_segments)
+        if host_dicriminant == len(next_available_host):
+            raise StopIteration
+        bin_next_available_host = "".join(str(bit) for bit in next_available_host)
+        ip_address = self.host.addr_bmask + bin_next_available_host
+        return Host.from_bip(ip_address, mask=self.host.mask)
 
     @staticmethod
     def comb(values, n):
