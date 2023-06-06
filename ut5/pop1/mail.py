@@ -135,10 +135,10 @@ class MailServer(DbUtils):
         Debe ser una función generadora que devuelva objetos de tipo Mail.'''
         if sent:
             sql = 'SELECT * FROM activity WHERE sender = ?'
-            rows = self.cur.execute(sql,(self.domain,)).fetchall()
+            rows = self.cur.execute(sql,(self.domain,))
         else:
             sql = 'SELECT * FROM activity WHERE recipient = ?'
-            rows = self.cur.execute(sql,(self.domain,)).fetchall()
+            rows = self.cur.execute(sql,(self.domain,))
         for row in rows:
             yield Mail(row['sender'], row['recipient'], row['subject'], row['body'])
 
