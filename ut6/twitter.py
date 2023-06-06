@@ -96,7 +96,7 @@ class User:
         new_tweet = Tweet(retweet_from = tweet_id)
         new_tweet.save(self)
         return new_tweet
-
+ 
     @property
     def tweets(self):
         '''Función generadora que devuelve todos los tweets propios del usuario.
@@ -202,6 +202,7 @@ class Twitter:
         if result == None:
             raise TwitterError(f'User with id {user_id} does not exist!')
         return User.from_db_row(result)
+
 
 class TwitterError(Exception):
     def __init__(self, message: str = ""):
