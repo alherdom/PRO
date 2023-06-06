@@ -121,7 +121,9 @@ class MailServer(DbUtils):
 
         Ojo! La excepción recibe en el constructor tanto el mensaje
         como el objeto actual de tipo MailServer.'''
-        
+        regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if re.match(regex, recipient) is None:
+            raise MailError(f'Recipient "{recipient}" has invalid mail format!', self)
         new_mail = Mail(sender = self.sender, recipient = recipient, subject = subject, body = body)
         new_mail.send()
 
@@ -147,3 +149,4 @@ class MailError(Exception):
         self.message = message
         self.mail_handler = mail_handler
         super().__init__(self.message)
+        
