@@ -12,10 +12,17 @@ class Card:
     SYMBOLS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
     A_VALUE = 1
     K_VALUE = 13
+    # Se debe poder construir un objecto Card desde una cadena de texto.
+    # Ejemplos: Card('Q♠'), Card('7♣'), Card('A♠')
+    
+    def __init__(self, value_suit: str):
+        self.value = int(value_suit[0])
+        self.suit = value_suit[1]
 
-    def __init__(self, value: int | str, suit: str = ''):           
-        self.value = value
-        self.suit = suit
+
+    # def __init__(self, value: int | str, suit: str = ''):           
+    #     self.value = value
+    #     self.suit = suit
         
     def is_ace(self) -> bool:
         return self.value == Card.A_VALUE
@@ -25,7 +32,7 @@ class Card:
         return self.value if not self.is_ace() else Card.A_VALUE + Card.K_VALUE
 
     def __repr__(self) -> str:
-        return Card.GLYPHS[self.suit][int(self.value) - 1]
+        return Card.GLYPHS[self.suit][self.value - 1]
 
     def __eq__(self, other: Card) -> bool:
         return self.cmp_value == other.cmp_value and self.suit == other.suit
@@ -52,7 +59,7 @@ class Deck:
         self.deck = []
         for suit in Card.GLYPHS.keys():
             for value in range(1,14):
-                self.deck.append(Card(value, suit))
+                self.deck.append(Card(str(value) + suit))
         shuffle(self.deck)
     
     def __getitem__(self, index: int) -> int:
