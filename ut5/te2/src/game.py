@@ -7,8 +7,10 @@ def get_winner(
     common_cards: list[Card],
     private_cards: list[list[Card]],
 ) -> tuple[Player | None, Hand]:
-        return Player('Player 1'), Hand('🃕','🃖','🃗','🃘','🃙')
-
+    player = Player('Player 1')
+    hand = Hand([Card('9♠'), Card('A♠'), Card('6♣'), Card('10♠'), Card('6♠')])
+    return player, hand
+    
 class Game:
     def __init__(self, number_players: int):
         self.deck = Deck()

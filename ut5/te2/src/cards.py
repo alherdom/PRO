@@ -8,11 +8,13 @@ class Card:
         '❤':'🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾',
         '♠':'🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮'
         }
-    
+    SYMBOLS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
     A_VALUE = 1
     K_VALUE = 13
+    
     def __init__(self, value_suit: str):
-        self.value = int(value_suit[:len(value_suit)-1])
+        value = value_suit[:len(value_suit)-1]
+        self.value = Card.SYMBOLS.index(value) + 1
         self.suit = value_suit[-1]
 
     def is_ace(self) -> bool:
