@@ -57,7 +57,7 @@ class Mail(DbUtils):
         From: <remitente>
         To: <destinatario>
         ---
-        <asunto pasado a mayúsculas>
+        <asunto pasado a mayúsculas>:
         <cuerpo del correo>
         '''
         return f'From: {self.sender}\nTo: {self.recipient}\n---\n{self.subject.upper()}:\n{self.body}'
@@ -97,9 +97,10 @@ class MailServer(DbUtils):
         Ojo! La excepción recibe en su constructor tanto el mensaje de error
         como el objeto actual de tipo MailServer.'''
         def wrapper(self, *args, **kwargs):
-            if not self.logged:
-                raise MailError(f'User "{self.username}" not logged in!', self)
-            return method(self, *args, **kwargs)
+            if self.logged:
+                return method(self, *args, **kwargs)
+            raise MailError(f'User "{self.username}" not logged in!', self)
+
         return wrapper
 
     @property
@@ -132,7 +133,7 @@ class MailServer(DbUtils):
         - Si el parámetro sent está a True se devuelven los enviados por el usuario.
         - Si el parámetro sent está a False se devuelven los recibidos por el usuario.
         Debe ser una función generadora que devuelva objetos de tipo Mail.'''
-        if sent:
+        if sent: #ToDo Refactorizar
             sql = 'SELECT * FROM activity WHERE sender = ?'
             rows = self.cur.execute(sql,(self.sender,))
         else:
@@ -145,7 +146,5 @@ class MailServer(DbUtils):
 class MailError(Exception):
     def __init__(self, message: str, mail_handler: Mail | MailServer):
         '''Hay que cerrar la conexión a la base de datos'''
-        self.message = message
-        self.mail_handler = mail_handler
         self.mail_handler.con.close()
         super().__init__(self.message)

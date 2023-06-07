@@ -117,17 +117,15 @@ class DeckIterator:
 #   - Ver la carta de "abajo" ✔
 
 class Hand:
-    HIGH_CARD	'J'	Carta más álta
-    ONE_PAIR	'5'	Carta más álta
-    TWO_PAIR	('10', '7')	Tupla con cartas más altas (de mayor a menor)
-    THREE_OF_A_KIND	'K'	Carta más álta
-    STRAIGTH	'9'	Carta más álta
-    FLUSH	'Q'	Carta más álta
-    FULL_HOUSE	('3', 'J')	Tupla con carta del trío y carta de la pareja
+    HIGH_CARD = ''
+    ONE_PAIR= ''
+    TWO_PAIR = ''
+    THREE_OF_A_KIND = ''
+    STRAIGTH = ''
+    FLUSH = ''
+    FULL_HOUSE = ''
     FOUR_OF_A_KIND = ''
     STRAIGHT_FLUSH = ''
-    
-    
     
     def __init__(self, player_cards = list[Card]):
         self.player_cards = player_cards
