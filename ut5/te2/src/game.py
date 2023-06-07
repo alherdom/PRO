@@ -9,9 +9,9 @@ class Game:
         self.number_players = number_players
         self.players = []
     
-    @property    
-    def create_players(self):
-        self.players = [Player(str(i)) for i in range(1,self.number_players + 1)]
+    # @property    
+    # def create_players(self):
+    #     self.players = [Player(str(i)) for i in range(1,self.number_players + 1)]
     
     @property
     def create_dealer(self):
@@ -29,12 +29,12 @@ class Game:
     def deal_community_cards(self):
         self.dealer.draw_community_cards()
     
-#     def get_winner(
-#     players: list[Player],
-#     common_cards: list[Card],
-#     private_cards: list[list[Card]],
-# ) -> tuple[Player | None, Hand]:
-        
+    def get_winner(
+    players: list[Player],
+    common_cards: list[Card],
+    private_cards: list[list[Card]],
+) -> tuple[Player | None, Hand]:
+        pass
     # if __name__ == '__main__':
 
         

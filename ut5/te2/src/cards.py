@@ -1,5 +1,6 @@
 from __future__ import annotations
 from helpers import randint, shuffle, combinations
+import re
 
 class Card:
     GLYPHS = {
@@ -12,17 +13,14 @@ class Card:
     SYMBOLS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
     A_VALUE = 1
     K_VALUE = 13
-    # Se debe poder construir un objecto Card desde una cadena de texto.
-    # Ejemplos: Card('Q♠'), Card('7♣'), Card('A♠')
     
     def __init__(self, value_suit: str):
-        self.value = int(value_suit[0])
-        self.suit = value_suit[1]
+        regex = r'\+?(?P<value>\d{1,2}|[AJQK])(?P<suit>.*)'
+        m = re.search(regex, value_suit)
+        value, suit = m.groups()
+        self.value = int(value)
+        self.suit = suit
 
-    # def __init__(self, value: int | str, suit: str = ''):           
-    #     self.value = value
-    #     self.suit = suit
-        
     def is_ace(self) -> bool:
         return self.value == Card.A_VALUE
 
