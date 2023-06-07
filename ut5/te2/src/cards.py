@@ -1,6 +1,5 @@
 from __future__ import annotations
-from helpers import randint, shuffle, combinations
-import re
+from helpers import randint, shuffle
 
 class Card:
     GLYPHS = {
@@ -10,14 +9,11 @@ class Card:
         '♠':'🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮'
         }
     
-    SYMBOLS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
     A_VALUE = 1
     K_VALUE = 13
-    
     def __init__(self, value_suit: str):
-        regex = r'\+?(?P<value>\d{1,2}|[AJQK])(?P<suit>.*)'
-        m = re.search(regex, value_suit)
-        self.value, self.suit = m.groups()
+        self.value = int(value_suit[:len(value_suit)-1])
+        self.suit = value_suit[-1]
 
     def is_ace(self) -> bool:
         return self.value == Card.A_VALUE
@@ -117,15 +113,15 @@ class DeckIterator:
 #   - Ver la carta de "abajo" ✔
 
 class Hand:
-    HIGH_CARD = ''
-    ONE_PAIR= ''
-    TWO_PAIR = ''
-    THREE_OF_A_KIND = ''
-    STRAIGTH = ''
-    FLUSH = ''
-    FULL_HOUSE = ''
-    FOUR_OF_A_KIND = ''
-    STRAIGHT_FLUSH = ''
+    HIGH_CARD = 1
+    ONE_PAIR= 2
+    TWO_PAIR = 3
+    THREE_OF_A_KIND = 4
+    STRAIGHT = 5
+    FLUSH = 6
+    FULL_HOUSE = 7
+    FOUR_OF_A_KIND = 8
+    STRAIGHT_FLUSH = 9
     
     def __init__(self, player_cards = list[Card]):
         self.player_cards = player_cards
