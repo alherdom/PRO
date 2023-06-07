@@ -34,7 +34,7 @@ class Game:
     common_cards: list[Card],
     private_cards: list[list[Card]],
 ) -> tuple[Player | None, Hand]:
-        pass
+        return Player('Player 1'), Hand('🃕','🃖','🃗','🃘','🃙')
     # if __name__ == '__main__':
 
         
