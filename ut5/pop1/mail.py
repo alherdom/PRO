@@ -133,7 +133,7 @@ class MailServer(DbUtils):
         - Si el parámetro sent está a True se devuelven los enviados por el usuario.
         - Si el parámetro sent está a False se devuelven los recibidos por el usuario.
         Debe ser una función generadora que devuelva objetos de tipo Mail.'''
-        if sent: #ToDo Refactorizar
+        if sent: #ToDo refactorizar
             sql = 'SELECT * FROM activity WHERE sender = ?'
             rows = self.cur.execute(sql,(self.sender,))
         else:
