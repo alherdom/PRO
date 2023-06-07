@@ -63,7 +63,6 @@ class Mail(DbUtils):
         return f'From: {self.sender}\nTo: {self.recipient}\n---\n{self.subject.upper()}:\n{self.body}'
 
 
-
 class MailServer(DbUtils):
     def __init__(self, username: str, password: str):
         '''Construye un MailServer guardando los atributos de nombre de usuario y contraseña.
