@@ -131,7 +131,6 @@ class Hand:
         self.player_cards = player_cards
         self.cat = ''
         
-        
     def __contains__(a, b) -> bool:
         pass
   
