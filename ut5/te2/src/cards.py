@@ -19,7 +19,6 @@ class Card:
         self.value = int(value_suit[0])
         self.suit = value_suit[1]
 
-
     # def __init__(self, value: int | str, suit: str = ''):           
     #     self.value = value
     #     self.suit = suit
