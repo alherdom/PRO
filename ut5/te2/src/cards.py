@@ -17,9 +17,7 @@ class Card:
     def __init__(self, value_suit: str):
         regex = r'\+?(?P<value>\d{1,2}|[AJQK])(?P<suit>.*)'
         m = re.search(regex, value_suit)
-        value, suit = m.groups()
-        self.value = int(value)
-        self.suit = suit
+        self.value, self.suit = m.groups()
 
     def is_ace(self) -> bool:
         return self.value == Card.A_VALUE
@@ -119,8 +117,22 @@ class DeckIterator:
 #   - Ver la carta de "abajo" ✔
 
 class Hand:
+    HIGH_CARD	'J'	Carta más álta
+    ONE_PAIR	'5'	Carta más álta
+    TWO_PAIR	('10', '7')	Tupla con cartas más altas (de mayor a menor)
+    THREE_OF_A_KIND	'K'	Carta más álta
+    STRAIGTH	'9'	Carta más álta
+    FLUSH	'Q'	Carta más álta
+    FULL_HOUSE	('3', 'J')	Tupla con carta del trío y carta de la pareja
+    FOUR_OF_A_KIND = ''
+    STRAIGHT_FLUSH = ''
+    
+    
+    
     def __init__(self, player_cards = list[Card]):
         self.player_cards = player_cards
+        self.cat = ''
+        
         
     def __contains__(a, b) -> bool:
         pass
